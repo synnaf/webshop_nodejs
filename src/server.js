@@ -33,9 +33,6 @@ app.use(express.urlencoded({ extended: true }));
 // define what view engine to use, ejs in this case
 app.set('view engine', 'ejs')
 
-
-
-
 // ------------------  Routs  -------------------//
 app.get(ROUTE.gallery, async (req, res) => {
     const productList = await productItem.find()
