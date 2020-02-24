@@ -1,0 +1,34 @@
+{
+  "name": "wshop19feb",
+  "version": "0.0.1",
+  "description": "A simple webshop",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./test,./npm-debug.log --copy-files,./sass",
+    "sass": "node-sass --watch sass -o public",
+    "start-dev": "nodemon index.js",
+    "start": "npm run build && node dist/index.js"
+  },
+  "keywords": [
+    "webshop",
+    "minimal",
+    "FED19S"
+  ],
+  "author": "Nina, Maria, Fanny, Marcus, Victor",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.2.0",
+    "mocha": "^7.0.1",
+    "node-sass-middleware": "^0.11.0",
+    "rimraf": "^3.0.2",
+    "supertest": "^4.0.2"
+  }
+}
