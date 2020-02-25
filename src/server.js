@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 8080
 const productItem = require('../model/product')
 
 const ROUTE = {
-    main: '/',
+    index: '/',
     product: '/product',
     gallery: '/gallery',
     addProduct: '/add-product'
@@ -17,7 +17,7 @@ const VIEW = {
     gallery: 'gallery',
     product: 'product',
     addProduct: 'addProduct',
-    main: 'main'
+    index: 'index'
 }
 
 app.use(sassMiddleware({ // tell sassMiddleware where src file and dest directory is
@@ -55,8 +55,8 @@ app.post(ROUTE.addProduct, (req, res) => {
     res.status(200).redirect(ROUTE.gallery)
 })
 
-app.get(ROUTE.main, (req, res) => {
-    res.status(200).render(VIEW.main, {})
+app.get(ROUTE.index, (req, res) => {
+    res.status(200).render(VIEW.index, {})
 })
 
 app.get(ROUTE.addProduct, (req, res) => {

@@ -1,16 +1,16 @@
-// Test för server.js
+// TESTING SERVER.JS
 const supertest = require('supertest')
-const { app, port } = require('../src/server') // hämtar in app och port från server.js
+const { app, port } = require('../src/server')
 
-describe('Router tests', () => { // Huvudrubrik till våra test
+describe('Testing routes', () => {
     let server
 
-    beforeEach(() => {                          // beforeEach körs innan varje 'it' test
-        server = app.listen(port, () => console.log('                  >>>>>>>>>>>> Testing server up')) // servern körs igång
+    beforeEach(() => {
+        server = app.listen(port, () => console.log('         >>>>>>>>>>>> Testing server up'))
     })
 
-    it('Should respond to /gallery', (done) => {       // Ett test för att se om servern svarar på get /
-        supertest(server).get('/gallery').expect(200, done());   // vi testar om vi får svar på /
+    it('Should respond to /gallery', (done) => {
+        supertest(server).get('/gallery').expect(200, done());
     })
 
     it('Should respond to /product', (done) => {
@@ -29,7 +29,7 @@ describe('Router tests', () => { // Huvudrubrik till våra test
         supertest(server).get('/add-product').expect(200, done)
     })
 
-    afterEach((done) => {                       // afterEach körs efter varje 'it' test
-        server.close(done)                          // servern stängs
+    afterEach((done) => {
+        server.close(done)
     })
 })
