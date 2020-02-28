@@ -1,6 +1,6 @@
 // schema för en produkt
 const mongoose = require('mongoose')
-// Maria
+
 const schema = new mongoose.Schema({
     name: String,
     price: Number,
