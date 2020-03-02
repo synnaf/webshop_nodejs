@@ -20,13 +20,25 @@ const schemaUser = new mongoose.Schema({
         Type: String,
         minlength: 2,
         maxlength: 20,
-
-
     },
     userMail: {
         Type: String,
         minlength: 2,
         maxlength: 20,
+        unique: true,
+
+    },
+    userFirstName: {
+        Type: String,
+        minlength: 2,
+        maxlength: 10,
+        unique: true,
+
+    },
+    userLastName: {
+        Type: String,
+        minlength: 2,
+        maxlength: 10,
         unique: true,
 
     },
