@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
 
 const schemaProduct = new mongoose.Schema({
-    productName: String,
-    productPrice: Number,
+    artist: String,
+    albumPrice: Number,
+    spotifyId: String,
     productDescription: String,
     enum: ['Disco', 'Rock'],
     imgUrl: String
