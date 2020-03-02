@@ -1,0 +1,10 @@
+<%- include ("header.ejs") %>
+<main>
+    <div>Inloggning för användare</div>
+    <form action="/useraccount" class="admin-login-form">
+        <div>E-mailadress<input type="text" name="user-mail" id="user-mail"></div>
+        <div>Lösenord<input type="text" name="user-pw" id="user-pw"></div>
+        <div><button type="submit">Logga in</button></div>
+    </form>
+</main>
+<%- include ("footer.ejs") %>
