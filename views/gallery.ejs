@@ -3,15 +3,15 @@
 <main>
     <div> Här visas flera produkter ur en kategori? loopar igenom produkter i db och presenterar utvalda objekt.</div>
     <ul>
-        <% vinylRecordProduct.forEach(vinylRecord)=>r{ %>
+        <% showProduct.forEach((product)=>{ %>
         <li>
-            <div><%= vinylRecord.artist %></div>
-            <div><%= vinylRecord.vinylRecord %></div>
-            <div><%= vinylRecord.description %></div>
-            <div><%= vinylRecord.vinylRecordPrice %></div>
-            <div class="product-image-container"><img src="<%= vinylRecord.imgUrl %>"></div>
+            <div><%= product.artist %></div>
+            <div><%= product.vinylRecord %></div>
+            <div><%= product.description %></div>
+            <div><%= product.vinylRecordPrice %></div>
+            <div class="product-image-container"><img src="<%= product.imgUrl %>"></div>
         </li>
-        <%}) %>
+        <% }) %>
     </ul>
 </main>
 <%- include ("footer.ejs") %>

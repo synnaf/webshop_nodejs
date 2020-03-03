@@ -2,13 +2,7 @@ const mongoose = require('mongoose')
 
 
 const schemaUser = new mongoose.Schema({
-    userName: {
-        Type: String,
-        unique: true,
-        require: true,
-        minlength: 2,
-        maxlength: 20,
-    },
+
     userPassWord: {
         Type: String,
         unique: true,
@@ -26,6 +20,7 @@ const schemaUser = new mongoose.Schema({
         minlength: 2,
         maxlength: 20,
         unique: true,
+
     },
     userFirstName: {
         Type: String,
@@ -38,9 +33,10 @@ const schemaUser = new mongoose.Schema({
         Type: String,
         minlength: 2,
         maxlength: 10,
-        unique: true,
+
 
     },
+    Cart: [String],
     date: {
         type: Date,
         default: Date.now,
