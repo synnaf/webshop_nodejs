@@ -3,11 +3,21 @@
 <main>
     <div>Detta är admin-sida, visar formulär för att lägga till produkter och en lista på produkter som finns i DB</div>
     <form action="/admin" method="post">
-        <div>Artist<input type="text" name="artist" /></div>
-        <div>Album<input type="text" name="album" /></div>
-        <div>Beskrivning<input type="text" name="description" /></div>
-        <div>Pris<input type="text" name="price" /></div>
-        <div><button type="submit">Lägg till</button></div>
+        <div>Artist
+            <input type="text" name="artist" />
+        </div>
+        <div>Album
+            <input type="text" name="vinylRecord" />
+        </div>
+        <div>Beskrivning
+            <input type="text" name="vinylRecordsDescription" />
+        </div>
+        <div>Pris
+            <input type="number" name="vinylRecordsPrice" />
+        </div>
+        <div>
+            <button type="submit">Lägg till</button>
+        </div>
     </form>
 </main>
 <%- include ("footer.ejs") %>
