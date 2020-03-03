@@ -1,5 +1,3 @@
-'use strict';
-
 // schema för en produkt
 var mongoose = require('mongoose');
 

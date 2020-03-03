@@ -1,6 +1,8 @@
 const VIEW = {
     index: 'index',
-    admin: 'admin',
+    admin: "admin",
+    createAdmin: "createadmin",
+    createUser: "createuser",
     loginAdmin: 'log-in-admin',
     loginUser: 'log-in-user',
     userAccount: 'useraccount',

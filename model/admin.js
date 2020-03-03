@@ -9,7 +9,7 @@ const schemaAdmin = new mongoose.Schema({
         minlength: 2,
         maxlength: 20,
     },
-    adminPassWord: {
+    adminPassword: {
         Type: String,
         unique: true,
         require: true,
