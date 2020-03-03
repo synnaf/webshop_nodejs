@@ -26,6 +26,10 @@ app.use(express.urlencoded({
 // define what view engine to use, ejs in this case
 app.set('view engine', 'ejs')
 
+// ------------------  Routes  -------------------//
+app.get(serverVariable.ROUTE.index, (req, res) => {
+    res.status(200).render(serverVariable.VIEW.index, {})
+})
 
 
 app.use(adminRoute);
@@ -35,10 +39,6 @@ app.use(userRoute);
 app.use(galleryRoute);
 
 app.use(errorRoute);
-// ------------------  Routs  -------------------//
-app.get(serverVariable.ROUTE.index, (req, res) => {
-    res.status(200).render(serverVariable.VIEW.index, {})
-})
 
 module.exports = {
     app,
