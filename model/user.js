@@ -20,15 +20,12 @@ const schemaUser = new mongoose.Schema({
         Type: String,
         minlength: 2,
         maxlength: 20,
-
-
     },
     userMail: {
         Type: String,
         minlength: 2,
         maxlength: 20,
         unique: true,
-
     },
     date: {
         type: Date,
