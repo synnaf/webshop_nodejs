@@ -5,7 +5,7 @@ const {
     app,
     PORT
 } = require('./src/server')
-const dbConfig = require('./config/config')
+const config = require('./config/config')
 
 // Kicka igång servern
 const dbOptions = {
@@ -13,7 +13,7 @@ const dbOptions = {
     useNewUrlParser: true
 }
 
-mongoose.connect(dbConfig.databaseUrl, dbOptions).then(() => {
+mongoose.connect(config.mongoDB.databaseUrl, dbOptions).then(() => {
     app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
 })
 
