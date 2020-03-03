@@ -27,6 +27,20 @@ const schemaUser = new mongoose.Schema({
         maxlength: 20,
         unique: true,
     },
+    userFirstName: {
+        Type: String,
+        minlength: 2,
+        maxlength: 10,
+        unique: true,
+
+    },
+    userLastName: {
+        Type: String,
+        minlength: 2,
+        maxlength: 10,
+        unique: true,
+
+    },
     date: {
         type: Date,
         default: Date.now,

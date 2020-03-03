@@ -1,13 +1,13 @@
+// schema för en produkt
 const mongoose = require('mongoose')
 
-const schemaProduct = new mongoose.Schema({
-    productName: String,
-    productPrice: Number,
-    productDescription: String,
-    enum: ['Disco', 'Rock'],
+const schema = new mongoose.Schema({
+    name: String,
+    price: Number,
+    description: String,
     imgUrl: String
 })
 
-const productItem = mongoose.model('product', schemaProduct)
+const productItem = mongoose.model('product', schema)
 
 module.exports = productItem

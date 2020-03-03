@@ -5,20 +5,11 @@ const sassMiddleware = require('node-sass-middleware')
 const app = express()
 const PORT = process.env.PORT || 8080
 const productItem = require('../model/product')
-
-const ROUTE = {
-    index: '/',
-    product: '/product',
-    gallery: '/gallery',
-    addProduct: '/add-product'
-}
-
-const VIEW = {
-    gallery: 'gallery',
-    product: 'product',
-    addProduct: 'addProduct',
-    index: 'index'
-}
+const serverVariable = require('../serverVariable');
+const adminRoute = require('../routes/adminRoute');
+const userRoute = require('../routes/userRoute');
+const galleryRoute = require('../routes/galleryRoute');
+const errorRoute = require('../routes/errorRoute');
 
 app.use(sassMiddleware({ // tell sassMiddleware where src file and dest directory is
     src: 'sass',
@@ -34,33 +25,16 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs')
 
 // ------------------  Routs  -------------------//
-app.get(ROUTE.gallery, async (req, res) => {
-    const productList = await productItem.find()
-    res.status(200).render(VIEW.gallery, { productList })
+app.get(serverVariable.ROUTE.index, (req, res) => {
+    res.status(200).render(serverVariable.VIEW.index, {})
 })
 
-app.get(ROUTE.product, (req, res) => {
-    res.status(200).render(VIEW.product, {})
-})
+app.use(adminRoute);
 
-app.post(ROUTE.addProduct, (req, res) => {
-    // spara ny produkt
-    new productItem({
-        name: req.body.name,
-        price: req.body.price,
-        description: req.body.description,
-        imgUrl: req.body.imgUrl
-    }).save() // och spara till databasen
+app.use(userRoute);
 
-    res.status(200).redirect(ROUTE.gallery)
-})
+app.use(galleryRoute);
 
-app.get(ROUTE.index, (req, res) => {
-    res.status(200).render(VIEW.index, {})
-})
-
-app.get(ROUTE.addProduct, (req, res) => {
-    res.status(200).render(VIEW.addProduct, {})
-})
+app.use(errorRoute);
 
 module.exports = { app, PORT, express }
