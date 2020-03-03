@@ -20,7 +20,9 @@
   "dependencies": {
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "mongoose": "^5.9.2"
+    "mongoose": "^5.9.2",
+    "querystring": "^0.2.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
