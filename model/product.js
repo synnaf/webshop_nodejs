@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const schemaVinylRecords = new mongoose.Schema({
+const schemaProduct = new mongoose.Schema({
     artist: String,
     vinylRecord: String,
     vinylRecordPrice: Number,
@@ -10,6 +10,6 @@ const schemaVinylRecords = new mongoose.Schema({
     imgUrl: String
 })
 
-const productModel = mongoose.model("product", schemaVinylRecords)
+const products = mongoose.model("product", schemaProduct)
 
-module.exports = productModel
+module.exports = products

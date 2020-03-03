@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const productModel = require('../model/product');
+const ProductModel = require('../model/product');
 const serverVariable = require('../serverVariable');
 const request = require('request'); // "Request" library
-const config = require("../config/config"); 
+const config = require("../config/config");
 
 
 router.get(serverVariable.ROUTE.loginAdmin, (req, res) => {
-    res.status(200).render(serverVariable.VIEW.loginAdmin);
+  res.status(200).render(serverVariable.VIEW.loginAdmin);
 })
 
 // router.get(serverVariable.ROUTE.admin, (req, res) => {
@@ -15,15 +15,15 @@ router.get(serverVariable.ROUTE.loginAdmin, (req, res) => {
 // })
 
 router.post(serverVariable.ROUTE.admin, (req, res) => {
-    new productModel({
-        artist: req.body.artist,
-        vinylRecord: req.body.vinylRecord,
-        vinylRecordPrice: req.body.vinylRecordPrice,
-        vinylRecordDescription: req.body.vinylRecordDescription,
-        imgUrl: req.body.imgUrl
+  new ProductModel({
+    artist: req.body.artist,
+    vinylRecord: req.body.vinylRecord,
+    vinylRecordPrice: req.body.vinylRecordPrice,
+    vinylRecordDescription: req.body.vinylRecordDescription,
+    imgUrl: req.body.imgUrl
 
-    }).save()
-    res.redirect("/gallery")
+  }).save()
+  res.redirect("/gallery")
 })
 
 module.exports = router;
@@ -58,37 +58,37 @@ var authOptions = {
 };
 
 router.get(serverVariable.ROUTE.admin, (req, res) => {
-    // hämta information från spotify 
-    // när man trycker på "Sök" så kör funktionen som auktoriserar spotify web api 
-    // hämta värdet från input-fältet req.body.namnetpåfältet 
-    // värdet från inputfältet ska in i söksträngen 
-    // q=artistenfrånsökfältet
+  // hämta information från spotify 
+  // när man trycker på "Sök" så kör funktionen som auktoriserar spotify web api 
+  // hämta värdet från input-fältet req.body.namnetpåfältet 
+  // värdet från inputfältet ska in i söksträngen 
+  // q=artistenfrånsökfältet
 
-    //hämta från formulär 
-    const artistSearchValue = req.body.artist
+  //hämta från formulär 
+  const artistSearchValue = req.body.artist
 
-    const apiResponse = fetchSpotifyApiData(artistSearchValue)
+  const apiResponse = fetchSpotifyApiData(artistSearchValue)
 
-    function fetchSpotifyApiData(searchValue) {
-        //skapa en request 
-        request.post(authOptions, function(error, response, body) {
-            if (!error && response.statusCode === 200) {
-              // use the access token to access the Spotify Web API
-              var token = body.access_token;
-              var options = {
-                url: `https://api.spotify.com/v1/search?type=artist&q=${searchValue}&access_token=${token}`,
-                headers: {
-                  'Authorization': 'Bearer ' + token
-                },
-                json: true
-              };
-              request.get(options, function(error, response, body) {
-                console.log(body);
-              });
+  function fetchSpotifyApiData(searchValue) {
+    //skapa en request 
+    request.post(authOptions, function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+        // use the access token to access the Spotify Web API
+        var token = body.access_token;
+        var options = {
+          url: `https://api.spotify.com/v1/search?type=artist&q=${searchValue}&access_token=${token}`,
+          headers: {
+            'Authorization': 'Bearer ' + token
+          },
+          json: true
+        };
+        request.get(options, function (error, response, body) {
+          console.log(body);
+        });
 
-            }
-          
-          });
-    } 
+      }
+
+    });
+  }
 
 })
