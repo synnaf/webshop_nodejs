@@ -5,7 +5,7 @@ const sassMiddleware = require('node-sass-middleware')
 const app = express()
 const PORT = process.env.PORT || 8080
 // const productItem = require('../model/product')
-const serverVariable = require('../serverVariable');
+const constant = require('../constant');
 const adminRoute = require('../routes/adminRoute');
 const userRoute = require('../routes/userRoute');
 const galleryRoute = require('../routes/galleryRoute');
@@ -27,8 +27,8 @@ app.use(express.urlencoded({
 app.set('view engine', 'ejs')
 
 // ------------------  Routes  -------------------//
-app.get(serverVariable.ROUTE.index, (req, res) => {
-    res.status(200).render(serverVariable.VIEW.index, {})
+app.get(constant.ROUTE.index, (req, res) => {
+    res.status(200).render(constant.VIEW.index, {})
 })
 
 
