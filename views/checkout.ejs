@@ -1,8 +1,58 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main>
-    <div>
-        Kassasidan, visar varukorg, betalnbingsalternativ och formulär för leverans etc
+    <div class="checkout-product-main-container">
+        <div class="checkout-header">
+            <h1 class="mainheadline">Shoppingcart</h1>
+        </div>
+        <div class="checkout-product-container">
+
+        </div>
     </div>
+
+    <div class="checkout-Payment-container">
+        <form action="">
+            <div class="checkout-header">
+                <h2>Payment</h2>
+            </div>
+
+            <div class="checkout-payment">
+                <input type="radio">
+            </div>
+            <div class="checkout-user-container">
+                <h3>Kortnummer</h3>
+                <input type="number">
+            </div>
+            <div class="checkout-headline">
+                <h2>Personuppgifter</h2>
+            </div>
+            <div class="checkout-user-container">
+                <h3>Förmamn</h3>
+                <input type="text">
+            </div>
+            <div class="checkout-user-container">
+                <h3>Efternamn</h3>
+                <input type="text">
+            </div>
+            <div class="checkout-user-container">
+                <h3>Adress</h3>
+                <input type="text">
+            </div>
+            <div class="checkout-user-container">
+                <div class="checkout-user-innercontainer">
+                    <h3>Stad</h3>
+                    <input type="text">
+                </div>
+                <div class="checkout-user-innercontainer">
+                    <h3>Postnummer</h3>
+                    <input type="text">
+                </div>
+            </div>
+            <div class="checkout-user-container">
+                <button type="submit">spara</button>
+            </div>
+        </form>
+    </div>
+
 </main>
 <%- include ("footer.ejs") %>
