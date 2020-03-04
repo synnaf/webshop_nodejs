@@ -1,5 +1,10 @@
 .navbar {
-    background-color: hotpink;
-    display: flex;
-    justify-content: space-between;
+    @include flexBetween; 
+    padding: $paddingSmall;
+    color: $colorMain;
+    background-color: $colorThird;
+    border-radius: $rounded;
+    .navbar-logo {
+        font-weight: $textBold;
+    }
 }
