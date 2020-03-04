@@ -33,20 +33,6 @@ module.exports = router;
 
 //------------------------------ SPOTIFY AUTH ---------------------------- //
 
-/**
- * This is an example of a basic node.js script that performs
- * the Client Credentials oAuth2 flow to authenticate against
- * the Spotify Accounts.
- *
- * For more information, read
- * https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow
- */
-
-
-
-
-
-
 router.get(serverVariable.ROUTE.admin, (req, res) => {
     // hämta information från spotify 
     // när man trycker på "Sök" så kör funktionen som auktoriserar spotify web api 
