@@ -3,14 +3,14 @@
 var express = require('express');
 var router = express.Router();
 // const Product = require('../model/product');
-var serverVariable = require('../serverVariable');
+var constant = require('../constant');
 
-router.get(serverVariable.ROUTE.gallery, function (req, res) {
-    res.status(200).render(serverVariable.VIEW.gallery);
+router.get(constant.ROUTE.gallery, function (req, res) {
+    res.status(200).render(constant.VIEW.gallery);
 });
 
-router.get(serverVariable.ROUTE.product, function (req, res) {
-    res.status(200).render(serverVariable.VIEW.product);
+router.get(constant.ROUTE.product, function (req, res) {
+    res.status(200).render(constant.VIEW.product);
 });
 
 module.exports = router;

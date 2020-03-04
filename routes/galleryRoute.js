@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const products = require('../model/product');
-const serverVariable = require('../serverVariable');
+const constant = require('../constant');
 
-router.get(serverVariable.ROUTE.gallery, async (req, res) => {
+router.get(constant.ROUTE.gallery, async (req, res) => {
     const showProduct = await products.find()
-    res.render(serverVariable.VIEW.gallery, {
+    res.render(constant.VIEW.gallery, {
         showProduct
     });
 })
 
-router.get(serverVariable.ROUTE.product, (req, res) => {
-    res.status(200).render(serverVariable.VIEW.product);
+router.get(constant.ROUTE.product, (req, res) => {
+    res.status(200).render(constant.VIEW.product);
 })
 
 module.exports = router;
