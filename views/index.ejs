@@ -2,27 +2,31 @@
 <%- include ("navbar.ejs") %>
 <main>
 
-    <div class="mainheadline">
+    <div class="pageheadline">
         <h1>Hey, let's get some music!</h1> 
     </div>
 
     <div class="newscontainers">
         <div class="news">
             <!-- rendera dynamisk bild? -->
-            <img src="/placeholder_images/lizzo.jpg" alt="artist"/> 
+            <div class="placeholder">
+                <img src="/placeholder_images/lizzo.jpg" alt="artist"/>
+            </div>
             <h3>Nyheter</h3>
         </div>
         <div class="news">
             <!-- rendera dynamisk bild? -->
-            <img src="/placeholder_images/lizzo.jpg" alt="artist"/>
+            <div class="placeholder">
+                <img src="/placeholder_images/lizzo.jpg" alt="artist"/>
+            </div>
             <h3>Topp 5</h3>
         </div>
     </div>
 
-    <div class="startbuttons">
-        <button type="button">Webbshopp</button>
-        <button type="button">Logga in</button>
-    </div>
+    <form class="startbuttons" method="get">
+        <button type="submit" formaction="gallery">Webbshopp</button>
+        <button type="submit" formaction="log-in-user">Logga in</button>
+    </form>
 
 </main>
 <%- include ("footer.ejs") %>

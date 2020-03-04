@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    font-size:12pt;
     body {
         background-color: $colorMain;
         color: $colorSecond;
@@ -8,6 +9,48 @@ html {
         flex-direction: column;
         main {
             flex: 1 0 auto;
+            font-family: sans-serif; //tillfällig font
+            .pageheadline {
+                font-weight: $textBold;
+                font-size: 2rem; //olika för startsidan/mobilläge/andra huvudrubriker
+                margin:10px;
+                line-height: 100px;
+                text-align: center; 
+            }
+            //unikt för startsidan 
+            .newscontainers {
+                font-size:1rem;
+                display: flex; 
+                flex-direction: row;
+                justify-content: center;
+                text-align:center; 
+                .news {
+                    margin:15px;   
+                //kan tas bort sen beroende på vilka bilder vi vill ha 
+                .placeholder {
+                    border:2px solid grey; 
+                    height:100px;
+                    width:100px;
+                }
+                }
+            }
+            //unikt för startsidan 
+            .startbuttons {
+                display: flex; 
+                flex-direction: column;
+                margin-bottom:50px;
+                button {
+                    align-self: center;
+                    font-size: 1rem; //ändra till rem 
+                    line-height: 40px;
+                    margin:10px;
+                    width:200px;
+                    background:$colorSecond;
+                    border:none; 
+                    border-radius:20px;
+                }
+            }
+
         }
     }
 }
