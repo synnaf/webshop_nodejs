@@ -1,5 +1,5 @@
 .navbar {
-    background-color: $colorThird;
+    background: $colorThird;
     border-radius: $rounded;
     .navbar-content {
         @include flexBetween; 
@@ -28,6 +28,7 @@
         }
     }
     .drop-down-menu {
+        border-top: 1px solid black;
         height: auto;
         padding: $paddingSmall;
         font-size: 1rem;

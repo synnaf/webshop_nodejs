@@ -5,14 +5,17 @@
     <ul class="product-list">
         <% showProduct.forEach((product)=>{ %>
             <li class="product-display">
-                <div class="product-info-container">
-                    <div><%= product.artist %></div>
-                    <div><%= product.vinylRecord %></div>
-                    <div><%= product.description %></div>
-                    <div><%= product.vinylRecordPrice %></div>
-                    <button>KÖP</button>
-                </div>
                 <div class="product-image-container"><img src="<%= product.imgUrl %>"></div>
+                <div class="product-info-container">
+                    <div class="left">
+                        <div><%= product.artist %></div>
+                        <div><%= product.vinylRecord %></div>
+                        <div><%= product.vinylRecordPrice %></div>
+                    </div>
+                    <div class="right">
+                        <button>KÖP</button>
+                    </div>
+                </div>
             </li>
         <% }) %>
     </ul>

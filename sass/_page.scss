@@ -51,32 +51,48 @@ html {
                 }
             }
             .small-text {
-                padding: $paddingSmall;
+                text-align: center;
+                padding: $paddingMedium;
             }
             .product-list {
                 padding: 0;
                 list-style-type: none;
                 .product-display {
-                    padding: $paddingSmall;
-                    @include flexBetween;
+                    padding: $paddingMedium;
+                    .product-image-container {
+                        width: 50%;
+                        img {
+                            width: 100%;
+                        }
+                    }
                     .product-info-container {
-                        button {
-                            align-self: center;
-                            font-size: 0.8rem; //ändra till rem 
-                            line-height: 28px;
-                            margin:10px;
-                            width:80px;
-                            background:$colorSecond;
-                            border:none; 
-                            border-radius:20px;
+                        @include flexBetween;
+                        padding: $paddingSmall;
+                        .left {
+                            display: flex; 
+                            flex-direction: column;
+                            justify-content: center;
+                            margin: 8px 0;
+                            
+                        }
+                        .right {
+                            display: flex; 
+                            flex-direction: column;
+                            justify-content: center;
+                            margin: 8px 0;
+                            button {
+                                align-self: center;
+                                font-weight: $textBold;
+                                line-height: 28px;
+                                width:80px;
+                                background: $colorThird;
+                                border:none; 
+                                border-radius:20px;
+                            }
                         }
                     }
                     .product-image-container {
-                        background: black;
-                        border-width: 1px;
-                        border-style: solid;
-                        border-color: $colorSecond;
-                        width: 50%;
+                        width: 100%;
                         img {
                             width: 100%;
                         }
