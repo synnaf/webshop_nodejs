@@ -7,7 +7,7 @@ html {
         color: $colorSecond;
         min-height: 100%;       
         main {
-            @include flexCenter; 
+            @include flexColumnCenter; 
             flex-direction: column;
             flex: 1 0 auto;
             font-family: $textFontStandard; //tillfällig font
@@ -35,7 +35,7 @@ html {
             }
             //unikt för startsidan 
             .startbuttons {
-                @include flexColumn;
+                @include flexColumnCenter;
                 margin-bottom: 50px;
                 button {
                     @include buttonShapeBig;
@@ -66,8 +66,7 @@ html {
                         padding: $paddingSmall;
                         .product-info-left {
                             @include flexColumnCenter;
-                            margin: 8px 0;
-                            
+                            margin: 8px 0;   
                         }
                         .product-info-right {
                             @include flexColumnCenter;
@@ -81,18 +80,68 @@ html {
                     }
                 }
             }
+            .shoppingcart-container {
+                height:auto;
+                background-color:white; 
+                margin:10px; 
+                @include flexRowBetween; 
+                .product-img {
+                    width:100px;
+                    height:100px;
+                    background-color:lightslategray;
+                }
+                .changecart {
+                    border-left:0.5px solid lightslategray;
+                    padding:10px 10px 0px 10px;
+                }
+            }
             .checkout-payment-container {
-                @include flexCenter;
                 background-color: white;
-                h3 {
-                    font-size:1rem;
-                    color:grey;
-                    font-weight:lighter;
+                margin:10px;
+                form {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    h2 {
+                        text-align: center;
+                        font-size:2rem;
+                        color:black;
+                    }
+                    h3 {
+                        margin-top:0px;
+                        margin-bottom:5px;
+                        font-size:1rem;
+                        color:grey;
+                        font-weight:lighter;
+                        text-align:left; 
+                    }
+                    .checkout-user-container {
+                        align-self: center;
+                        input {
+                            @include inputfieldStyle;
+                        }
+                    }
+                    .checkout-postal {
+                        align-self: center;
+                        margin-bottom:30px;
+                        .postal-city>input{  
+                            @include inputfieldStyle;
+                            width:70%;      
+                        }
+                        .postal-code>input{
+                            @include inputfieldStyle; 
+                            width:70%;
+                        }
+                    }
+                    button {
+                        align-self:center;
+                        @include buttonShapeBig;
+                        background-color:$colorSecond; 
+                        padding:$paddingThin;
+                        margin-bottom:30px;
+                    }
                 }
-                input {
-                    border-radius: $rounded;
-                    border-color: whitesmoke;  
-                }
+
             }
             
         }

@@ -6,46 +6,50 @@
     </div>
     <div class="shoppingcart-container">
         <!-- loopa produkter här -->
+        <div class="product-img">bild</div>
+        <h4>Titel</h4>
+        <span>
+            <p>Pris: 100kr</p>
+            <p>Antal: 2st</p>
+        </span>
+        <span class="changecart">
+            <p>+</p>
+            <p>-</p>
+        </span>
+        
     </div>
 
     <div class="checkout-payment-container">
         <form action="post">
-            <div class="checkout-header">
-                <h2>Betalning</h2>
-            </div>
+            <h2>Betalning</h2>
             <div class="checkout-user-container">
-                <input type="radio">
+                <input type="radio" checked>
                 <input type="number" placeholder="Kortnummer">
             </div>
-
-            <div class="checkout-headline">
-                <h2>Personuppgifter</h2>
-            </div>
+            <h2>Leverans</h2>
             <div class="checkout-user-container">
                 <h3>Förnamn</h3>
-                <input type="text">
+                <input type="text" size=30>
             </div>
             <div class="checkout-user-container">
                 <h3>Efternamn</h3>
-                <input type="text">
+                <input type="text" size=30>
             </div>
             <div class="checkout-user-container">
                 <h3>Adress</h3>
-                <input type="text">
+                <input type="text" size=30>
             </div>
-            <div class="checkout-user-container">
-                <div class="checkout-user-innercontainer">
+            <div class="checkout-postal">
+                <div class="postal-city">
                     <h3>Stad</h3>
                     <input type="text">
                 </div>
-                <div class="checkout-user-innercontainer">
+                <div class="postal-code">
                     <h3>Postnummer</h3>
                     <input type="text">
                 </div>
             </div>
-
-                <button type="submit">Beställ</button>
-
+            <button type="submit">Beställ</button>
         </form>
     </div>
 
