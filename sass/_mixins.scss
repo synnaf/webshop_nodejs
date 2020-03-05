@@ -1,9 +1,33 @@
-@mixin flexBetween {
+@mixin flexRowBetween {
     display: flex;
     justify-content: space-between;
 }
 
-@mixin flexCenter {
-    display: flex;
+@mixin flexRowCenter {
+    display: flex; 
+    flex-direction: row;
     justify-content: center;
+}
+
+@mixin flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flexColumnCenter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@mixin buttonShapeSmall {
+    padding: $paddingThin;
+    border:none; 
+    border-radius: $roundedMedium;
+}
+
+@mixin buttonShapeBig {
+    width: 200px;
+    border: none; 
+    border-radius: $roundedBig;
 }

@@ -2,30 +2,27 @@ html {
     height: 100%;
     font-size:12pt;
     body {
+        @include flexColumn;
         background-color: $colorMain;
         color: $colorSecond;
-        min-height: 100%;
-        display: flex;
-        flex-direction: column;
+        min-height: 100%;       
         main {
             flex: 1 0 auto;
-            font-family: sans-serif; //tillfällig font
+            font-family: $textFontStandard; //tillfällig font
             .pageheadline {
                 font-weight: $textBold;
-                font-size: 2rem; //olika för startsidan/mobilläge/andra huvudrubriker
+                font-size: $textSizeBig; //olika för startsidan/mobilläge/andra huvudrubriker
                 margin:10px;
                 line-height: 100px;
                 text-align: center; 
             }
             //unikt för startsidan 
             .newscontainers {
-                font-size:1rem;
+                font-size: $textSizeStandard;
                 display: flex; 
-                flex-direction: row;
-                justify-content: center;
-                text-align:center; 
+                @include flexRowCenter;
                 .news {
-                    margin:15px;   
+                    margin: 15px;
                 //kan tas bort sen beroende på vilka bilder vi vill ha 
                     .placeholder {
                         border:2px solid grey; 
@@ -36,18 +33,15 @@ html {
             }
             //unikt för startsidan 
             .startbuttons {
-                display: flex; 
-                flex-direction: column;
-                margin-bottom:50px;
+                @include flexColumn;
+                margin-bottom: 50px;
                 button {
+                    @include buttonShapeBig;
+                    font-size: $textSizeStandard;
+                    background: $colorSecond;
                     align-self: center;
-                    font-size: 1rem; //ändra till rem 
                     line-height: 40px;
-                    margin:10px;
-                    width:200px;
-                    background:$colorSecond;
-                    border:none; 
-                    border-radius:20px;
+                    margin: 10px;
                 }
             }
             .small-text {
@@ -60,41 +54,27 @@ html {
                 .product-display {
                     padding: $paddingMedium;
                     .product-image-container {
-                        width: 50%;
+                        width: 100%;
                         img {
                             width: 100%;
                         }
                     }
                     .product-info-container {
-                        @include flexBetween;
+                        @include flexRowBetween;
                         padding: $paddingSmall;
-                        .left {
-                            display: flex; 
-                            flex-direction: column;
-                            justify-content: center;
+                        .product-info-left {
+                            @include flexColumnCenter;
                             margin: 8px 0;
                             
                         }
-                        .right {
-                            display: flex; 
-                            flex-direction: column;
-                            justify-content: center;
+                        .product-info-right {
+                            @include flexColumnCenter;
                             margin: 8px 0;
                             button {
-                                align-self: center;
-                                font-weight: $textBold;
-                                line-height: 28px;
-                                width:80px;
+                                @include buttonShapeSmall;
+                                font-size: $textFontStandard;
                                 background: $colorThird;
-                                border:none; 
-                                border-radius:20px;
                             }
-                        }
-                    }
-                    .product-image-container {
-                        width: 100%;
-                        img {
-                            width: 100%;
                         }
                     }
                 }
