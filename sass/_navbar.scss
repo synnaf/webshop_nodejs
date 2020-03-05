@@ -1,10 +1,36 @@
 .navbar {
-    @include flexBetween; 
-    padding: $paddingSmall;
-    color: $colorMain;
     background-color: $colorThird;
     border-radius: $rounded;
-    .navbar-logo {
-        font-weight: $textBold;
+    .navbar-content {
+        @include flexBetween; 
+        padding: $paddingSmall;
+        color: $colorMain;
+        .navbar-logo {
+            font-weight: $textBold;
+        }
+        i:hover {
+            color: $colorSecond;
+        }
+    }
+    .hidden-menu {
+        @include flexBetween; 
+        height: 0;
+        font-size: 0;
+        overflow: hidden;
+        transition: 0.2s ease-in;
+        a {
+            color: $colorMain;
+            text-decoration: none;
+            font-weight: $textBold;
+        }
+        a:hover {
+            color: $colorSecond;
+        }
+    }
+    .drop-down-menu {
+        height: auto;
+        padding: $paddingSmall;
+        font-size: 1rem;
+        overflow: visible;
     }
 }

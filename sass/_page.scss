@@ -27,11 +27,11 @@ html {
                 .news {
                     margin:15px;   
                 //kan tas bort sen beroende på vilka bilder vi vill ha 
-                .placeholder {
-                    border:2px solid grey; 
-                    height:100px;
-                    width:100px;
-                }
+                    .placeholder {
+                        border:2px solid grey; 
+                        height:100px;
+                        width:100px;
+                    }
                 }
             }
             //unikt för startsidan 
@@ -50,7 +50,18 @@ html {
                     border-radius:20px;
                 }
             }
-
+            .product-list {
+                .product-element {
+                    background: red;
+                    height: 40px;
+                    width: 40px;
+                    .product-image-container {
+                        background: green;
+                        height: 20px;
+                        width: 20px;
+                    }
+                }
+            }
         }
     }
 }
