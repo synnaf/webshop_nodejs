@@ -1,33 +1,28 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main>
-    <div class="checkout-product-main-container">
-        <div class="checkout-header">
-            <h1 class="mainheadline">Shoppingcart</h1>
-        </div>
-        <div class="checkout-product-container">
-
-        </div>
+    <div class="pageheadline">
+        <h1>Varukorg</h1>
+    </div>
+    <div class="shoppingcart-container">
+        <!-- loopa produkter här -->
     </div>
 
     <div class="checkout-payment-container">
         <form action="post">
             <div class="checkout-header">
-                <h2>Payment</h2>
+                <h2>Betalning</h2>
             </div>
-
             <div class="checkout-user-container">
                 <input type="radio">
+                <input type="number" placeholder="Kortnummer">
             </div>
-            <div class="checkout-user-container">
-                <h3>Kortnummer</h3>
-                <input type="number">
-            </div>
+
             <div class="checkout-headline">
-                <h3>Personuppgifter</h3>
+                <h2>Personuppgifter</h2>
             </div>
             <div class="checkout-user-container">
-                <h3>Förmamn</h3>
+                <h3>Förnamn</h3>
                 <input type="text">
             </div>
             <div class="checkout-user-container">
@@ -48,9 +43,9 @@
                     <input type="text">
                 </div>
             </div>
-            <div class="checkout-user-container">
-                <button type="submit">spara</button>
-            </div>
+
+                <button type="submit">Beställ</button>
+
         </form>
     </div>
 

@@ -7,6 +7,8 @@ html {
         color: $colorSecond;
         min-height: 100%;       
         main {
+            @include flexCenter; 
+            flex-direction: column;
             flex: 1 0 auto;
             font-family: $textFontStandard; //tillfällig font
             .pageheadline {
@@ -79,6 +81,20 @@ html {
                     }
                 }
             }
+            .checkout-payment-container {
+                @include flexCenter;
+                background-color: white;
+                h3 {
+                    font-size:1rem;
+                    color:grey;
+                    font-weight:lighter;
+                }
+                input {
+                    border-radius: $rounded;
+                    border-color: whitesmoke;  
+                }
+            }
+            
         }
     }
 }
