@@ -2,10 +2,10 @@
 <%- include ("navbar.ejs") %>
 <main>
     <div>Inloggning för admin</div>
-    <form action="/admin" class="admin-login-form">
-        <div>Namn<input type="text" name="adminName" id="admin-name"></div>
-        <div>Lösenord<input type="text" name="adminPassword" id="admin-pw"></div>
-        <div><button type="submit">Logga in</button></div>
+    <form action="<%constant.ROUTE.loginAdmin%>" method="POST" class="admin-login-form">
+        <input type="text" name="adminName" id="admin-name" placeholder="Namn" />
+        <input type="password" name="adminPassword" id="admin-pw" placeholder="Lösenord" />
+        <button type="submit">Logga in</button>
     </form>
 </main>
 <%- include ("footer.ejs") %>

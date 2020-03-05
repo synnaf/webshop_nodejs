@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Admin = require('../model/admin');
 const ProductModel = require('../model/product');
 const constant = require('../constant');
 const request = require('request'); // "Request" library
@@ -7,7 +8,23 @@ const config = require("../config/config");
 
 
 router.get(constant.ROUTE.loginAdmin, (req, res) => {
-    res.status(200).render(constant.VIEW.loginAdmin);
+    res.status(200).render(constant.VIEW.loginAdmin, {constant});
+})
+
+router.post(constant.ROUTE.loginAdmin, async (req, res) => {
+    const admin = await Admin.findOne({adminName: req.body.adminName});
+
+    if (!admin) {
+        res.redirect(constant.ROUTE.index);
+    }
+
+    // const validAdmin = await bcrypt.compare(req.body.adminPassword, admin.adminPassword);
+
+    if (req.body.adminPassword == admin.adminPassword) {
+        res.redirect(constant.ROUTE.admin);
+    }
+
+    res.redirect(constant.ROUTE.loginAdmin);
 })
 
 // router.get(constant.ROUTE.admin, (req, res) => {
