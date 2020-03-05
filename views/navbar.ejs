@@ -1,7 +1,18 @@
 <div class="navbar">
-    <div class="menu-icon"><i class="fa fa-bars"></i></div>
-    <div class="serach-icon"><i class="fa fa-search"></i></div>
-    <div class="navbar-logo">VINYLSHOP</div>
-    <div class="user-icon"><i class="fa fa-user"></i></div>
-    <div class="cart-icon"><i class="fa fa-shopping-bag"></i></div>
+    <script>
+        const showMenu = () => document.querySelector('#menu').classList.toggle('drop-down-menu')
+    </script>
+    <div class="navbar-content">
+        <div class="menu-icon"><i class="fa fa-bars" onclick="showMenu()"></i></div>
+        <div class="serach-icon"><i class="fa fa-search"></i></div>
+        <div class="navbar-logo">VINYLSHOP</div>
+        <div class="user-icon"><i class="fa fa-user"></i></div>
+        <div class="cart-icon"><i class="fa fa-shopping-bag"></i></div>
+    </div>
+    <div id="menu" class="hidden-menu">
+        <a href="/">Hem</a>
+        <a href="/gallery">Gallery</a>
+        <a href="/">Hem</a>
+        <a href="/">Hem</a>
+    </div>
 </div>

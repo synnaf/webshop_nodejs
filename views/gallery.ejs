@@ -2,16 +2,23 @@
 <%- include ("navbar.ejs") %>
 <main>
     <div> Här visas flera produkter ur en kategori? loopar igenom produkter i db och presenterar utvalda objekt.</div>
-    <ul>
+    <ul class="product-list">
         <% showProduct.forEach((product)=>{ %>
-        <li>
-            <div><%= product.artist %></div>
-            <div><%= product.vinylRecord %></div>
-            <div><%= product.description %></div>
-            <div><%= product.vinylRecordPrice %></div>
-            <div class="product-image-container"><img src="<%= product.imgUrl %>"></div>
-        </li>
+            <li class="product-element">
+                <div><%= product.artist %></div>
+                <div><%= product.vinylRecord %></div>
+                <div><%= product.description %></div>
+                <div><%= product.vinylRecordPrice %></div>
+                <div class="product-image-container"><img src="<%= product.imgUrl %>"></div>
+            </li>
         <% }) %>
+        <li class="product-element">
+            <div>Markoolio</div>
+            <div>Heja Finland</div>
+            <div>Bla bla</div>
+            <div>299</div>
+            <div class="product-image-container"><img src=""></div>
+        </li>
     </ul>
 </main>
 <%- include ("footer.ejs") %>
