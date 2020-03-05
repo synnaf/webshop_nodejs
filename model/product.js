@@ -5,11 +5,12 @@ const schemaProduct = new mongoose.Schema({
     vinylRecord: String,
     vinylRecordPrice: Number,
     spotifyId: String,
-    vinylRecordDescription: String,
+    tracks: Number, 
+    genre: String,
     enum: ['Disco', 'Rock'],
     imgUrl: String
 })
 
-const products = mongoose.model("product", schemaProduct)
+const Product = mongoose.model("product", schemaProduct)
 
-module.exports = products
+module.exports = Product
