@@ -4,7 +4,8 @@ const Admin = require('../model/user');
 const Product = require('../model/product');
 const constant = require('../constant');
 const request = require('request'); // "Request" library
-const config = require("../config/config");
+const config = require('../config/config');
+const bcrypt = require('bcryptjs');
 
 
 router.get(constant.ROUTE.loginAdmin, (req, res) => {
@@ -12,15 +13,15 @@ router.get(constant.ROUTE.loginAdmin, (req, res) => {
 })
 
 router.post(constant.ROUTE.loginAdmin, async (req, res) => {
-    const admin = await Admin.findOne({ adminName: req.body.adminName });
+    const admin = await Admin.findOne({ email: req.body.adminName });
 
     if (!admin) {
         res.redirect(constant.ROUTE.index);
     }
 
-    // const validAdmin = await bcrypt.compare(req.body.adminPassword, admin.adminPassword);
+    const validAdmin = await bcrypt.compare(req.body.adminPassword, admin.password);
 
-    if (req.body.adminPassword == admin.adminPassword) {
+    if (validAdmin) {
         res.redirect(constant.ROUTE.admin);
     }
 

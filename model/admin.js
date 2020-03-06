@@ -3,17 +3,17 @@ const mongoose = require('mongoose')
 const schemaAdmin = {
     adminName: {
         type: String,
-        unique: true,
+        // unique: true,
         required: true,
         minlength: 2,
         maxlength: 20,
     },
     adminPassword: {
         type: String,
-        unique: true,
+        // unique: true,
         required: true,
         minlength: 2,
-        maxlength: 20,
+        // maxlength: 20,
     },
     date: {
         type: Date,
