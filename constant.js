@@ -20,12 +20,14 @@ const ROUTE = {
     adminAddProduct: '/admin/addproduct',
     loginAdmin: '/adminlogin',
     loginUser: '/userlogin',
-    userAccount: '/account/:username',
+    userAccountId: '/account/:username',
+    userAccount: "/useraccount",
+    createUser: "/createuser",
     gallery: '/gallery',
     product: '/gallery/:id',
     checkout: '/checkout',
     confirmation: '/checkout/confirmation',
-    error: '/*'
+    error: '/*',
 }
 
 module.exports = {

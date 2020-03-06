@@ -18,7 +18,11 @@
   "author": "Nina, Maria, Fanny, Marcus, Victor",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "bcryptjs": "^2.4.3",
+=======
+    "bcrypt": "^4.0.1",
+>>>>>>> lägg till användare
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "mongoose": "^5.9.2",
