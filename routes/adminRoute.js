@@ -33,11 +33,13 @@ router.post(constant.ROUTE.loginAdmin, async (req, res) => {
 })
 
 router.get(constant.ROUTE.admin, async (req, res) => {
-    res.status(200).render(constant.VIEW.admin, { Product })
+    const productList = await Product.find()
+    res.status(200).render(constant.VIEW.admin, { productList })
 })
 
 router.post(constant.ROUTE.admin, (req, res) => {
 
+    //console.log(req.)
     // när man trycker på "Sök" så kör funktionen som auktoriserar spotify web api
     // värdet från inputfältet ska in i söksträngen 
     const artistSearchValue = req.body.artist;
@@ -89,26 +91,40 @@ router.post(constant.ROUTE.admin, (req, res) => {
 
                 request.get(options, function (error, response, body) {
                     console.log(response.statusCode + "===== is the response status code for request.get")
-                    console.log(JSON.parse(body).albums.items[0].artists[0].name);
+                    console.log(JSON.parse(body).albums);
                     //gör ett if-statement fär vi hanterar det som kommer tillbaka i body (vårt response) 
                     //re-routa till error sidan annars! 
                     const spotifyResponse = JSON.parse(body).albums;
 
-                    // const product = new Product({
-                    //     artist: spotifyResponse.items[0].artists[0].name,
-                    //     album: spotifyResponse.items[0].name,
-                    //     spotifyId: spotifyResponse.items[0].artists[0].id,
-                    //     tracks: spotifyResponse.items[0].total_tracks,
-                    //     genre: spotifyResponse.items[0].total_tracks,
-                    //     imgUrl: spotifyResponse.items[0].images[0].url
-                    // })
-                    console.log(spotifyResponse);
+
+                    //console.log(spotifyResponse);
                     res.render(constant.VIEW.adminAddProduct, { spotifyResponse })
                 });
-
             }
         });
     }
 })
 
+router.post(constant.ROUTE.adminAddProduct, async (req, res) => {
+    console.log(req.body)
+    const product = await new Product({
+        artist: req.body.artist,
+        album: req.body.album,
+        tracks: req.body.tracks,
+        spotifyId: req.body.spotifyId,
+        imgUrl: req.body.imgUrl,
+        genre: req.body.genre,
+        price: req.body.price,
+        addedBy: req.body.adminName
+    });
+    product.validate(function (err) {
+        if (err) {
+            console.log(err);
+            res.render("errors", { err });
+        } else {
+            product.save();
+            res.redirect(constant.ROUTE.admin);
+        }
+    });
+})
 module.exports = router;

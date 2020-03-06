@@ -7,7 +7,7 @@ html {
         color: $colorSecond;
         min-height: 100%;       
         main {
-            @include flexColumnCenter; 
+            @include flexColumn; 
             flex-direction: column;
             flex: 1 0 auto;
             font-family: $textFontStandard; //tillfällig font
