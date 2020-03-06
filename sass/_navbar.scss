@@ -1,6 +1,8 @@
 .navbar {
     background: $colorThird;
     border-radius: $roundedSmall;
+    position: sticky;
+    top: 8px;
     .navbar-content {
         @include flexRowBetween; 
         padding: $paddingSmall;
@@ -14,24 +16,34 @@
     }
     .hidden-menu {
         @include flexRowBetween;
+        padding: 0 32px;
+        border-bottom-left-radius: $roundedSmall;
+        border-bottom-right-radius: $roundedSmall;
         height: 0;
-        font-size: 0;
         overflow: hidden;
-        transition: $transitionFast;
+        font-size: 0;
+        transition: $transitionFaster;
         a {
-            color: $colorMain;
-            text-decoration: none;
+            margin-top: 2px;
+            color: $colorSecond;
             font-weight: $textBold;
+            text-decoration: none;
+            
         }
         a:hover {
-            color: $colorSecond;
+            color: $colorThird;
         }
     }
     .drop-down-menu {
-        border-top: $borderThin;
-        height: auto;
+        background: $colorSecond;
         padding: $paddingSmall;
-        font-size: $textSizeStandard;
+        border-top: 2px solid black;
+        transition: $transitionFast;
+        height: auto;
         overflow: visible;
+        font-size: $textSizeSmall;
+        a {
+            color: $colorMain;
+        }
     }
 }

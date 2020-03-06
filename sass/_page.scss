@@ -47,33 +47,58 @@ html {
                 }
             }
             .small-text {
+                border-width: 1px;
+                border-color: $colorThird;
+                border-top-style: solid;
+                border-bottom-style: solid;
                 text-align: center;
                 padding: $paddingMedium;
+                margin-top: 32px;
+                margin-bottom: 8px;
+                margin: 32px 30px 8px 30px;
             }
             .product-list {
                 padding: 0;
                 list-style-type: none;
+                .line {
+                    border-top-style: solid;
+                    border-top-width: 1px;
+                    border-top-color: $colorThird;
+                    margin: 0px 30px 26px 30px;
+                }
                 .product-display {
                     padding: $paddingMedium;
                     .product-image-container {
                         width: 100%;
                         img {
+                            border-style: solid;
+                            border-width: 1px;
+                            border-color: $colorThird;
                             width: 100%;
                         }
                     }
                     .product-info-container {
                         @include flexRowBetween;
                         padding: $paddingSmall;
+                        margin: 8px 0 0 0;
                         .product-info-left {
                             @include flexColumnCenter;
-                            margin: 8px 0;   
+                            .product-price-container {
+                                .product-price {
+                                    font-size: 1.4rem; /*fixa variabel*/
+                                    color: $colorThird;
+                                }
+                                .product-currency {
+                                    font-size: 0.8rem;  /*fixa variabel*/
+                                }
+                            } 
                         }
                         .product-info-right {
                             @include flexColumnCenter;
-                            margin: 8px 0;
                             button {
                                 @include buttonShapeSmall;
                                 font-size: $textFontStandard;
+                                color: $colorSecond;
                                 background: $colorThird;
                             }
                         }

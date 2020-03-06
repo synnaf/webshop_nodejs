@@ -21,9 +21,9 @@
 }
 
 @mixin buttonShapeSmall {
-    padding: $paddingThin;
+    padding: 20px 16px;
     border:none; 
-    border-radius: $roundedMedium;
+    border-radius: 50%;
 }
 
 @mixin buttonShapeBig {

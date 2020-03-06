@@ -10,13 +10,17 @@
                     <div class="product-info-left">
                         <div><%= product.artist %></div>
                         <div><%= product.vinylRecord %></div>
-                        <div><%= product.vinylRecordPrice %></div>
+                        <div class="product-price-container">
+                            <span class="product-price"><%= product.vinylRecordPrice %></span>
+                            <span class="product-currency">SEK</span>
+                        </div>
                     </div>
                     <div class="product-info-right">
                         <button>KÖP</button>
                     </div>
                 </div>
             </li>
+            <div class="line"></div>
         <% }) %>
     </ul>
 </main>

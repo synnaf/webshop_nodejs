@@ -1,9 +1,10 @@
-$colorMain : rgb(15, 15, 15);
-$colorSecond : rgb(146, 150, 240);
-$colorThird :  rgb(86, 90, 223);
+$colorMain : rgb(5, 5, 5);
+$colorSecond : /*rgb(255, 230, 230);*/  rgb(146, 150, 240);
+$colorThird : /* hotpink;*/ rgb(86, 90, 223);
 
 $textFontStandard : sans-serif;
 
+$textSizeSmall: 0.8rem;
 $textSizeStandard : 1rem;
 $textSizeBig : 2rem;
 
@@ -13,12 +14,11 @@ $paddingSmall : 8px 16px;
 $paddingThin : 8px 24px;
 $paddingMedium : 16px 32px;
 
-$borderThin: 1px solid black;
-
 $roundedSmall : 5px;
-$roundedMedium : 9px;
+$roundedMedium : 12px;
 $roundedBig : 20px;
 
+$transitionFaster : 0.2s;
 $transitionFast : 0.2s ease-in;
 
 
