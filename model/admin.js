@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 
-
 const schemaAdmin = {
     adminName: {
         type: String,

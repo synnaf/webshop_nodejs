@@ -3,46 +3,33 @@ const mongoose = require('mongoose')
 
 const schemaUser = new mongoose.Schema({
 
-    userPassWord: {
-        Type: String,
+    isAdmin: {
+        type: Boolean, 
+        default: false
+    },
+    email: {
+        type: String,
+        minlength: 2, 
+        required:true ,
         unique: true,
-        require: true,
-        minlength: 2,
-        maxlength: 20,
     },
-    userAddress: {
-        Type: String,
-        minlength: 2,
-        maxlength: 20,
+    password: {
+        type: String,
+        required: true,
     },
-    userMail: {
-        Type: String,
-        minlength: 2,
-        maxlength: 20,
-        unique: true,
-
+    firstName: {
+        type: String,
+        minlength: 2
     },
-    userFirstName: {
-        Type: String,
-        minlength: 2,
-        maxlength: 10,
-        unique: true,
-
+    lastName: {
+        type: String,
+        minlength: 2
     },
-    userLastName: {
-        Type: String,
-        minlength: 2,
-        maxlength: 10,
-
-
+    address: {
+        type: String,
+        minlength: 2
     },
-    Cart: [String],
-    date: {
-        type: Date,
-        default: Date.now,
-        lastActiveAt: Date
-    },
-
+    orders: [String]
 })
 
 const userModel = mongoose.model('user', schemaUser)

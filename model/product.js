@@ -8,6 +8,7 @@ const schemaProduct = new mongoose.Schema({
     imgUrl: String,
     genre: [],
     price: Number,
+    addedBy: String
 })
 
 const Product = mongoose.model("product", schemaProduct)

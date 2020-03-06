@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Admin = require('../model/admin');
+const Admin = require('../model/user');
 const Product = require('../model/product');
 const constant = require('../constant');
 const request = require('request'); // "Request" library
