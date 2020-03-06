@@ -1,23 +1,22 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main>
-    <div>Detta är admin-sida, visar formulär för att lägga till produkter och en lista på produkter som finns i DB</div>
-    <form action="/admin" method="post">
-        <div>Artist
+    <div>Detta är admin-sida, visar formulär för att söka album och en lista på produkter som finns i DB</div>
+    <form action="/admin" method="POST">
+        <div>
+            <label for="artistname">Artist</label>
             <input type="text" name="artist" />
         </div>
-        <div>Album
-            <input type="text" name="vinylRecord" />
-        </div>
-        <div>Beskrivning
-            <input type="text" name="vinylRecordsDescription" />
-        </div>
-        <div>Pris
-            <input type="number" name="vinylRecordsPrice" />
+        <div>
+            <label for="albumName">Album</label>
+            <input type="text" name="album" />
         </div>
         <div>
-            <button type="submit">Lägg till</button>
+            <button type="submit">Sök album</button>
         </div>
     </form>
+    <div>
+
+    </div>
 </main>
 <%- include ("footer.ejs") %>

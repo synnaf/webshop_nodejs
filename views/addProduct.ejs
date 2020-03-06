@@ -1,0 +1,42 @@
+<%- include ("header.ejs") %>
+<%- include ("navbar.ejs") %>
+<main>
+    <div>Detta är admin-sida, visar formulär för att lägga till produkter i datbas</div>
+    <form action="/admin/addproduct" method="post">
+        <div>
+            <label for="artist">Artist</label>
+            <input type="text" name="artist" value="<%= spotifyResponse.items[0].artists[0].name %>" readonly />
+        </div>
+        <div>
+            <label for="album">Album</label>
+            <input type="text" name="album" value="<%= spotifyResponse.items[0].name %>" readonly />
+        </div>
+        <div>
+            <label for="tracks">Antal låtar</label>
+            <input type="text" name="tracks" value="<%= spotifyResponse.items[0].total_tracks %>" readonly />
+        </div>
+        <div>
+            <label for="spotifyid">Spotify ID</label>
+            <input type="text" name="spotifyId" id="" value="<%= spotifyResponse.items[0].artists[0].id %>" readonly />
+        </div>
+        <div>
+            <label for="imgUrl">Bildlänk</label>
+            <input type="text" name="imgUrl" value="<%= spotifyResponse.items[0].images[0].url %>" readonly />
+        </div>
+        <div>
+            <label for="genre">Genre</label>
+            <input type="text" name="genre">
+        </div>
+        <div>
+            <label for="price">Pris</label>
+            <input type="number" name="price" />
+        </div>
+        <div>
+            <button type="submit">Lägg till i databas</button>
+        </div>
+    </form>
+    <div>
+
+    </div>
+</main>
+<%- include ("footer.ejs") %>

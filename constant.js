@@ -1,6 +1,7 @@
 const VIEW = {
     index: 'index',
     admin: "admin",
+    adminAddProduct: 'addProduct',
     createAdmin: "createadmin",
     createUser: "createuser",
     loginAdmin: 'log-in-admin',
@@ -16,6 +17,7 @@ const VIEW = {
 const ROUTE = {
     index: '/',
     admin: '/admin',
+    adminAddProduct: '/admin/addproduct',
     loginAdmin: '/adminlogin',
     loginUser: '/userlogin',
     userAccount: '/account/:username',

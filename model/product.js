@@ -2,13 +2,12 @@ const mongoose = require('mongoose')
 
 const schemaProduct = new mongoose.Schema({
     artist: String,
-    vinylRecord: String,
-    vinylRecordPrice: Number,
+    album: String,
+    tracks: String,
     spotifyId: String,
-    tracks: Number, 
-    genre: String,
-    enum: ['Disco', 'Rock'],
-    imgUrl: String
+    imgUrl: String,
+    genre: [],
+    price: Number,
 })
 
 const Product = mongoose.model("product", schemaProduct)
