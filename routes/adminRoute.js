@@ -15,6 +15,10 @@ router.get(constant.ROUTE.loginAdmin, (req, res) => {
 router.post(constant.ROUTE.loginAdmin, async (req, res) => {
     const admin = await Admin.findOne({ email: req.body.adminName });
 
+    if (!admin.isAdmin) {
+        res.redirect(constant.ROUTE.loginUser);
+    }
+
     if (!admin) {
         res.redirect(constant.ROUTE.index);
     }
