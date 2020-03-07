@@ -11,13 +11,13 @@ router.get(constant.ROUTE.createUser, (req, res) => {
 })
 router.post(constant.ROUTE.createUser, async (req, res) => {
     const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(req.body.userPassWord, salt)
+    const hashPassword = await bcrypt.hash(req.body.password, salt)
     await new UserInfoModel({
-        userMail: req.body.userMail,
-        userPassWord: hashPassword,
-        userAddress: req.body.userAddress,
-        userFirstName: req.body.userFirstName,
-        userLastName: req.body.userLastName,
+        email: req.body.email,
+        password: hashPassword,
+        address: req.body.address,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
     }).save()
     res.redirect(constant.VIEW.gallery)
 
@@ -30,11 +30,11 @@ router.get(constant.ROUTE.loginUser, (req, res) => {
 
 router.post(constant.ROUTE.loginUser, async (req, res) => {
     const user = await UserInfoModel.findOne({
-        userMail: req.body.userMail
+        email: req.body.email
     });
     if (!user) res.redirect(constant.ROUTE.createUser)
 
-    const validUser = await bcrypt.compare(req.body.userPassWord, user.userPassWord)
+    const validUser = await bcrypt.compare(req.body.password, user.password)
     console.log(validUser)
     if (validUser) return res.redirect(
         constant.VIEW.userAccount)

@@ -10,7 +10,8 @@ const config = require('./config/config')
 // Kicka igång servern
 const dbOptions = {
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useCreateIndex: true
 }
 
 mongoose.connect(config.mongoDB.databaseUrl, dbOptions).then(() => {

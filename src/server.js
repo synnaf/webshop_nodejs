@@ -9,7 +9,7 @@ const constant = require('../constant');
 const adminRoute = require('../routes/adminRoute');
 const userRoute = require('../routes/userRoute');
 const galleryRoute = require('../routes/galleryRoute');
-const errorRoute = require('../routes/errorRoute');
+//const errorRoute = require('../routes/errorRoute');
 
 app.use(sassMiddleware({ // tell sassMiddleware where src file and dest directory is
     src: 'sass',
@@ -27,9 +27,10 @@ app.use(express.urlencoded({
 app.set('view engine', 'ejs')
 
 // ------------------  Routes  -------------------//
+/*
 app.get(constant.ROUTE.index, (req, res) => {
     res.status(200).render(constant.VIEW.index, {})
-})
+})*/
 
 
 app.use(adminRoute);
@@ -38,7 +39,7 @@ app.use(userRoute);
 
 app.use(galleryRoute);
 
-app.use(errorRoute);
+//app.use(errorRoute);
 
 module.exports = {
     app,

@@ -5,15 +5,19 @@ const Product = require('../model/product');
 const constant = require('../constant');
 const request = require('request'); // "Request" library
 const config = require('../config/config');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 
 router.get(constant.ROUTE.loginAdmin, (req, res) => {
-    res.status(200).render(constant.VIEW.loginAdmin, { constant });
+    res.status(200).render(constant.VIEW.loginAdmin, {
+        constant
+    });
 })
 
 router.post(constant.ROUTE.loginAdmin, async (req, res) => {
-    const admin = await Admin.findOne({ email: req.body.adminName });
+    const admin = await Admin.findOne({
+        email: req.body.adminName
+    });
 
     if (!admin.isAdmin) {
         res.redirect(constant.ROUTE.loginUser);
@@ -34,7 +38,9 @@ router.post(constant.ROUTE.loginAdmin, async (req, res) => {
 
 router.get(constant.ROUTE.admin, async (req, res) => {
     const productList = await Product.find()
-    res.status(200).render(constant.VIEW.admin, { productList })
+    res.status(200).render(constant.VIEW.admin, {
+        productList
+    })
 })
 
 router.post(constant.ROUTE.admin, (req, res) => {
@@ -98,7 +104,9 @@ router.post(constant.ROUTE.admin, (req, res) => {
 
 
                     //console.log(spotifyResponse);
-                    res.render(constant.VIEW.adminAddProduct, { spotifyResponse })
+                    res.render(constant.VIEW.adminAddProduct, {
+                        spotifyResponse
+                    })
                 });
             }
         });
@@ -120,7 +128,9 @@ router.post(constant.ROUTE.adminAddProduct, async (req, res) => {
     product.validate(function (err) {
         if (err) {
             console.log(err);
-            res.render("errors", { err });
+            res.render("errors", {
+                err
+            });
         } else {
             product.save();
             res.redirect(constant.ROUTE.admin);

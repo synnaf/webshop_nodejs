@@ -5,11 +5,12 @@
         Här visas användarens uppgifter som finns lagrat i DB
         <h1>Mina uppgifter</h1>
 
-        <%= showUserInfo.userMail %>
-        <%= showUserInfo.userPassWord %>
-        <%= showUserInfo.userAddress %>
-        <%= showUserInfo.userFirstName %>
-        <%= showUserInfo.userLastName %>
+        <%= showUserInfo.firstName %>
+        <%= showUserInfo.lastName %>
+        <%= showUserInfo.email %>
+        <%= showUserInfo.password %>
+        <%= showUserInfo.address %>
+
     </div>
 </main>
 <%- include ("footer.ejs") %>

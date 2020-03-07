@@ -4,13 +4,13 @@ const mongoose = require('mongoose')
 const schemaUser = new mongoose.Schema({
 
     isAdmin: {
-        type: Boolean, 
+        type: Boolean,
         default: false
     },
     email: {
         type: String,
-        minlength: 2, 
-        required:true ,
+        minlength: 2,
+        required: true,
         unique: true,
     },
     password: {
