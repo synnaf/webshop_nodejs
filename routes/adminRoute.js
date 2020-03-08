@@ -103,21 +103,13 @@ router.post(constant.ROUTE.admin, (req, res) => {
                     const spotifyResponse = JSON.parse(body).albums;
 
 
-<<<<<<< HEAD
-                    //console.log(spotifyResponse);
-                    res.render(constant.VIEW.adminAddProduct, {
-                        spotifyResponse
-                    })
-=======
                     if (spotifyResponse.items == 0) {
-
                         res.render("errors", { errmsg: 'Titeln saknas hos Spotify' });
                     } else {
                         res.render(constant.VIEW.adminAddProduct, { spotifyResponse })
                     }
 
 
->>>>>>> presenting data from DB to admin.ejs
                 });
             }
         });
