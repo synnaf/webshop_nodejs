@@ -3,8 +3,12 @@
 <main>
     <div class="container">
         <h1 class="my-3"><%= errmsg%></h1>
-        <button class="btn my-4 d-block" id="errButton"><a href="/todolist">Tillbaka</a></button>
+        <button onclick="goBack()">Tillbaka</button>
     </div>
 </main>
-
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 <%- include ("footer.ejs") %>

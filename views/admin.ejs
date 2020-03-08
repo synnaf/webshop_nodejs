@@ -1,8 +1,8 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main>
-    <div>Detta är admin-sida, visar formulär för att söka album och en lista på produkter som finns i DB</div>
-    <form action="/admin" method="POST">
+    <h1>Sök artist och album</h1>
+    <form action="/admin" method="POST" class="search-album-form">
         <div>
             <label for="artistname">Artist</label>
             <input type="text" name="artist" />
@@ -15,8 +15,20 @@
             <button type="submit">Sök album</button>
         </div>
     </form>
-    <div>
-
+    <div class="productlist-container">
+        <h2>Produkter på lager</h2>
+        <% productList.forEach( (item)=> { %>
+        <div class="product-container">
+            <div class="album-img"><a href="<%= item.imgUrl %>"><img src="<%= item.imgUrl %>" alt=""></a></div>
+            <div><b>Artist: </b><%= item.artist %></div>
+            <div><b>Album: </b><%= item.album %></div>
+            <div><b>Antal låtar: </b><%= item.tracks %></div>
+            <div><b>Spotify ID: </b><%= item.spotifyId %></div>
+            <div><b>Genre: </b><%= item.genre %></div>
+            <div><b>Pris: </b><%= item.price %></div>
+            <div><b>Tillagd av: </b><%= item.addedBy %></div>
+        </div>
+        <% }); %>
     </div>
 </main>
 <%- include ("footer.ejs") %>

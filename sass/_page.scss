@@ -168,6 +168,26 @@ html {
                 }
 
             }
+            form {
+                label {
+                    display: block;
+                }
+                input{
+                    @include inputfieldStyle;
+                    width: 70%;
+                }
+                button {
+                    @include buttonShapeBig
+                }
+            }
+            .product-container {
+                text-align: center;
+                margin-top: 2rem;
+                margin-bottom: 3rem ;
+                .album-img a img {
+                    width: 50%;
+                }
+            }   
             
         }
     }

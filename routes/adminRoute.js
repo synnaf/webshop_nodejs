@@ -103,10 +103,21 @@ router.post(constant.ROUTE.admin, (req, res) => {
                     const spotifyResponse = JSON.parse(body).albums;
 
 
+<<<<<<< HEAD
                     //console.log(spotifyResponse);
                     res.render(constant.VIEW.adminAddProduct, {
                         spotifyResponse
                     })
+=======
+                    if (spotifyResponse.items == 0) {
+
+                        res.render("errors", { errmsg: 'Titeln saknas hos Spotify' });
+                    } else {
+                        res.render(constant.VIEW.adminAddProduct, { spotifyResponse })
+                    }
+
+
+>>>>>>> presenting data from DB to admin.ejs
                 });
             }
         });
@@ -115,7 +126,7 @@ router.post(constant.ROUTE.admin, (req, res) => {
 
 router.post(constant.ROUTE.adminAddProduct, async (req, res) => {
     console.log(req.body)
-    const product = await new Product({
+    const Product = await new Product({
         artist: req.body.artist,
         album: req.body.album,
         tracks: req.body.tracks,
@@ -125,14 +136,14 @@ router.post(constant.ROUTE.adminAddProduct, async (req, res) => {
         price: req.body.price,
         addedBy: req.body.adminName
     });
-    product.validate(function (err) {
+    Product.validate(function (err) {
         if (err) {
             console.log(err);
             res.render("errors", {
                 err
             });
         } else {
-            product.save();
+            Product.save();
             res.redirect(constant.ROUTE.admin);
         }
     });
