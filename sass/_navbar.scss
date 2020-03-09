@@ -25,7 +25,7 @@
         transition: $transitionFaster;
         a {
             margin-top: 2px;
-            color: $colorSecond;
+            color: $colorMain;
             font-weight: $textBold;
             text-decoration: none;
             
@@ -35,7 +35,7 @@
         }
     }
     .drop-down-menu {
-        background: $colorSecond;
+        background: $colorMain;
         padding: $paddingSmall;
         border-top: 2px solid black;
         transition: $transitionFast;
@@ -43,7 +43,7 @@
         overflow: visible;
         font-size: $textSizeSmall;
         a {
-            color: $colorMain;
+            color: $colorSecond;
         }
     }
 }

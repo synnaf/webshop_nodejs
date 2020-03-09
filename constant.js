@@ -11,7 +11,7 @@ const VIEW = {
     product: 'product',
     checkout: 'checkout',
     confirmation: 'confirmation',
-    //error: 'errors'
+    error: 'errors'
 }
 
 const ROUTE = {
@@ -27,7 +27,7 @@ const ROUTE = {
     product: '/gallery/:id',
     checkout: '/checkout',
     confirmation: '/checkout/confirmation',
-    //error: '/*',
+    error: '/*',
 }
 
 module.exports = {
