@@ -118,7 +118,7 @@ router.post(constant.ROUTE.admin, (req, res) => {
 
 router.post(constant.ROUTE.adminAddProduct, async (req, res) => {
     console.log(req.body)
-    const Product = await new Product({
+    const product = await new Product({
         artist: req.body.artist,
         album: req.body.album,
         tracks: req.body.tracks,
@@ -128,14 +128,14 @@ router.post(constant.ROUTE.adminAddProduct, async (req, res) => {
         price: req.body.price,
         addedBy: req.body.adminName
     });
-    Product.validate(function (err) {
+    product.validate(function (err) {
         if (err) {
             console.log(err);
             res.render("errors", {
                 err
             });
         } else {
-            Product.save();
+            product.save();
             res.redirect(constant.ROUTE.admin);
         }
     });

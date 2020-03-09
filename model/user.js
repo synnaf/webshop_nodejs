@@ -29,7 +29,7 @@ const schemaUser = new mongoose.Schema({
         type: String,
         minlength: 2
     },
-    orders: [String]
+    orders: []
 })
 
 const userModel = mongoose.model('user', schemaUser)

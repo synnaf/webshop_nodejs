@@ -27,10 +27,10 @@ app.use(express.urlencoded({
 app.set('view engine', 'ejs')
 
 // ------------------  Routes  -------------------//
-/*
+
 app.get(constant.ROUTE.index, (req, res) => {
     res.status(200).render(constant.VIEW.index, {})
-})*/
+})
 
 
 app.use(adminRoute);
