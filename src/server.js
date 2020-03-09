@@ -9,7 +9,7 @@ const constant = require('../constant');
 const adminRoute = require('../routes/adminRoute');
 const userRoute = require('../routes/userRoute');
 const galleryRoute = require('../routes/galleryRoute');
-//const errorRoute = require('../routes/errorRoute');
+const errorRoute = require('../routes/errorRoute');
 
 app.use(sassMiddleware({ // tell sassMiddleware where src file and dest directory is
     src: 'sass',
