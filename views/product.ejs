@@ -1,8 +1,24 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main>
-    <div>
-        Här visas vald produkt
+    
+    <h1 class="pageheadline"><%= product.artist %> / <%= product.album %></h1>
+    <div class="product-image-container">
+        <img src="<%= product.imgUrl %>">
     </div>
+    <div class="product-info-container">
+        <div class="product-info-left">
+            <ul>
+                <li><%= product.tracks %></li>
+            </ul>
+            <div class="product-price-container">
+                <span class="product-price"><%= product.price %></span>
+                <span class="product-currency">SEK</span>
+            </div>
+        </div>
+    <div class="product-info-right">
+        <button>KÖP</button>
+    </div>
+
 </main>
 <%- include ("footer.ejs") %>

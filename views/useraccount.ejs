@@ -1,16 +1,29 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
-<main>
-    <div>
-        Här visas användarens uppgifter som finns lagrat i DB
-        <h1>Mina uppgifter</h1>
-
-        <%= showUserInfo.firstName %>
-        <%= showUserInfo.lastName %>
-        <%= showUserInfo.email %>
-        <%= showUserInfo.password %>
-        <%= showUserInfo.address %>
-
+<main>    
+    <div class="pageheadline">
+        <h1>Välkommen <i> <%= showUserInfo.firstName %> </i> </h1>
     </div>
+        <div class="userinfo">
+            <h3>Användare: </h3>
+            <span><%= showUserInfo.firstName %> <%= showUserInfo.lastName %></span>
+            <span><%= showUserInfo.address %></span>
+            <span><%= showUserInfo.email %></span> 
+        </div>
+        <div class="orderinfo">
+            <h3>Beställningar: </h3>
+            <span>Order: 12234444</span>
+        </div> 
+        <div class="passwordinfo">
+            <form action="" method="">
+                <h3>Ändra lösenord:</h3>
+                <label>Nuvarande lösenord:</label>
+                    <input type="password" name="password" placeholder="<%= showUserInfo.password %>">
+                <label>Nytt lösenord:</label>
+                    <input type="password" name="password">
+                <button type="submit">Ändra lösenord</button>
+            </form>
+        </div>
 </main>
 <%- include ("footer.ejs") %>
+

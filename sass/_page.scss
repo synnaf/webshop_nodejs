@@ -183,11 +183,62 @@ html {
             .product-container {
                 text-align: center;
                 margin-top: 2rem;
-                margin-bottom: 3rem ;
+                margin-bottom: 3rem;
                 .album-img a img {
                     width: 50%;
                 }
-            }   
+            }
+            
+            .userinfo {
+                @include flexColumnCenter; 
+                h3 {
+                    align-self:center;
+                    border-bottom:1px solid white;
+                    width:70%;
+                }
+                span {
+                    align-self: center;
+                    
+                }
+                
+            }
+            .orderinfo {
+                @include flexColumnCenter; 
+                margin-bottom:50px;
+                h3 {
+                    align-self:center;
+                    border-bottom:1px solid white;
+                    width:70%; 
+                }
+                span {
+                    align-self: center; 
+                }
+            }
+            .passwordinfo {
+                @include flexColumnCenter;
+                align-items:center;
+                margin-top:20px;
+                margin:10px;
+                form {
+                    background-color:whitesmoke; 
+                    padding:10px;
+                    text-align:center;
+                    width:50%;
+                    h3,label {
+                        color:lightslategray;
+                    }
+                    input {
+                        @include inputfieldStyle;
+                    }
+                    button {
+                        margin:20px;
+                        background-color:$colorSecond;
+                        padding:10px;
+                        font-size:1rem;
+                    }
+                }
+
+            }
             
         }
     }
