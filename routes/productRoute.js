@@ -4,13 +4,25 @@ const Product = require('../model/product');
 const constant = require('../constant');
 
 router.get(constant.ROUTE.index, (req, res) => {
-    res.render(constant.VIEW.index, {})
+    res.render(constant.VIEW.index, {});
 })
 
 router.get(constant.ROUTE.gallery, async (req, res) => {
-    const showProduct = await Product.find()
+
+    const productPerPage = 3; //flytta till constant.js!!
+    const page = +req.query.page;
+    const productAmount = await Product.find().countDocuments();
+
+    const productList = await Product.find().skip(productPerPage * (page - 1)).limit(productPerPage);
     res.render(constant.VIEW.gallery, {
-        showProduct
+        productList,
+        productAmount,
+        currentPage: page,
+        isLast: productPerPage < productPerPage * page,
+        isFirst: page <= 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(productAmount/productPerPage)
     });
 })
 

@@ -4,7 +4,7 @@
     <p class="small-text">Här visas flera produkter ur en kategori? loopar igenom produkter i db och presenterar utvalda
         objekt.</p>
     <ul class="product-list">
-        <% showProduct.forEach((product)=>{ %>
+        <% productList.forEach((product)=>{ %>
         <li class="product-display">
             <div class="product-image-container"><img src="<%= product.imgUrl %>"></div>
             <div class="product-info-container">
