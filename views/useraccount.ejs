@@ -12,7 +12,11 @@
         </div>
         <div class="orderinfo">
             <h3>Beställningar: </h3>
-            <span>Order: 12234444</span>
+            <ul>
+              <% for(let orders of showUserInfo.orders) { %> 
+                    <li> Order: <%= orders %>. Detaljer</li>
+              <% } %>
+            </ul>
         </div> 
         <div class="passwordinfo">
             <form action="" method="">
