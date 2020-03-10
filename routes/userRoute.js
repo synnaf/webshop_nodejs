@@ -42,11 +42,33 @@ router.get(constant.ROUTE.userAccount, async (req, res) => {
     const showUserInfo = await UserInfoModel.findOne();
     console.log(showUserInfo)
     res.status(200).render(constant.VIEW.userAccount, {
+        constant,
         showUserInfo
     });
 })
 
+router.post(constant.ROUTE.userAccount, async (req, res) => {
+    //showUserInfo kommer sen att hämta användare via jwt istället för att bara hämta en
+    const showUserInfo = await UserInfoModel.findOne();
+    
+    if (await bcrypt.compare(req.body.currentpassword, showUserInfo.password)) {
+        const salt = await bcrypt.genSalt(10);
+        const newHashPassword = await bcrypt.hash(req.body.newpassword, salt)
+        
+        await UserInfoModel.updateOne({email: showUserInfo.email}, {$set: {password: newHashPassword}}, {runValidators: true}, (error, success) => {
+            if (error) {
+                res.send(error._message);
+            }
+            else {
+                res.redirect(constant.ROUTE.userAccount + "?success");
+            }
+        });
+    }
 
+    else {
+        res.redirect(constant.ROUTE.userAccount + "?failure");
+    }
+})
 
 
 router.get(constant.ROUTE.confirmation, (req, res) => {
