@@ -8,11 +8,9 @@ router.get(constant.ROUTE.index, (req, res) => {
 })
 
 router.get(constant.ROUTE.gallery, async (req, res) => {
-
     const productPerPage = 3;
     const page = +req.query.page;
     const productAmount = await Product.find().countDocuments();
-
     const productList = await Product.find().skip(productPerPage * (page - 1)).limit(productPerPage);
     res.render(constant.VIEW.gallery, {
         productList,
@@ -24,7 +22,8 @@ router.get(constant.ROUTE.gallery, async (req, res) => {
         isSecondLast: page === (Math.ceil(productAmount / productPerPage) - 1),
         nextPage: page + 1,
         previousPage: page - 1,
-        lastPage: Math.ceil(productAmount / productPerPage)
+        lastPage: Math.ceil(productAmount / productPerPage),
+        productListRoute: constant.ROUTE.gallery
     });
 })
 

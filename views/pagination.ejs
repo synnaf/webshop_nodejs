@@ -2,17 +2,17 @@
     <% if (productList.length >= 1) { %>
     <div class="pagination">
         <% if (!isFirst && !isSecond) { %>
-            <a href="/gallery?page=<%= 1 %>">&lt;&lt;</a>
+            <a href="<%= productListRoute %>?page=<%= 1 %>">&lt;&lt;</a>
         <% } %>
         <% if (!isFirst) { %>
-            <a href="/gallery?page=<%= previousPage %>">&lt;</a>
+            <a href="<%= productListRoute %>?page=<%= previousPage %>">&lt;</a>
         <% } %>
-        <a href="/gallery?page=<%= currentPage %>"><%= currentPage %>/<%= lastPage %></a>
+        <a href="<%= productListRoute %>?page=<%= currentPage %>"><%= currentPage %>/<%= lastPage %></a>
         <% if (!isLast) { %>
-            <a href="/gallery?page=<%= nextPage %>">&gt;</a>
+            <a href="<%= productListRoute %>?page=<%= nextPage %>">&gt;</a>
         <% } %>
         <% if (!isLast && !isSecondLast) { %>
-            <a href="/gallery?page=<%= lastPage %>">&gt;&gt;</a>
+            <a href="<%= productListRoute %>?page=<%= lastPage %>">&gt;&gt;</a>
         <% } %>
     </div>
     <% } %>
