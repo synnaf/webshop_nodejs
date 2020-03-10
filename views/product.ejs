@@ -1,10 +1,31 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main>
+<<<<<<< HEAD
     
     <h1 class="pageheadline"><%= product.artist %> / <%= product.album %></h1>
     <div class="product-image-container">
         <img src="<%= product.imgUrl %>">
+=======
+    <div class="product-container">
+        <h1><%= oneProduct.album %></h1>
+
+        <div class="oneproduct-image-container"><img src="<%= oneProduct.imgUrl %>" id="one-product-image"></div>
+        <div class="oneproduct-info-container">
+            <div class="product-info-left">
+                <div><%= oneProduct.artist %></div>
+                <div><%= oneProduct.album %></div>
+                <div class="product-price-container">
+                    <span class="product-price"><%= oneProduct.price %></span>
+                    <span class="product-currency">SEK</span>
+                </div>
+            </div>
+            <div>
+                <a href="/cart"><button id="add-to-cart-button">KÖP</button></a>
+            </div>
+        </div>
+        <div class="line"></div>
+>>>>>>> added functionality to product/id route and rendering product.ejs properly.
     </div>
     <div class="product-info-container">
         <div class="product-info-left">

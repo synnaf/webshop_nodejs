@@ -1,26 +1,28 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main>
-    <p class="small-text">Här visas flera produkter ur en kategori? loopar igenom produkter i db och presenterar utvalda objekt.</p>
+    <p class="small-text">Här visas flera produkter ur en kategori? loopar igenom produkter i db och presenterar utvalda
+        objekt.</p>
     <ul class="product-list">
         <% showProduct.forEach((product)=>{ %>
-            <li class="product-display">
-                <div class="product-image-container"><img src="<%= product.imgUrl %>"></div>
-                <div class="product-info-container">
-                    <div class="product-info-left">
-                        <div><%= product.artist %></div>
-                        <div><%= product.album %></div>
-                        <div class="product-price-container">
-                            <span class="product-price"><%= product.price %></span>
-                            <span class="product-currency">SEK</span>
-                        </div>
-                    </div>
-                    <div class="product-info-right">
-                        <button>KÖP</button>
+        <li class="product-display">
+            <div class="product-image-container"><img src="<%= product.imgUrl %>"></div>
+            <div class="product-info-container">
+                <div class="product-info-left">
+                    <div><%= product.artist %></div>
+                    <div><%= product.album %></div>
+                    <div class="product-price-container">
+                        <span class="product-price"><%= product.price %></span>
+                        <span class="product-currency">SEK</span>
                     </div>
                 </div>
-            </li>
-            <div class="line"></div>
+                <div class="product-info-right">
+                    <a href="/cart"><button class="add-to-cart-button">KÖP</button></a>
+                    <a href="/gallery/<%= product._id%>"><button id="show-product-button">LÄS MER</button></a>
+                </div>
+            </div>
+        </li>
+        <div class="line"></div>
         <% }) %>
     </ul>
 </main>

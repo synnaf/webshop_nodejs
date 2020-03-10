@@ -240,7 +240,14 @@ html {
                 }
 
             }
+                #one-product-image {
+                    width: 80%;
+                }
+                #add-to-cart-button {
+                    @include buttonShapeSmall;
+                    background-color: $colorSecond;
+                }
+        }   
             
-        }
     }
 }
