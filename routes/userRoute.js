@@ -21,7 +21,6 @@ router.post(constant.ROUTE.createUser, async (req, res) => {
     }).save()
     res.redirect(constant.VIEW.gallery)
 
-
 })
 
 router.get(constant.ROUTE.loginUser, (req, res) => {
@@ -29,17 +28,14 @@ router.get(constant.ROUTE.loginUser, (req, res) => {
 })
 
 router.post(constant.ROUTE.loginUser, async (req, res) => {
-    const user = await UserInfoModel.findOne({
-        email: req.body.email
-    });
-    if (!user) res.redirect(constant.ROUTE.createUser)
+    const user = await UserInfoModel.findOne({email: req.body.email});
+    if (!user) return res.render("errors", { errmsg: 'Fel email!' });
 
-    const validUser = await bcrypt.compare(req.body.password, user.password)
-    console.log(validUser)
-    if (validUser) return res.redirect(
-        constant.VIEW.userAccount)
-    res.redirect(constant.ROUTE.loginUser)
-
+    const validUser = await bcrypt.compare(req.body.password, user.password);
+    if (!validUser) return res.render("errors", { errmsg: 'Fel lösenord!' });
+    
+    if (validUser) return res.redirect(constant.VIEW.userAccount); 
+    
 })
 
 router.get(constant.ROUTE.userAccount, async (req, res) => {
