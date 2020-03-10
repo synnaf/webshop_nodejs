@@ -9,7 +9,7 @@ router.get(constant.ROUTE.index, (req, res) => {
 
 router.get(constant.ROUTE.gallery, async (req, res) => {
 
-    const productPerPage = 3; //flytta till constant.js!!
+    const productPerPage = 3;
     const page = +req.query.page;
     const productAmount = await Product.find().countDocuments();
 
@@ -18,11 +18,13 @@ router.get(constant.ROUTE.gallery, async (req, res) => {
         productList,
         productAmount,
         currentPage: page,
-        isLast: productPerPage < productPerPage * page,
         isFirst: page <= 1,
+        isSecond: page == 2,
+        isLast: page === Math.ceil(productAmount / productPerPage),
+        isSecondLast: page === (Math.ceil(productAmount / productPerPage) - 1),
         nextPage: page + 1,
         previousPage: page - 1,
-        lastPage: Math.ceil(productAmount/productPerPage)
+        lastPage: Math.ceil(productAmount / productPerPage)
     });
 })
 

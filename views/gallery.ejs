@@ -1,8 +1,11 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main>
-    <p class="small-text">Här visas flera produkter ur en kategori? loopar igenom produkter i db och presenterar utvalda
-        objekt.</p>
+    <p class="small-text">
+        Här visas flera produkter ur en kategori? loopar igenom produkter i db och presenterar utvalda
+        objekt.
+    </p>
+    <%- include ("pagination.ejs") %>
     <ul class="product-list">
         <% productList.forEach((product)=>{ %>
         <li class="product-display">
@@ -25,5 +28,6 @@
         <div class="line"></div>
         <% }) %>
     </ul>
+    <%- include ("pagination.ejs") %>
 </main>
 <%- include ("footer.ejs") %>
