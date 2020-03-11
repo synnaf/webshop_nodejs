@@ -39,7 +39,7 @@ router.post(constant.ROUTE.loginAdmin, async (req, res) => {
 router.get(constant.ROUTE.admin, async (req, res) => {
 
     const productList = (await Product.find()).reverse()
-    res.render(constant.VIEW.admin, {
+    res.status(200).render(constant.VIEW.admin, {
         productList
     })
 })
