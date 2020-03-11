@@ -20,8 +20,10 @@
   "dependencies": {
     "bcrypt": "^4.0.1",
     "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.4",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.2",
     "querystring": "^0.2.0",
     "request": "^2.88.2"

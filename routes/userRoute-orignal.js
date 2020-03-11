@@ -2,9 +2,13 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const verifyToken = require("./verifyToken")
+const verifyToken = require('./verifyToken')
 const UserInfoModel = require('../model/user');
 const constant = require('../constant');
+const config = require('../config/config');
+
+
+
 
 
 router.get(constant.ROUTE.createUser, (req, res) => {
@@ -30,48 +34,60 @@ router.get(constant.ROUTE.loginUser, (req, res) => {
 })
 
 router.post(constant.ROUTE.loginUser, async (req, res) => {
-    const userInfo = await UserInfoModel.findOne({
+    const showUserInfo = await UserInfoModel.findOne({
         email: req.body.email
     });
 
-    if (!userInfo) return res.render('errors', {
+    if (!showUserInfo) return res.render('errors', {
         errmsg: 'Fel email!'
     });
-    console.log(req.body.password)
-    const validUser = await bcrypt.compare(req.body.password, userInfo.password);
+    console.log(showUserInfo.password)
+    const validUser = await bcrypt.compare(req.body.password, showUserInfo.password);
+    console.log(validUser);
     if (!validUser) return res.render('errors', {
         errmsg: 'Fel lösenord!'
     });
-    jwt.sign({
-        userInfo
-    }, 'secretPriveteKey', (err, token) => {
-        if (err) return res.render('errors', {
+
+    jwt.sign({ // vad är sign funktion som playlod är använadre info allså userInfo
+        showUserInfo // "secretPriveteKey" behöver gömas i config filen
+    }, "secretPriveteKey", (err, token) => { // nyckel "secretkey" ger exra skydd den har en calback err och token // här skapas en token med använadre info //om inte funkar skickar err annars skickar token
+        if (err) return res.render('errors', { // token info  sparas i brower och i front end 
             errmsg: 'token funkar inte'
         });
 
         console.log("token", token)
         if (token) {
-            const cookie = req.cookies.jsonwebtoken;
-            if (!cookie) {
-                console.log('cookie2', req.cookies)
-                res.cookie('jsonwebtoken', token, {
-                    maxAge: 400000,
-                    httpOnly: true
+            const cookie = req.cookies.jsonwebtoken; // kollar om användare har loggat in// viktigt att står jwt på rad 55
+            //console.log('cookie1', req.cookies)
+            if (!cookie) { // kollar om token finns så sparas i cookis
+
+                res.cookie('jsonwebtoken', token, { // token spara jwt
+                    maxAge: 400000, // talar om hur länge  info den ska sparas
+                    httpOnly: true // vilken produkoll den användre
                 })
+
             }
+            res.render(constant.VIEW.userAccount, {
+                showUserInfo
+            })
+            /*  res.render(constant.VIEW.userAccount, {
+                 showUserInfo
+             }); */
         }
-        res.redirect(constant.VIEW.userAccount);
     })
+
+    //  if (validUser) return res.redirect(constant.VIEW.userAccount);
+
 })
 
-router.get(constant.ROUTE.userAccount, verifyToken, async (req, res) => {
-    const showUserInfo = await UserInfoModel.findOne();
-    console.log(showUserInfo)
-    res.status(200).render(constant.VIEW.userAccount, {
-        constant,
-        showUserInfo
-    });
-})
+//router.get(constant.ROUTE.userAccount, verifyToken, async (req, res) => {
+// const showUserInfo = await UserInfoModel.findOne();
+// console.log(showUserInfo)
+// res.status(200).render(constant.VIEW.userAccount, {
+//     showUserInfo,
+// });
+
+//})
 
 router.post(constant.ROUTE.userAccount, async (req, res) => {
     //showUserInfo kommer sen att hämta användare via jwt istället för att bara hämta en
