@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const verifyToken = require("./verifyToken")
 const UserInfoModel = require('../model/user');
 const constant = require('../constant');
 
@@ -21,7 +19,7 @@ router.post(constant.ROUTE.createUser, async (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
     }).save()
-    res.redirect(constant.VIEW.index)
+    res.redirect(constant.VIEW.gallery)
 
 })
 
@@ -30,41 +28,23 @@ router.get(constant.ROUTE.loginUser, (req, res) => {
 })
 
 router.post(constant.ROUTE.loginUser, async (req, res) => {
-    const userInfo = await UserInfoModel.findOne({
+    const user = await UserInfoModel.findOne({
         email: req.body.email
     });
-
-    if (!userInfo) return res.render('errors', {
+    if (!user) return res.render("errors", {
         errmsg: 'Fel email!'
     });
-    console.log(req.body.password)
-    const validUser = await bcrypt.compare(req.body.password, userInfo.password);
-    if (!validUser) return res.render('errors', {
+
+    const validUser = await bcrypt.compare(req.body.password, user.password);
+    if (!validUser) return res.render("errors", {
         errmsg: 'Fel lösenord!'
     });
-    jwt.sign({
-        userInfo
-    }, 'secretPriveteKey', (err, token) => {
-        if (err) return res.render('errors', {
-            errmsg: 'token funkar inte'
-        });
 
-        console.log("token", token)
-        if (token) {
-            const cookie = req.cookies.jsonwebtoken;
-            if (!cookie) {
-                console.log('cookie2', req.cookies)
-                res.cookie('jsonwebtoken', token, {
-                    maxAge: 400000,
-                    httpOnly: true
-                })
-            }
-        }
-        res.redirect(constant.VIEW.userAccount);
-    })
+    if (validUser) return res.redirect(constant.VIEW.userAccount);
+
 })
 
-router.get(constant.ROUTE.userAccount, verifyToken, async (req, res) => {
+router.get(constant.ROUTE.userAccount, async (req, res) => {
     const showUserInfo = await UserInfoModel.findOne();
     console.log(showUserInfo)
     res.status(200).render(constant.VIEW.userAccount, {
@@ -80,6 +60,7 @@ router.post(constant.ROUTE.userAccount, async (req, res) => {
     if (await bcrypt.compare(req.body.currentpassword, showUserInfo.password)) {
         const salt = await bcrypt.genSalt(10);
         const newHashPassword = await bcrypt.hash(req.body.newpassword, salt)
+
         await UserInfoModel.updateOne({
             email: showUserInfo.email
         }, {

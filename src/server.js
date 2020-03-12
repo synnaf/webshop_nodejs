@@ -4,14 +4,11 @@ const express = require('express')
 const sassMiddleware = require('node-sass-middleware')
 const app = express()
 const PORT = process.env.PORT || 8080
-const cookieParser = require('cookie-parser')
 const constant = require('../constant');
 const adminRoute = require('../routes/adminRoute');
 const userRoute = require('../routes/userRoute');
 const productRoute = require('../routes/productRoute');
 const errorRoute = require('../routes/errorRoute');
-
-
 
 app.use(sassMiddleware({
     // TELL SASSMIDDLEWARE WHERE SRC FILE AND DEST DIRECTORY IS
@@ -29,11 +26,12 @@ app.use(express.urlencoded({
 app.set('view engine', 'ejs')
 
 // ------------------  ROUTES  -------------------//
-app.use(cookieParser());
 app.use(adminRoute);
+
 app.use(userRoute);
 
 app.use(productRoute);
+
 app.use(errorRoute);
 
 module.exports = {
