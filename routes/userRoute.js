@@ -30,33 +30,30 @@ router.get(constant.ROUTE.login, (req, res) => {
 })
 
 router.post(constant.ROUTE.login, async (req, res) => {
-    const user = await UserInfoModel.findOne({ email: req.body.email });
-    if (!user) return res.render("errors", { errmsg: 'Fel email!' });
-
-    const validUser = await bcrypt.compare(req.body.password, user.password);
-    if (!validUser) return res.render("errors", { errmsg: 'Fel lösenord!' });
-
-    if (validUser) return res.redirect(constant.VIEW.userAccount);
 
     const admin = await UserInfoModel.findOne({
         email: req.body.email
     });
 
+    // OM ADMIN HAR VÄRDET ADMIN: FALSE
     if (!admin.isAdmin) {
-        res.redirect(constant.ROUTE.login);
+        const user = await UserInfoModel.findOne({ email: req.body.email });
+        if (!user) return res.render("errors", { errmsg: 'Fel email!' });
+
+        const validUser = await bcrypt.compare(req.body.password, user.password);
+        if (!validUser) return res.render("errors", { errmsg: 'Fel lösenord!' });
+
+        if (validUser) return res.redirect(constant.VIEW.userAccount);
     }
 
     if (!admin) {
         res.redirect(constant.ROUTE.index);
     }
-
     const validAdmin = await bcrypt.compare(req.body.password, admin.password);
 
     if (validAdmin) {
         res.redirect(constant.ROUTE.admin);
     }
-
-    res.redirect(constant.ROUTE.login);
 })
 
 router.get(constant.ROUTE.userAccount, async (req, res) => {
