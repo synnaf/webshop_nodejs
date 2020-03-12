@@ -2,12 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../model/product');
 const constant = require('../constant');
-const request = require('request'); // "Request" library
+const request = require('request'); // SPOTIFY REQUEST LIBRARY
 const config = require('../config/config');
 const bcrypt = require('bcrypt');
 const verifyAdminToken = require('./verifyAdminToken');
-
-
 
 router.get(constant.ROUTE.admin, verifyAdminToken, async (req, res) => {
 
@@ -80,7 +78,7 @@ router.post(constant.ROUTE.admin, (req, res) => {
                         const genres = constant.PRODUCT.genres.filter(genre => {
                             return genre !== "All";
                         });
-                        res.render(constant.VIEW.adminAddProduct, { spotifyResponse: spotifyResponse, genres: genres})
+                        res.render(constant.VIEW.adminAddProduct, { spotifyResponse: spotifyResponse, genres: genres })
                     }
                 });
             }
@@ -94,7 +92,7 @@ router.post(constant.ROUTE.adminAddProduct, async (req, res) => {
     let genres = ["All"];
     for (const property in req.body) {
         if (property.includes("genre")) {
-            genres.push(property.replace("genre",""));
+            genres.push(property.replace("genre", ""));
         }
     }
     const product = await new Product({
