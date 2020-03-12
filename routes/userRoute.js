@@ -29,23 +29,6 @@ router.get(constant.ROUTE.login, (req, res) => {
     });
 })
 
-<<<<<<< HEAD
-router.post(constant.ROUTE.loginUser, async (req, res) => {
-    const user = await UserInfoModel.findOne({
-        email: req.body.email
-    });
-    if (!user) return res.render("errors", {
-        errmsg: 'Fel email!'
-    });
-
-    const validUser = await bcrypt.compare(req.body.password, user.password);
-    if (!validUser) return res.render("errors", {
-        errmsg: 'Fel lösenord!'
-    });
-
-    if (validUser) return res.redirect(constant.VIEW.userAccount);
-
-=======
 router.post(constant.ROUTE.login, async (req, res) => {
     const user = await UserInfoModel.findOne({ email: req.body.email });
     if (!user) return res.render("errors", { errmsg: 'Fel email!' });
@@ -74,7 +57,6 @@ router.post(constant.ROUTE.login, async (req, res) => {
     }
 
     res.redirect(constant.ROUTE.login);
->>>>>>> changing routes to use only one login route
 })
 
 router.get(constant.ROUTE.userAccount, async (req, res) => {
@@ -94,7 +76,6 @@ router.post(constant.ROUTE.userAccount, async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const newHashPassword = await bcrypt.hash(req.body.newpassword, salt)
 
-<<<<<<< HEAD
         await UserInfoModel.updateOne({
             email: showUserInfo.email
         }, {
@@ -104,9 +85,6 @@ router.post(constant.ROUTE.userAccount, async (req, res) => {
         }, {
             runValidators: true
         }, (error, success) => {
-=======
-        await UserInfoModel.updateOne({ email: showUserInfo.email }, { $set: { password: newHashPassword } }, { runValidators: true }, (error, success) => {
->>>>>>> changing routes to use only one login route
             if (error) {
                 res.send(error._message);
             } else {
