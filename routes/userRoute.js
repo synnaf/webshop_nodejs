@@ -104,14 +104,14 @@ router.get(constant.ROUTE.userAccount,verifyToken, async (req, res) => {
 
 router.post(constant.ROUTE.userAccount, async (req, res) => {
     //showUserInfo kommer sen att hämta användare via jwt istället för att bara hämta en
-    const showUserInfo = await UserInfoModel.findOne();
+    const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
 
-    if (await bcrypt.compare(req.body.currentpassword, showUserInfo.password)) {
+    if (await bcrypt.compare(req.body.currentpassword, loggedIn.password)) {
         const salt = await bcrypt.genSalt(10);
         const newHashPassword = await bcrypt.hash(req.body.newpassword, salt)
 
         await UserInfoModel.updateOne({
-            email: showUserInfo.email
+            email: loggedIn.email
         }, {
             $set: {
                 password: newHashPassword
