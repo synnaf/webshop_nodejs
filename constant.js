@@ -10,7 +10,8 @@ const VIEW = {
     product: 'product',
     checkout: 'checkout',
     confirmation: 'confirmation',
-    error: 'errors'
+    error: 'errors', 
+    resetpassword: 'resetpassword'
 }
 
 const ROUTE = {
@@ -27,6 +28,7 @@ const ROUTE = {
     checkout: '/checkout',
     confirmation: '/checkout/confirmation',
     error: '/*',
+    resetpassword: '/resetpassword'
 }
 
 module.exports = {

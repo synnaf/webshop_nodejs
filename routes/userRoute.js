@@ -136,4 +136,15 @@ router.get(constant.ROUTE.confirmation, (req, res) => {
     res.status(200).render(constant.VIEW.confirmation);
 })
 
+
+
+//-------------- Fanny lägger in routes för att reset password ------------ // 
+
+router.get(constant.ROUTE.resetpassword, (req, res) => {
+    res.status(200).render(constant.VIEW.resetpassword);
+})
+
+
+
+
 module.exports = router;
