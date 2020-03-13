@@ -1,12 +1,15 @@
 html {
     height: 100%;
-    font-size:12pt;
+    font-size:12pt; 
     body {
         @include flexColumn;
         background-color: $colorMain;
         color: $colorSecond;
-        min-height: 100%;       
-        main {
+        min-height: 100%; 
+        .adminpage {
+            background-color:white;
+        }
+        main, .adminpage {
             @include flexColumn; 
             flex-direction: column;
             flex: 1 0 auto;
@@ -17,6 +20,55 @@ html {
                 margin:10px;
                 line-height: 100px;
                 text-align: center; 
+            }
+            //admin sök formulär 
+            .search-album-form {
+                align-self: center;
+                width:70%; 
+                h3 {
+                    color:$colorMain;
+                    text-align:center;
+                }
+                fieldset {
+                   justify-self: center;
+                    padding:1.5rem;
+                    border:4px solid lightgrey;
+                    label {
+                        font-size: 1rem;
+                        color:$colorMain; 
+                        opacity: 0.5;
+                        margin-bottom:0.2rem;
+                    }
+                    button {
+                        
+                        margin-top:1rem;
+                        padding:0.5rem;  
+                    }
+                }
+            }
+            //admin produkter
+            .productlist-container{
+                @include flexColumnCenter;
+                h2 {
+                    color:$colorMain;
+                    margin-top:3rem;
+                    text-align:center;
+                }
+                .product-container{
+                    margin-top:0.5rem;
+                    color:$colorMain; 
+                    text-align:center;
+                    
+                    .info{
+                        margin:0.5rem 2rem 2rem 2rem;
+                        padding:2rem;
+                        background-color: whitesmoke;
+                        display: inline-block;
+                        text-align: left;
+                    }
+
+                }
+
             }
             //unikt för startsidan 
             .newscontainers {
