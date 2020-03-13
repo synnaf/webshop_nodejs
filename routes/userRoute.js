@@ -25,8 +25,18 @@ router.post(constant.ROUTE.createUser, async (req, res) => {
 
 })
 
-router.post(constant.ROUTE.loginUser, async (req, res) => {
+router.get(constant.ROUTE.loginUser, (req, res) => {
+    res.status(200).render(constant.VIEW.loginUser, {
+        constant
+    });
+})
+router.get(constant.ROUTE.login, (req, res) => {
+    res.status(200).render(constant.VIEW.login, {
+        constant
+    });
+})
 
+router.post(constant.ROUTE.login, async (req, res) => {
     const userInfo = await UserInfoModel.findOne({
         email: req.body.email
     });
@@ -59,52 +69,14 @@ router.post(constant.ROUTE.loginUser, async (req, res) => {
                 })
             }
         }
+
+        if (userInfo.isAdmin) {
+            res.redirect(constant.ROUTE.admin);
+        }
+
         res.redirect(constant.VIEW.userAccount);
     })
-   // if (validUser) return res.redirect(constant.VIEW.userAccount);
-
-})
-
-
-
-
-
-router.get(constant.ROUTE.loginUser, (req, res) => {
-    res.status(200).render(constant.VIEW.loginUser, {
-        constant
-    });
-})
-router.get(constant.ROUTE.login, (req, res) => {
-    res.status(200).render(constant.VIEW.login, {
-        constant
-    });
-})
-
-router.post(constant.ROUTE.login, async (req, res) => {
-
-    const admin = await UserInfoModel.findOne({
-        email: req.body.email
-    });
-
-    // OM ADMIN HAR VÄRDET ADMIN: FALSE
-    if (!admin.isAdmin) {
-        const user = await UserInfoModel.findOne({ email: req.body.email });
-        if (!user) return res.render("errors", { errmsg: 'Fel email!' });
-
-        const validUser = await bcrypt.compare(req.body.password, user.password);
-        if (!validUser) return res.render("errors", { errmsg: 'Fel lösenord!' });
-
-        if (validUser) return res.redirect(constant.VIEW.userAccount);
-    }
-
-    if (!admin) {
-        res.redirect(constant.ROUTE.index);
-    }
-    const validAdmin = await bcrypt.compare(req.body.password, admin.password);
-
-    if (validAdmin) {
-        res.redirect(constant.ROUTE.admin);
-    }
+    
 })
 
 router.get(constant.ROUTE.userAccount,verifyToken, async (req, res) => {
