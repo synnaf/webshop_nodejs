@@ -1,4 +1,3 @@
-'use strict';
 
 // Härifrån startar vi upp vår webshop
 var mongoose = require('mongoose');

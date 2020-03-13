@@ -9,6 +9,8 @@ const adminRoute = require('../routes/adminRoute');
 const userRoute = require('../routes/userRoute');
 const productRoute = require('../routes/productRoute');
 const errorRoute = require('../routes/errorRoute');
+const cookieParser = require('cookie-parser')
+
 
 app.use(sassMiddleware({
     // TELL SASSMIDDLEWARE WHERE SRC FILE AND DEST DIRECTORY IS
@@ -26,6 +28,8 @@ app.use(express.urlencoded({
 app.set('view engine', 'ejs')
 
 // ------------------  ROUTES  -------------------//
+app.use(cookieParser());
+
 app.use(adminRoute);
 
 app.use(userRoute);

@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const UserInfoModel = require('../model/user');
 const constant = require('../constant');
+const jwt = require('jsonwebtoken');
+const verifyToken = require("./verifyToken")
 
 
 router.get(constant.ROUTE.createUser, (req, res) => {
@@ -23,6 +25,55 @@ router.post(constant.ROUTE.createUser, async (req, res) => {
 
 })
 
+router.post(constant.ROUTE.loginUser, async (req, res) => {
+
+    const userInfo = await UserInfoModel.findOne({
+        email: req.body.email
+    });
+
+    console.log(req.body.email)
+    if (!userInfo) return res.render("errors", {
+        errmsg: 'Fel email!'
+    });
+    console.log(req.body.password)
+    
+    const validUser = await bcrypt.compare(req.body.password, userInfo.password);
+    if (!validUser) return res.render("errors", {
+        errmsg: 'Fel lösenord!'
+    });
+    jwt.sign({
+        userInfo
+    }, 'secretPriveteKey', (err, token) => {
+        if (err) return res.render('errors', {
+            errmsg: 'token funkar inte'
+        });
+
+        console.log("token", token)
+        if (token) {
+            const cookie = req.cookies.jsonwebtoken;
+            if (!cookie) {
+                console.log('cookie2', req.cookies)
+                res.cookie('jsonwebtoken', token, {
+                    maxAge: 400000,
+                    httpOnly: true
+                })
+            }
+        }
+        res.redirect(constant.VIEW.userAccount);
+    })
+   // if (validUser) return res.redirect(constant.VIEW.userAccount);
+
+})
+
+
+
+
+
+router.get(constant.ROUTE.loginUser, (req, res) => {
+    res.status(200).render(constant.VIEW.loginUser, {
+        constant
+    });
+})
 router.get(constant.ROUTE.login, (req, res) => {
     res.status(200).render(constant.VIEW.login, {
         constant
@@ -56,7 +107,7 @@ router.post(constant.ROUTE.login, async (req, res) => {
     }
 })
 
-router.get(constant.ROUTE.userAccount, async (req, res) => {
+router.get(constant.ROUTE.userAccount,verifyToken, async (req, res) => {
     const showUserInfo = await UserInfoModel.findOne();
     console.log(showUserInfo)
     res.status(200).render(constant.VIEW.userAccount, {
