@@ -95,11 +95,10 @@ router.post(constant.ROUTE.login, async (req, res) => {
 })
 
 router.get(constant.ROUTE.userAccount,verifyToken, async (req, res) => {
-    const showUserInfo = await UserInfoModel.findOne();
-    console.log(showUserInfo)
+    const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
     res.status(200).render(constant.VIEW.userAccount, {
         constant,
-        showUserInfo
+        loggedIn
     });
 })
 

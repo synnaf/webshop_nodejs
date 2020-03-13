@@ -2,18 +2,18 @@
 <%- include ("navbar.ejs") %>
 <main>    
     <div class="pageheadline">
-        <h1>Välkommen <i> <%= showUserInfo.firstName %> </i> </h1>
+        <h1>Välkommen <i> <%= loggedIn.firstName %> </i> </h1>
     </div>
         <div class="userinfo">
             <h3>Användare: </h3>
-            <span><%= showUserInfo.firstName %> <%= showUserInfo.lastName %></span>
-            <span><%= showUserInfo.address %></span>
-            <span><%= showUserInfo.email %></span> 
+            <span><%= loggedIn.firstName %> <%= loggedIn.lastName %></span>
+            <span><%= loggedIn.address %></span>
+            <span><%= loggedIn.email %></span> 
         </div>
         <div class="orderinfo">
             <h3>Beställningar: </h3>
             <ul>
-              <% for(let orders of showUserInfo.orders) { %> 
+              <% for(let orders of loggedIn.orders) { %> 
                     <li> Order: <%= orders %>. Detaljer</li>
               <% } %>
             </ul>
