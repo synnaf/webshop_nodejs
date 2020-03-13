@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const UserInfoModel = require('../model/user');
+const config = require('../config/config');
 const constant = require('../constant');
 const jwt = require('jsonwebtoken');
 const verifyToken = require("./verifyToken")
@@ -14,13 +15,27 @@ router.get(constant.ROUTE.createUser, (req, res) => {
 router.post(constant.ROUTE.createUser, async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt)
-    await new UserInfoModel({
-        email: req.body.email,
-        password: hashPassword,
-        address: req.body.address,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-    }).save()
+    
+    if ( req.body.adminpass == config.adminPassword) {
+        await new UserInfoModel({
+            isAdmin: true,
+            email: req.body.email,
+            password: hashPassword,
+            address: "Admin",
+            firstName: "Admin",
+            lastName: "Admin",
+        }).save()
+    }
+
+    else {
+        await new UserInfoModel({
+            email: req.body.email,
+            password: hashPassword,
+            address: req.body.address,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+        }).save()
+    }
     res.redirect(constant.VIEW.gallery)
 
 })
