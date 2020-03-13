@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 8080
 const constant = require('../constant');
 const adminRoute = require('../routes/adminRoute');
 const userRoute = require('../routes/userRoute');
+const checkOutRoute = require('../routes/checkoutRoute');
 const productRoute = require('../routes/productRoute');
 const errorRoute = require('../routes/errorRoute');
 const cookieParser = require('cookie-parser')
@@ -29,6 +30,8 @@ app.set('view engine', 'ejs')
 
 // ------------------  ROUTES  -------------------//
 app.use(cookieParser());
+
+app.use(checkOutRoute);
 
 app.use(adminRoute);
 

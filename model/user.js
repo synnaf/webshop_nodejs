@@ -29,7 +29,8 @@ const schemaUser = new mongoose.Schema({
         type: String,
         minlength: 2
     },
-    orders: []
+    orders: [],
+    resetToken: String
 })
 
 const userModel = mongoose.model('user', schemaUser)
