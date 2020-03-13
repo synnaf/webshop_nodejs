@@ -1,32 +1,31 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
-<main>
-    <h1>Sök artist och album</h1>
+<main class="adminpage">
+    <h1 class="pageheadline">Välkommen admin!</h1>
     <form action="/admin" method="POST" class="search-album-form">
-        <div>
+        <h3 class="searchAlbum">Lägg till ett album i produktlistan:</h3>
+        <fieldset>
             <label for="artistname">Artist</label>
             <input type="text" name="artist" />
-        </div>
-        <div>
             <label for="albumName">Album</label>
             <input type="text" name="album" />
-        </div>
-        <div>
             <button type="submit">Sök album</button>
-        </div>
+        </fieldset>
     </form>
     <div class="productlist-container">
         <h2>Produkter på lager</h2>
         <% productList.forEach( (item)=> { %>
         <div class="product-container">
-            <div class="album-img"><a href="<%= item.imgUrl %>"><img src="<%= item.imgUrl %>" alt=""></a></div>
-            <div><b>Artist: </b><%= item.artist %></div>
-            <div><b>Album: </b><%= item.album %></div>
-            <div><b>Antal låtar: </b><%= item.tracks %></div>
-            <div><b>Spotify ID: </b><%= item.spotifyId %></div>
-            <div><b>Genre: </b><%= item.genre %></div>
-            <div><b>Pris: </b><%= item.price %></div>
-            <div><b>Tillagd av: </b><%= item.addedBy %></div>
+            <div class="album-img"><a href="<%= item.imgUrl %>"><img src="<%= item.imgUrl %>" alt="album cover"></a></div>
+            <div class="info">
+                <div><b>Artist: </b><%= item.artist %></div>
+                <div><b>Album: </b><%= item.album %></div>
+                <div><b>Antal låtar: </b><%= item.tracks %></div>
+                <div><b>Spotify ID: </b><%= item.spotifyId %></div>
+                <div><b>Genre: </b><%= item.genre %></div>
+                <div><b>Pris: </b><%= item.price %></div>
+                <div><b>Tillagd av: </b><%= item.addedBy %></div>
+            </div>
         </div>
         <% }); %>
     </div>
