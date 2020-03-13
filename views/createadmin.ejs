@@ -1,17 +1,18 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
-<main>
-    <div>Detta är admin-sida där man kan lägga till nya admin</div>
-    <form action="/createadmin" method="post">
-        <div>Användare
+<main class="adminpage">
+    <h1 class="pageheadline">Lägg till admin</h1>
+
+    <form action="/createadmin" method="post" class="create-admin-form">
+        <fieldset>
+            <label for="adminName">Adminnamn</label>
             <input type="text" name="adminName" />
-        </div>
-        <div> Lösenord
+            <label for="password">Lösenord</label>
             <input type="text" name="adminPassword" />
-        </div>
-        <button type="submit">Lägg till</button>
-        </div>
+            <button type="submit">Lägg till</button>
+        </fieldset>
     </form>
+    
 </main>
 
 

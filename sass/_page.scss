@@ -22,7 +22,7 @@ html {
                 text-align: center; 
             }
             //admin sök formulär 
-            .search-album-form {
+            .search-album-form, .admin-login-form, .create-admin-form, .add-product-form {
                 align-self: center;
                 width:70%; 
                 h3 {
@@ -40,7 +40,7 @@ html {
                         margin-bottom:0.2rem;
                     }
                     button {
-                        
+                        background-color:lightgrey;
                         margin-top:1rem;
                         padding:0.5rem;  
                     }

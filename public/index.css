@@ -6,7 +6,7 @@
   .navbar .navbar-content {
     display: flex;
     justify-content: space-between;
-    padding: 8px 16px;
+    padding: 0.5rem 2rem;
     color: #050505; }
     .navbar .navbar-content .navbar-logo {
       font-weight: 800; }
@@ -31,7 +31,7 @@
       color: #565adf; }
   .navbar .drop-down-menu {
     background: #050505;
-    padding: 8px 16px;
+    padding: 0.5rem 2rem;
     border-top: 2px solid black;
     transition: 0.2s ease-in;
     height: auto;
@@ -63,22 +63,23 @@ html {
         margin: 10px;
         line-height: 100px;
         text-align: center; }
-      html body main .search-album-form, html body .adminpage .search-album-form {
+      html body main .search-album-form, html body main .admin-login-form, html body main .create-admin-form, html body main .add-product-form, html body .adminpage .search-album-form, html body .adminpage .admin-login-form, html body .adminpage .create-admin-form, html body .adminpage .add-product-form {
         align-self: center;
         width: 70%; }
-        html body main .search-album-form h3, html body .adminpage .search-album-form h3 {
+        html body main .search-album-form h3, html body main .admin-login-form h3, html body main .create-admin-form h3, html body main .add-product-form h3, html body .adminpage .search-album-form h3, html body .adminpage .admin-login-form h3, html body .adminpage .create-admin-form h3, html body .adminpage .add-product-form h3 {
           color: #050505;
           text-align: center; }
-        html body main .search-album-form fieldset, html body .adminpage .search-album-form fieldset {
+        html body main .search-album-form fieldset, html body main .admin-login-form fieldset, html body main .create-admin-form fieldset, html body main .add-product-form fieldset, html body .adminpage .search-album-form fieldset, html body .adminpage .admin-login-form fieldset, html body .adminpage .create-admin-form fieldset, html body .adminpage .add-product-form fieldset {
           justify-self: center;
           padding: 1.5rem;
           border: 4px solid lightgrey; }
-          html body main .search-album-form fieldset label, html body .adminpage .search-album-form fieldset label {
+          html body main .search-album-form fieldset label, html body main .admin-login-form fieldset label, html body main .create-admin-form fieldset label, html body main .add-product-form fieldset label, html body .adminpage .search-album-form fieldset label, html body .adminpage .admin-login-form fieldset label, html body .adminpage .create-admin-form fieldset label, html body .adminpage .add-product-form fieldset label {
             font-size: 1rem;
             color: #050505;
             opacity: 0.5;
             margin-bottom: 0.2rem; }
-          html body main .search-album-form fieldset button, html body .adminpage .search-album-form fieldset button {
+          html body main .search-album-form fieldset button, html body main .admin-login-form fieldset button, html body main .create-admin-form fieldset button, html body main .add-product-form fieldset button, html body .adminpage .search-album-form fieldset button, html body .adminpage .admin-login-form fieldset button, html body .adminpage .create-admin-form fieldset button, html body .adminpage .add-product-form fieldset button {
+            background-color: lightgrey;
             margin-top: 1rem;
             padding: 0.5rem; }
       html body main .productlist-container, html body .adminpage .productlist-container {
@@ -131,7 +132,7 @@ html {
         border-top-style: solid;
         border-bottom-style: solid;
         text-align: center;
-        padding: 16px 32px;
+        padding: 2rem 4rem;
         margin-top: 32px;
         margin-bottom: 8px;
         margin: 32px 30px 8px 30px; }
@@ -144,7 +145,7 @@ html {
           border-top-color: #565adf;
           margin: 0px 30px 26px 30px; }
         html body main .product-list .product-display, html body .adminpage .product-list .product-display {
-          padding: 16px 32px; }
+          padding: 2rem 4rem; }
           html body main .product-list .product-display .product-image-container, html body .adminpage .product-list .product-display .product-image-container {
             width: 100%; }
             html body main .product-list .product-display .product-image-container img, html body .adminpage .product-list .product-display .product-image-container img {
@@ -155,7 +156,7 @@ html {
           html body main .product-list .product-display .product-info-container, html body .adminpage .product-list .product-display .product-info-container {
             display: flex;
             justify-content: space-between;
-            padding: 8px 16px;
+            padding: 0.5rem 2rem;
             margin: 8px 0 0 0; }
             html body main .product-list .product-display .product-info-container .product-info-left, html body .adminpage .product-list .product-display .product-info-container .product-info-left {
               display: flex;
@@ -235,7 +236,7 @@ html {
             border: none;
             border-radius: 20px;
             background-color: #9296f0;
-            padding: 8px 24px;
+            padding: 0.5rem 3rem;
             margin-bottom: 30px; }
       html body main form label, html body .adminpage form label {
         display: block; }

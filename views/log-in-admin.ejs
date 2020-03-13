@@ -1,11 +1,15 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
-<main>
-    <div>Inloggning för admin</div>
+<main class="adminpage">
+    <h1 class="pageheadline">Inloggning för admin</h1>
+    
     <form action="<%constant.ROUTE.loginAdmin%>" method="POST" class="admin-login-form">
-        <input type="text" name="adminName" id="admin-name" placeholder="Namn" />
-        <input type="password" name="adminPassword" id="admin-pw" placeholder="Lösenord" />
-        <button type="submit">Logga in</button>
+        <fieldset>
+            <input type="text" name="adminName" id="admin-name" placeholder="Namn" />
+            <input type="password" name="adminPassword" id="admin-pw" placeholder="Lösenord" />
+            <button type="submit">Logga in</button>
+        </fieldset>
     </form>
+
 </main>
 <%- include ("footer.ejs") %>
