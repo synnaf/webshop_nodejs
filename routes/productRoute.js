@@ -14,7 +14,7 @@ router.get(constant.ROUTE.index, async (req, res) => {
     for (const genre of EXPRESSION.genres) {
         imageList.push(await Product.findOne({genre: genre}, { genre: 1, imgUrl: 1, _id: 0 }));
     }
-    res.render(constant.VIEW.index, {imageList});
+    res.render(constant.VIEW.index, {imageList: imageList, productListRoute: constant.ROUTE.gallery});
 })
 
 router.get(constant.ROUTE.product, async (req, res) => {
@@ -54,7 +54,10 @@ const validateListQuery = async (query) => {
         if (Number.isInteger(+query.page) && EXPRESSION.genres.includes(query.genre)) {
             resolve(query);
         } else {
-            reject();
+            let error = new Error();
+            error.name = "Invalid Query"
+            error.errmsg = "page is not an integer or genre does not exist";
+            reject(error);
         }
     })
 }
@@ -92,7 +95,10 @@ const getData = async (query) => {
                 genre: genre
             });
         } else {
-            reject();
+            let error = new Error();
+            error.name = "Invalid Query";
+            error.errmsg = "page is not within range"
+            reject(error);
         }
     })
 }
