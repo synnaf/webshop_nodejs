@@ -2,17 +2,17 @@
     <% if (productList.length >= 1) { %>
     <div class="pagination">
         <% if (!isFirst && !isSecond) { %>
-            <a href="<%= productListRoute %>?page=<%= 1 %>&genre=<%= genre %>">&lt;&lt;</a>
+            <a href="<%= productListRoute %>?genre=<%= genre %>&page=<%= 1 %>">&lt;&lt;</a>
         <% } %>
         <% if (!isFirst) { %>
-            <a href="<%= productListRoute %>?page=<%= previousPage %>&genre=<%= genre %>">&lt;</a>
+            <a href="<%= productListRoute %>?genre=<%= genre %>&page=<%= previousPage %>">&lt;</a>
         <% } %>
-        <a href="<%= productListRoute %>?page=<%= currentPage %>&genre=<%= genre %>"><%= currentPage %>/<%= lastPage %></a>
+        <a href="<%= productListRoute %>?genre=<%= genre %>&page=<%= currentPage %>"><%= currentPage %>/<%= lastPage %></a>
         <% if (!isLast) { %>
-            <a href="<%= productListRoute %>?page=<%= nextPage %>&genre=<%= genre %>">&gt;</a>
+            <a href="<%= productListRoute %>?genre=<%= genre %>&page=<%= nextPage %>">&gt;</a>
         <% } %>
         <% if (!isLast && !isSecondLast) { %>
-            <a href="<%= productListRoute %>?page=<%= lastPage %>&genre=<%= genre %>">&gt;&gt;</a>
+            <a href="<%= productListRoute %>?genre=<%= genre %>&page=<%= lastPage %>">&gt;&gt;</a>
         <% } %>
     </div>
     <% } %>

@@ -8,36 +8,37 @@ router.get(constant.ROUTE.index, (req, res) => {
     res.render(constant.VIEW.index, {});
 })
 
-router.get(constant.ROUTE.gallery, async (req, res) => {
-    if ((req.query.page === undefined) || (req.query.genre === undefined)) {
-        res.redirect(url.format({
-            pathname: constant.ROUTE.gallery,
-            query: {
-                "page": 1,
-                "genre": "all"
-            }
-        }));
-    } else {
-        const productPerPage = 4;
-        const page = +req.query.page;
-        const genre = req.query.genre;
+const validateListQuery = async (query) => {
+    return new Promise(async (resolve, reject) => {
+        const genres = ["all", "Rock", "Pop", "Soul", "Rap", "Rnb"];
+        if (Number.isInteger(+query.page) && genres.includes(query.genre)) {
+            resolve(query);
+        } else {
+            reject();
+        }
+    })
+}
+
+const getData = async (query) => {
+    return new Promise(async (resolve, reject) => {
+        const page = +query.page;
+        const genre = query.genre;
+        const productPerPage = 1;
         let productAmount = 0;
         if (genre === "all") {
             productAmount = await Product.find().countDocuments();
         } else {
             productAmount = await Product.find({genre: genre}).countDocuments();
         }
-        
         const pageAmount = Math.ceil(productAmount / productPerPage);
-        
-        if (Number.isInteger(page) && (page >= 1) && (page <= pageAmount)) {
+        if ((page >= 1) && (page <= pageAmount)) {
             let productList = [];
             if (genre === "all") {
                 productList = await Product.find().skip(productPerPage * (page - 1)).limit(productPerPage);
             } else {
                 productList = await Product.find({genre: genre}).skip(productPerPage * (page - 1)).limit(productPerPage);
             }
-            res.render(constant.VIEW.gallery, {
+            resolve({
                 productList,
                 productAmount,
                 currentPage: page,
@@ -52,13 +53,38 @@ router.get(constant.ROUTE.gallery, async (req, res) => {
                 genre: genre
             });
         } else {
+            reject();
+        }
+    })
+}
+
+router.get(constant.ROUTE.gallery, async (req, res) => {
+    if (Object.keys(req.query).length === 0) {
+        res.redirect(url.format({
+            pathname: constant.ROUTE.gallery,
+            query: {
+                "genre": "all",
+                "page": 1
+            }
+        }));
+    } else {
+        validateListQuery(req.query)
+        .then(async query => {
+            return await getData(query)
+        })
+        .then(async object => {
+            res.render(constant.VIEW.gallery, object);
+        })
+        .catch(error => {
+            console.error(error);
             res.redirect(url.format({
                 pathname: constant.ROUTE.error,
                 query: {}
             }));
-        }
+        });
     }
 })
+
 router.get(constant.ROUTE.product, async (req, res) => {
     const oneProduct = await Product.findById({ _id: req.params.id });
     res.render(constant.VIEW.product, { oneProduct });
