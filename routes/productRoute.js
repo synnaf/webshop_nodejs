@@ -25,7 +25,7 @@ router.get(constant.ROUTE.gallery, async (req, res) => {
         if (genre === "all") {
             productAmount = await Product.find().countDocuments();
         } else {
-            productAmount = await Product.find({genre}).countDocuments();
+            productAmount = await Product.find({genre: genre}).countDocuments();
         }
         
         const pageAmount = Math.ceil(productAmount / productPerPage);
@@ -35,9 +35,8 @@ router.get(constant.ROUTE.gallery, async (req, res) => {
             if (genre === "all") {
                 productList = await Product.find().skip(productPerPage * (page - 1)).limit(productPerPage);
             } else {
-                productList = await Product.find({genre}).skip(productPerPage * (page - 1)).limit(productPerPage);
+                productList = await Product.find({genre: genre}).skip(productPerPage * (page - 1)).limit(productPerPage);
             }
-            console.log(productList);
             res.render(constant.VIEW.gallery, {
                 productList,
                 productAmount,
@@ -50,7 +49,7 @@ router.get(constant.ROUTE.gallery, async (req, res) => {
                 previousPage: page - 1,
                 lastPage: pageAmount,
                 productListRoute: constant.ROUTE.gallery,
-                genre: req.query.genre
+                genre: genre
             });
         } else {
             res.redirect(url.format({
