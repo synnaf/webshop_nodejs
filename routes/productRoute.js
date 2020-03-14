@@ -9,20 +9,35 @@ router.get(constant.ROUTE.index, (req, res) => {
 })
 
 router.get(constant.ROUTE.gallery, async (req, res) => {
-    if (req.query.page === undefined) {
+    if ((req.query.page === undefined) || (req.query.genre === undefined)) {
         res.redirect(url.format({
             pathname: constant.ROUTE.gallery,
             query: {
-                "page": 1
+                "page": 1,
+                "genre": "all"
             }
         }));
     } else {
         const productPerPage = 4;
         const page = +req.query.page;
-        const productAmount = await Product.find().countDocuments();
+        const genre = req.query.genre;
+        let productAmount = 0;
+        if (genre === "all") {
+            productAmount = await Product.find().countDocuments();
+        } else {
+            productAmount = await Product.find({genre}).countDocuments();
+        }
+        
         const pageAmount = Math.ceil(productAmount / productPerPage);
+        
         if (Number.isInteger(page) && (page >= 1) && (page <= pageAmount)) {
-            const productList = await Product.find().skip(productPerPage * (page - 1)).limit(productPerPage);
+            let productList = [];
+            if (genre === "all") {
+                productList = await Product.find().skip(productPerPage * (page - 1)).limit(productPerPage);
+            } else {
+                productList = await Product.find({genre}).skip(productPerPage * (page - 1)).limit(productPerPage);
+            }
+            console.log(productList);
             res.render(constant.VIEW.gallery, {
                 productList,
                 productAmount,
@@ -34,7 +49,8 @@ router.get(constant.ROUTE.gallery, async (req, res) => {
                 nextPage: page + 1,
                 previousPage: page - 1,
                 lastPage: pageAmount,
-                productListRoute: constant.ROUTE.gallery
+                productListRoute: constant.ROUTE.gallery,
+                genre: req.query.genre
             });
         } else {
             res.redirect(url.format({
