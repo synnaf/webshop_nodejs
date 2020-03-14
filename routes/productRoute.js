@@ -4,59 +4,23 @@ const Product = require('../model/product');
 const constant = require('../constant');
 const url = require('url');
 
-router.get(constant.ROUTE.index, (req, res) => {
-    res.render(constant.VIEW.index, {});
+const EXPRESSION = {
+    genres: ["all", "Rock", "Pop", "Soul", "Rap", "Rnb"],
+    productPerPage: 4
+}
+
+router.get(constant.ROUTE.index, async (req, res) => {
+    let imageList = [];
+    for (const genre of EXPRESSION.genres) {
+        imageList.push(await Product.findOne({genre: genre}, { genre: 1, imgUrl: 1, _id: 0 }));
+    }
+    res.render(constant.VIEW.index, {imageList});
 })
 
-const validateListQuery = async (query) => {
-    return new Promise(async (resolve, reject) => {
-        const genres = ["all", "Rock", "Pop", "Soul", "Rap", "Rnb"];
-        if (Number.isInteger(+query.page) && genres.includes(query.genre)) {
-            resolve(query);
-        } else {
-            reject();
-        }
-    })
-}
-
-const getData = async (query) => {
-    return new Promise(async (resolve, reject) => {
-        const page = +query.page;
-        const genre = query.genre;
-        const productPerPage = 1;
-        let productAmount = 0;
-        if (genre === "all") {
-            productAmount = await Product.find().countDocuments();
-        } else {
-            productAmount = await Product.find({genre: genre}).countDocuments();
-        }
-        const pageAmount = Math.ceil(productAmount / productPerPage);
-        if ((page >= 1) && (page <= pageAmount)) {
-            let productList = [];
-            if (genre === "all") {
-                productList = await Product.find().skip(productPerPage * (page - 1)).limit(productPerPage);
-            } else {
-                productList = await Product.find({genre: genre}).skip(productPerPage * (page - 1)).limit(productPerPage);
-            }
-            resolve({
-                productList,
-                productAmount,
-                currentPage: page,
-                isFirst: page <= 1,
-                isSecond: page === 2,
-                isLast: page === pageAmount,
-                isSecondLast: page === (pageAmount - 1),
-                nextPage: page + 1,
-                previousPage: page - 1,
-                lastPage: pageAmount,
-                productListRoute: constant.ROUTE.gallery,
-                genre: genre
-            });
-        } else {
-            reject();
-        }
-    })
-}
+router.get(constant.ROUTE.product, async (req, res) => {
+    const oneProduct = await Product.findById({ _id: req.params.id });
+    res.render(constant.VIEW.product, { oneProduct });
+})
 
 router.get(constant.ROUTE.gallery, async (req, res) => {
     if (Object.keys(req.query).length === 0) {
@@ -85,9 +49,52 @@ router.get(constant.ROUTE.gallery, async (req, res) => {
     }
 })
 
-router.get(constant.ROUTE.product, async (req, res) => {
-    const oneProduct = await Product.findById({ _id: req.params.id });
-    res.render(constant.VIEW.product, { oneProduct });
-})
+const validateListQuery = async (query) => {
+    return new Promise(async (resolve, reject) => {
+        if (Number.isInteger(+query.page) && EXPRESSION.genres.includes(query.genre)) {
+            resolve(query);
+        } else {
+            reject();
+        }
+    })
+}
+
+const getData = async (query) => {
+    return new Promise(async (resolve, reject) => {
+        const page = +query.page;
+        const genre = query.genre;
+        let productAmount = 0;
+        if (genre === "all") {
+            productAmount = await Product.find().countDocuments();
+        } else {
+            productAmount = await Product.find({genre: genre}).countDocuments();
+        }
+        const pageAmount = Math.ceil(productAmount / EXPRESSION.productPerPage);
+        if ((page >= 1) && (page <= pageAmount)) {
+            let productList = [];
+            if (genre === "all") {
+                productList = await Product.find().skip(EXPRESSION.productPerPage * (page - 1)).limit(EXPRESSION.productPerPage);
+            } else {
+                productList = await Product.find({genre: genre}).skip(EXPRESSION.productPerPage * (page - 1)).limit(EXPRESSION.productPerPage);
+            }
+            resolve({
+                productList,
+                productAmount,
+                currentPage: page,
+                isFirst: page <= 1,
+                isSecond: page === 2,
+                isLast: page === pageAmount,
+                isSecondLast: page === (pageAmount - 1),
+                nextPage: page + 1,
+                previousPage: page - 1,
+                lastPage: pageAmount,
+                productListRoute: constant.ROUTE.gallery,
+                genre: genre
+            });
+        } else {
+            reject();
+        }
+    })
+}
 
 module.exports = router;
