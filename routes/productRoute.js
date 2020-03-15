@@ -5,7 +5,7 @@ const constant = require('../constant');
 const url = require('url');
 
 const EXPRESSION = {
-    genres: ["all", "Rock", "Pop", "Soul", "Rap", "Rnb"],
+    genres: ["all", "Rock", "Pop", "Soul", "Rap", "Rnb", "Blues"],
     productPerPage: 4
 }
 
@@ -14,6 +14,8 @@ router.get(constant.ROUTE.index, async (req, res) => {
     for (const genre of EXPRESSION.genres) {
         imageList.push(await Product.findOne({genre: genre}, { genre: 1, imgUrl: 1, _id: 0 }));
     }
+    imageList = imageList.filter(el => el);
+    console.log(imageList);
     res.render(constant.VIEW.index, {imageList: imageList, productListRoute: constant.ROUTE.gallery});
 })
 
@@ -94,6 +96,7 @@ const getData = async (query) => {
                 productListRoute: constant.ROUTE.gallery,
                 genre: genre
             });
+            console.log(productList);
         } else {
             let error = new Error();
             error.name = "Invalid Query";

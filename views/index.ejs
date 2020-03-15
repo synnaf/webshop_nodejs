@@ -22,26 +22,19 @@
             <h3>Topp 5</h3>
         </div>
     </div>
-    <div class="newscontainers">
-        <div class="news">
-            <!-- rendera dynamisk bild? -->
-            <a href="<%= productListRoute %>?page=1&genre=Rock">
-                <div class="placeholder">
-                    <img src="<%= imageList[1].imgUrl %>" style="width: 100%" alt="rock" /> <!--TILLFÄLLIG INLINE-CSS-->
-                </div>
-            </a>      
-            <h3>Rock</h3>
-        </div>
-        <div class="news">
-            <!-- rendera dynamisk bild? -->
-            <a href="<%= productListRoute %>?page=1&genre=Soul">
-                <div class="placeholder">
-                    <img src="<%= imageList[3].imgUrl %>" style="width: 100%" alt="soul" /> <!--TILLFÄLLIG INLINE-CSS-->
-                </div>
-            </a>
-            <h3>Soul</h3>
-        </div>
+    <div class="newscontainers" style="flex-wrap: wrap">
+        <% for (const image of imageList) { %>
+            <div class="news">
+                <a href="<%= productListRoute %>?page=1&genre=<%= image.genre[0] %>">
+                    <div class="placeholder">
+                            <img src="<%= image.imgUrl %>" style="width: 100%" alt="<%= image.genre[0] %>" />
+                    </div>
+                </a>      
+                <h3><%= image.genre[0] %></h3>
+            </div> 
+        <% } %>
     </div>
+    
     <form class="startbuttons" method="get">
         <button type="submit" formaction="gallery">Webbshop</button>
         <button type="submit" formaction="login">Logga in</button>
