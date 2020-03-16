@@ -7,7 +7,10 @@ const url = require('url');
 router.get(ROUTE.index, async (req, res) => {
     let displayList = [];
     for (const genre of PRODUCT.genres) {
-        displayList.push(await Product.findOne({genre: genre}, { genre: 1, imgUrl: 1, _id: 0 }));
+        displayList.push({
+            img: await Product.findOne({genre: genre}, { imgUrl: 1, _id: 0 }),
+            genre: genre
+        });
     }
     displayList = displayList.filter(el => el);
     console.log(displayList);

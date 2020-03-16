@@ -25,12 +25,12 @@
     <div class="newscontainers" style="flex-wrap: wrap">
         <% for (const display of displayList) { %>
             <div class="news">
-                <a href="<%= productListRoute %>?genre=<%= display.genre[0] %>&page=1">
+                <a href="<%= productListRoute %>?genre=<%= display.genre %>&page=1">
                     <div class="placeholder">
-                        <img src="<%= display.imgUrl %>" style="width: 100%" alt="<%= display.genre[0] %>" />
+                        <img src="<%= display.img.imgUrl %>" style="width: 100%" alt="<%= display.genre %>" />
                     </div>
                 </a>      
-                <h3><%= display.genre[0] %></h3>
+                <h3><%= display.genre %></h3>
             </div> 
         <% } %>
     </div>
