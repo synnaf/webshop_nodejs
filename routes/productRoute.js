@@ -1,35 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../model/product');
-const constant = require('../constant');
+const {ROUTE, VIEW, PRODUCT} = require('../constant');
 const url = require('url');
 
-const EXPRESSION = {
-    genres: ["all", "Rock", "Pop", "Soul", "Rap", "Rnb", "Blues"],
-    productPerPage: 4
-}
-
-router.get(constant.ROUTE.index, async (req, res) => {
-    let imageList = [];
-    for (const genre of EXPRESSION.genres) {
-        imageList.push(await Product.findOne({genre: genre}, { genre: 1, imgUrl: 1, _id: 0 }));
+router.get(ROUTE.index, async (req, res) => {
+    let displayList = [];
+    for (const genre of PRODUCT.genres) {
+        displayList.push(await Product.findOne({genre: genre}, { genre: 1, imgUrl: 1, _id: 0 }));
     }
-    imageList = imageList.filter(el => el);
-    console.log(imageList);
-    res.render(constant.VIEW.index, {imageList: imageList, productListRoute: constant.ROUTE.gallery});
+    displayList = displayList.filter(el => el);
+    console.log(displayList);
+    res.render(VIEW.index, {displayList: displayList, productListRoute: ROUTE.gallery});
 })
 
-router.get(constant.ROUTE.product, async (req, res) => {
+router.get(ROUTE.product, async (req, res) => {
     const oneProduct = await Product.findById({ _id: req.params.id });
-    res.render(constant.VIEW.product, { oneProduct });
+    res.render(VIEW.product, { oneProduct });
 })
 
-router.get(constant.ROUTE.gallery, async (req, res) => {
+router.get(ROUTE.gallery, async (req, res) => {
     if (Object.keys(req.query).length === 0) {
         res.redirect(url.format({
-            pathname: constant.ROUTE.gallery,
+            pathname: ROUTE.gallery,
             query: {
-                "genre": "all",
+                "genre": "All",
                 "page": 1
             }
         }));
@@ -39,12 +34,12 @@ router.get(constant.ROUTE.gallery, async (req, res) => {
             return await getData(query)
         })
         .then(async object => {
-            res.render(constant.VIEW.gallery, object);
+            res.render(VIEW.gallery, object);
         })
         .catch(error => {
             console.error(error);
             res.redirect(url.format({
-                pathname: constant.ROUTE.error,
+                pathname: ROUTE.error,
                 query: {}
             }));
         });
@@ -53,7 +48,7 @@ router.get(constant.ROUTE.gallery, async (req, res) => {
 
 const validateListQuery = async (query) => {
     return new Promise(async (resolve, reject) => {
-        if (Number.isInteger(+query.page) && EXPRESSION.genres.includes(query.genre)) {
+        if (Number.isInteger(+query.page) && PRODUCT.genres.includes(query.genre)) {
             resolve(query);
         } else {
             let error = new Error();
@@ -69,18 +64,18 @@ const getData = async (query) => {
         const page = +query.page;
         const genre = query.genre;
         let productAmount = 0;
-        if (genre === "all") {
+        if (genre === "All") {
             productAmount = await Product.find().countDocuments();
         } else {
             productAmount = await Product.find({genre: genre}).countDocuments();
         }
-        const pageAmount = Math.ceil(productAmount / EXPRESSION.productPerPage);
+        const pageAmount = Math.ceil(productAmount / PRODUCT.perPage);
         if ((page >= 1) && (page <= pageAmount)) {
             let productList = [];
-            if (genre === "all") {
-                productList = await Product.find().skip(EXPRESSION.productPerPage * (page - 1)).limit(EXPRESSION.productPerPage);
+            if (genre === "All") {
+                productList = await Product.find().skip(PRODUCT.perPage * (page - 1)).limit(PRODUCT.perPage);
             } else {
-                productList = await Product.find({genre: genre}).skip(EXPRESSION.productPerPage * (page - 1)).limit(EXPRESSION.productPerPage);
+                productList = await Product.find({genre: genre}).skip(PRODUCT.perPage * (page - 1)).limit(PRODUCT.perPage);
             }
             resolve({
                 productList,
@@ -93,7 +88,7 @@ const getData = async (query) => {
                 nextPage: page + 1,
                 previousPage: page - 1,
                 lastPage: pageAmount,
-                productListRoute: constant.ROUTE.gallery,
+                productListRoute: ROUTE.gallery,
                 genre: genre
             });
             console.log(productList);

@@ -23,14 +23,14 @@
         </div>
     </div>
     <div class="newscontainers" style="flex-wrap: wrap">
-        <% for (const image of imageList) { %>
+        <% for (const display of displayList) { %>
             <div class="news">
-                <a href="<%= productListRoute %>?page=1&genre=<%= image.genre[0] %>">
+                <a href="<%= productListRoute %>?genre=<%= display.genre[0] %>&page=1">
                     <div class="placeholder">
-                            <img src="<%= image.imgUrl %>" style="width: 100%" alt="<%= image.genre[0] %>" />
+                        <img src="<%= display.imgUrl %>" style="width: 100%" alt="<%= display.genre[0] %>" />
                     </div>
                 </a>      
-                <h3><%= image.genre[0] %></h3>
+                <h3><%= display.genre[0] %></h3>
             </div> 
         <% } %>
     </div>
