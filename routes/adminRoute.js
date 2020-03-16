@@ -99,6 +99,7 @@ router.post(constant.ROUTE.admin, (req, res) => {
                 request.get(options, function (error, response, body) {
                     console.log(response.statusCode + "===== is the response status code for request.get")
                     console.log(JSON.parse(body).albums);
+
                     //gör ett if-statement fär vi hanterar det som kommer tillbaka i body (vårt response) 
                     //re-routa till error sidan annars! 
                     const spotifyResponse = JSON.parse(body).albums;

@@ -1,4 +1,4 @@
-// Härifrån startar vi upp vår webshop
+// THIS IS WHERE THE APP RUNS
 const mongoose = require('mongoose')
 
 const {
@@ -7,7 +7,7 @@ const {
 } = require('./src/server')
 const config = require('./config/config')
 
-// Kicka igång servern
+// START SERVER
 const dbOptions = {
     useUnifiedTopology: true,
     useNewUrlParser: true,
