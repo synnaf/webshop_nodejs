@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const crypto = require("crypto"); 
 const UserInfoModel = require('../model/user');
 const config = require('../config/config');
 const constant = require('../constant');
 const jwt = require('jsonwebtoken');
-const verifyToken = require("./verifyToken")
-
+const verifyToken = require("./verifyToken"); 
+const nodemailer = require("nodemailer"); 
+const sendgridTransport = require("nodemailer-sendgrid-transport"); 
+const transport = nodemailer.createTransport(sendgridTransport({
+    auth: { api_key: config.mailkey }
+}))
 
 router.get(constant.ROUTE.createUser, (req, res) => {
     res.status(200).render(constant.VIEW.createUser);
@@ -26,7 +31,6 @@ router.post(constant.ROUTE.createUser, async (req, res) => {
             lastName: "Admin",
         }).save()
     }
-
     else {
         await new UserInfoModel({
             email: req.body.email,
@@ -36,15 +40,27 @@ router.post(constant.ROUTE.createUser, async (req, res) => {
             lastName: req.body.lastName,
         }).save()
     }
-    res.redirect(constant.VIEW.gallery)
+    const userEmail = await UserInfoModel.findOne({
+        email: req.body.email
+    });
+    //skicka mail till användaren kommer ske här 
+    await transport.sendMail({
+        to: userEmail.email,
+        from: "<no-reply>Webshop-NMFVM", 
+        subject: "Välkommen!",
+        html: "<h1>Välkommen " + userEmail.email + "</h1>"
+    });
 
-})
+    //sedan skickas användaren till login-sidan! 
+    return res.redirect(constant.VIEW.loginUser, {constant});
+});  
 
 router.get(constant.ROUTE.loginUser, (req, res) => {
     res.status(200).render(constant.VIEW.loginUser, {
         constant
     });
 })
+
 router.get(constant.ROUTE.login, (req, res) => {
     res.status(200).render(constant.VIEW.login, {
         constant
@@ -92,7 +108,7 @@ router.post(constant.ROUTE.login, async (req, res) => {
         res.redirect(constant.VIEW.userAccount);
     })
     
-})
+}); 
 
 router.get(constant.ROUTE.userAccount,verifyToken, async (req, res) => {
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
@@ -140,10 +156,49 @@ router.get(constant.ROUTE.confirmation, (req, res) => {
 //-------------- Fanny lägger in routes för att reset password ------------ // 
 
 router.get(constant.ROUTE.resetpassword, (req, res) => {
-    res.status(200).render(constant.VIEW.resetpassword);
+    res.status(200).render(constant.VIEW.resetpassword, {constant});
+})
+
+router.post(constant.ROUTE.resetpassword, async (req, res) => {
+    crypto.randomBytes(32, async (error, token) => {
+        if (error) return res.redirect(constant.VIEW.userAccount); 
+        const resetToken = token.toString("hex");
+        const user = UserInfoModel.findOne({ email: req.body.resetMail })
+            .then(user => {
+                if (!user) return res.redirect(constant.VIEW.userAccount)
+                user.resetToken = resetToken
+                user.tokenExpiration = Date.now() + 1000000
+                return user.save(); 
+            })
+            .then( ()=> {
+                transport.sendMail({
+                    to: user.resetMail,
+                    from: "<no-reply>Byt lösenord", 
+                    subject: "Ändra ditt lösenord!",
+                    html: `http://localhost:8003/reset/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord!<h2>`
+                });   
+            })  
+        return res.redirect(constant.VIEW.loginUser)
+    })
 })
 
 
+router.get(constant.ROUTE.resetpasswordToken, async (req, res) => { 
+    const token = req.params.token;
+    const user = await UserInfoModel.findOne({ resetToken: token }); 
+    res.render(constant.VIEW.resetform, {user, constant}) 
+})
+
+router.post(constant.ROUTE.resetpasswordToken, async (req, res)=> {
+   const user = await UserInfoModel.findOne({ resetToken: req.body.token }) 
+   if(user) {
+       const hashPassword = await bcrypt.hash(req.body.password, 10); 
+       user.password = hashPassword; 
+       user.resetToken = undefined;
+       await user.save(); 
+   }
+   res.redirect(constant.VIEW.loginUser); 
+})
 
 
 module.exports = router;
