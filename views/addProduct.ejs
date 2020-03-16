@@ -1,10 +1,10 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main class="adminpage">
-    <h1 class="pageheadline">Detta är admin-sida, visar formulär för att lägga till produkter i datbas</h1>
+    <h1 class="pageheadline">Lägg till:</h1>
     
     <form action="/admin/addproduct" method="post" class="add-product-form">
-        <fieldset>
+        <fieldset class="about-album">
             <label for="artist">Artist</label>
             <input type="text" name="artist" value="<%= spotifyResponse.items[0].artists[0].name %>" readonly />
             <label for="album">Album</label>
@@ -18,15 +18,15 @@
             <label for="genre">Genre</label>
             <input type="text" name="genre">
         </fieldset>
-        <fieldset>
+        <fieldset class="additional-info">
             <label for="price">Pris</label>
             <input type="number" name="price" />
             <label for="addedBy">Tillagd av</label>
             <input type="text" name="adminName" id="">
         </fieldset>
-
-        <button type="submit">Lägg till i databas</button>
-
+        <div class="submit-form">
+            <button type="submit">Lägg till i databas</button>
+        </div>
     </form>
 </main>
 <%- include ("footer.ejs") %>
