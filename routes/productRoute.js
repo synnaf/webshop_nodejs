@@ -29,9 +29,12 @@ router.get(ROUTE.gallery, async (req, res) => {
             }
         }));
     } else {
-        validateListQuery(req.query)
+        validatePage(req.query)
         .then(async query => {
-            return await getData(query)
+            return await validateGenre(query);
+        })
+        .then(async queryObject => {
+            return await getData(queryObject);
         })
         .then(async object => {
             res.render(VIEW.gallery, object);
@@ -46,36 +49,65 @@ router.get(ROUTE.gallery, async (req, res) => {
     }
 })
 
-const validateListQuery = async (query) => {
+const validatePage = async (query) => {
     return new Promise(async (resolve, reject) => {
-        if (Number.isInteger(+query.page) && PRODUCT.genres.includes(query.genre)) {
+        if (Number.isInteger(+query.page)) {
             resolve(query);
         } else {
             let error = new Error();
             error.name = "Invalid Query"
-            error.errmsg = "page is not an integer or genre does not exist";
+            error.errmsg = "page is not an integer";
             reject(error);
         }
     })
 }
 
-const getData = async (query) => {
+const validateGenre = async (query) => {
     return new Promise(async (resolve, reject) => {
-        const page = +query.page;
-        const genre = query.genre;
-        let productAmount = 0;
-        if (genre === "All") {
-            productAmount = await Product.find().countDocuments();
+        if (query.genre !== undefined) {
+            let correct = true;
+            const genres = query.genre.split(",");
+            for (genre of genres) {
+                if (!PRODUCT.genres.includes(genre)) {
+                    correct = false;
+                    break;
+                }
+            }
+            if (correct) {
+                const queryObject = {
+                    genres: genres,
+                    page: +query.page
+                }
+                resolve(queryObject);
+            } else {
+                let error = new Error();
+                error.name = "Invalid Query"
+                error.errmsg = "genre does not exist";
+                reject(error);
+            }
         } else {
-            productAmount = await Product.find({genre: genre}).countDocuments();
+            let error = new Error();
+            error.name = "Invalid Query"
+            error.errmsg = "genre is undefined";
+            reject(error);
+        }
+    })
+}
+
+const getData = async (queryObject) => {
+    return new Promise(async (resolve, reject) => {
+        const page = queryObject.page;
+        const genres = queryObject.genres;
+        console.log(genres);
+        let productAmount = 0;
+        for (genre of genres) {
+            productAmount += await Product.find({genre: genre}).countDocuments();
         }
         const pageAmount = Math.ceil(productAmount / PRODUCT.perPage);
         if ((page >= 1) && (page <= pageAmount)) {
             let productList = [];
-            if (genre === "All") {
-                productList = await Product.find().skip(PRODUCT.perPage * (page - 1)).limit(PRODUCT.perPage);
-            } else {
-                productList = await Product.find({genre: genre}).skip(PRODUCT.perPage * (page - 1)).limit(PRODUCT.perPage);
+            for (genre of genres) {
+                productList = productList.concat(await Product.find({genre: genre}).skip(PRODUCT.perPage * (page - 1)).limit(PRODUCT.perPage));
             }
             resolve({
                 productList,
@@ -89,7 +121,7 @@ const getData = async (query) => {
                 previousPage: page - 1,
                 lastPage: pageAmount,
                 productListRoute: ROUTE.gallery,
-                genre: genre
+                genre: genres[0]
             });
             console.log(productList);
         } else {
