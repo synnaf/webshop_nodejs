@@ -1,86 +1,116 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../model/product');
-const constant = require('../constant');
+const {ROUTE, VIEW, PRODUCT} = require('../constant');
 const url = require('url');
 
-const EXPRESSION = {
-    genres: ["all", "Rock", "Pop", "Soul", "Rap", "Rnb", "Blues"],
-    productPerPage: 4
-}
-
-router.get(constant.ROUTE.index, async (req, res) => {
-    let imageList = [];
-    for (const genre of EXPRESSION.genres) {
-        imageList.push(await Product.findOne({genre: genre}, { genre: 1, imgUrl: 1, _id: 0 }));
+router.get(ROUTE.index, async (req, res) => {
+    let displayList = [];
+    for (const genre of PRODUCT.genres) {
+        displayList.push({
+            img: await Product.findOne({genre: genre}, { imgUrl: 1, _id: 0 }),
+            genre: genre
+        });
     }
-    imageList = imageList.filter(el => el);
-    console.log(imageList);
-    res.render(constant.VIEW.index, {imageList: imageList, productListRoute: constant.ROUTE.gallery});
+    displayList = displayList.filter(el => el);
+    console.log(displayList);
+    res.render(VIEW.index, {displayList: displayList, productListRoute: ROUTE.gallery});
 })
 
-router.get(constant.ROUTE.product, async (req, res) => {
+router.get(ROUTE.product, async (req, res) => {
     const oneProduct = await Product.findById({ _id: req.params.id });
-    res.render(constant.VIEW.product, { oneProduct });
+    res.render(VIEW.product, { oneProduct });
 })
 
-router.get(constant.ROUTE.gallery, async (req, res) => {
+router.get(ROUTE.gallery, async (req, res) => {
     if (Object.keys(req.query).length === 0) {
         res.redirect(url.format({
-            pathname: constant.ROUTE.gallery,
+            pathname: ROUTE.gallery,
             query: {
-                "genre": "all",
+                "genre": "All",
                 "page": 1
             }
         }));
     } else {
-        validateListQuery(req.query)
+        validatePage(req.query)
         .then(async query => {
-            return await getData(query)
+            return await validateGenre(query);
+        })
+        .then(async queryObject => {
+            return await getData(queryObject);
         })
         .then(async object => {
-            res.render(constant.VIEW.gallery, object);
+            res.render(VIEW.gallery, object);
         })
         .catch(error => {
             console.error(error);
             res.redirect(url.format({
-                pathname: constant.ROUTE.error,
+                pathname: ROUTE.error,
                 query: {}
             }));
         });
     }
 })
 
-const validateListQuery = async (query) => {
+const validatePage = async (query) => {
     return new Promise(async (resolve, reject) => {
-        if (Number.isInteger(+query.page) && EXPRESSION.genres.includes(query.genre)) {
+        if (Number.isInteger(+query.page)) {
             resolve(query);
         } else {
             let error = new Error();
             error.name = "Invalid Query"
-            error.errmsg = "page is not an integer or genre does not exist";
+            error.errmsg = "page is not an integer";
             reject(error);
         }
     })
 }
 
-const getData = async (query) => {
+const validateGenre = async (query) => {
     return new Promise(async (resolve, reject) => {
-        const page = +query.page;
-        const genre = query.genre;
-        let productAmount = 0;
-        if (genre === "all") {
-            productAmount = await Product.find().countDocuments();
+        if (query.genre !== undefined) {
+            let correct = true;
+            const genres = query.genre.split(",");
+            for (genre of genres) {
+                if (!PRODUCT.genres.includes(genre)) {
+                    correct = false;
+                    break;
+                }
+            }
+            if (correct) {
+                const queryObject = {
+                    genres: genres,
+                    page: +query.page
+                }
+                resolve(queryObject);
+            } else {
+                let error = new Error();
+                error.name = "Invalid Query"
+                error.errmsg = "genre does not exist";
+                reject(error);
+            }
         } else {
-            productAmount = await Product.find({genre: genre}).countDocuments();
+            let error = new Error();
+            error.name = "Invalid Query"
+            error.errmsg = "genre is undefined";
+            reject(error);
         }
-        const pageAmount = Math.ceil(productAmount / EXPRESSION.productPerPage);
+    })
+}
+
+const getData = async (queryObject) => {
+    return new Promise(async (resolve, reject) => {
+        const page = queryObject.page;
+        const genres = queryObject.genres;
+        console.log(genres);
+        let productAmount = 0;
+        for (genre of genres) {
+            productAmount += await Product.find({genre: genre}).countDocuments();
+        }
+        const pageAmount = Math.ceil(productAmount / PRODUCT.perPage);
         if ((page >= 1) && (page <= pageAmount)) {
             let productList = [];
-            if (genre === "all") {
-                productList = await Product.find().skip(EXPRESSION.productPerPage * (page - 1)).limit(EXPRESSION.productPerPage);
-            } else {
-                productList = await Product.find({genre: genre}).skip(EXPRESSION.productPerPage * (page - 1)).limit(EXPRESSION.productPerPage);
+            for (genre of genres) {
+                productList = productList.concat(await Product.find({genre: genre}).skip(PRODUCT.perPage * (page - 1)).limit(PRODUCT.perPage));
             }
             resolve({
                 productList,
@@ -93,8 +123,8 @@ const getData = async (query) => {
                 nextPage: page + 1,
                 previousPage: page - 1,
                 lastPage: pageAmount,
-                productListRoute: constant.ROUTE.gallery,
-                genre: genre
+                productListRoute: ROUTE.gallery,
+                genre: genres[0]
             });
             console.log(productList);
         } else {

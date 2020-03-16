@@ -33,7 +33,13 @@ const ROUTE = {
     resetpasswordToken: '/resetpassword/:token'
 }
 
+const PRODUCT = {
+    perPage: 4,
+    genres: ["All", "Rock", "Pop", "Soul", "Rap", "Rnb", "Blues"]
+}
+
 module.exports = {
     VIEW,
-    ROUTE
+    ROUTE,
+    PRODUCT
 }

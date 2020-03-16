@@ -76,7 +76,10 @@ router.post(constant.ROUTE.admin, (req, res) => {
                     if (spotifyResponse.items == 0) {
                         res.render("errors", { errmsg: 'Titeln saknas hos Spotify' });
                     } else {
-                        res.render(constant.VIEW.adminAddProduct, { spotifyResponse })
+                        const genres = constant.PRODUCT.genres.filter(genre => {
+                            return genre !== "All";
+                        });
+                        res.render(constant.VIEW.adminAddProduct, { spotifyResponse: spotifyResponse, genres: genres})
                     }
                 });
             }
@@ -87,13 +90,19 @@ router.post(constant.ROUTE.admin, (req, res) => {
 
 router.post(constant.ROUTE.adminAddProduct, async (req, res) => {
     console.log(req.body)
+    let genres = ["All"];
+    for (const property in req.body) {
+        if (property.includes("genre")) {
+            genres.push(property.replace("genre",""));
+        }
+    }
     const product = await new Product({
         artist: req.body.artist,
         album: req.body.album,
         tracks: req.body.tracks,
         spotifyId: req.body.spotifyId,
         imgUrl: req.body.imgUrl,
-        genre: req.body.genre,
+        genre: genres,
         price: req.body.price,
         addedBy: req.body.adminName
     });
