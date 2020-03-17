@@ -32,4 +32,4 @@ router.get(constant.ROUTE.product, async (req, res) => {
     res.render(constant.VIEW.product, { oneProduct });
 })
 
-module.exports = router;
+module.exports = router; 
