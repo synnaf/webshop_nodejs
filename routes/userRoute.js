@@ -66,6 +66,7 @@ router.post(constant.ROUTE.createUser, async (req, res) => {
                 errmsg: 'token funkar inte'
             });
             if (token) {
+                console.log("token som finns på signup" + token)
                 const cookie = req.cookies.jsonwebtoken;
                 if (!cookie) {
                     res.cookie('jsonwebtoken', token, {
@@ -99,12 +100,11 @@ router.post(constant.ROUTE.login, async (req, res) => {
         email: req.body.email
     });
 
-    console.log(req.body.email)
     if (!userInfo) return res.render("errors", {
         errmsg: 'Fel email!'
     });
-    console.log(req.body.password)
-    
+
+
     const validUser = await bcrypt.compare(req.body.password, userInfo.password);
     if (!validUser) return res.render("errors", {
         errmsg: 'Fel lösenord!'
@@ -116,11 +116,10 @@ router.post(constant.ROUTE.login, async (req, res) => {
             errmsg: 'token funkar inte'
         });
 
-        console.log("token", token)
+        console.log("token som finns login route matchar användaren som loggar in: ", token)
         if (token) {
             const cookie = req.cookies.jsonwebtoken;
             if (!cookie) {
-                console.log('cookie2', req.cookies)
                 res.cookie('jsonwebtoken', token, {
                     maxAge: 400000,
                     httpOnly: true
@@ -136,7 +135,7 @@ router.post(constant.ROUTE.login, async (req, res) => {
     
 }); 
 
-router.get(constant.ROUTE.userAccount,verifyToken, async (req, res) => {
+router.get(constant.ROUTE.userAccount, verifyToken, async (req, res) => {
     // const newUser = jwt.decode(req.cookies.jsonwebtoken).signedUpUser; 
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
     res.status(200).render(constant.VIEW.userAccount, {
