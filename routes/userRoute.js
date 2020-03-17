@@ -38,22 +38,49 @@ router.post(constant.ROUTE.createUser, async (req, res) => {
             address: req.body.address,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-        }).save()
-    }
-    const userEmail = await UserInfoModel.findOne({
+        }).save(); 
+
+    // const userEmail = await UserInfoModel.findOne({
+    //     email: req.body.email
+    // });
+    // //skicka mail till användaren kommer ske här 
+    // // await transport.sendMail({
+    // //     to: userEmail.email,
+    // //     from: "<no-reply>Webshop-NMFVM", 
+    // //     subject: "Välkommen!",
+    // //     html: "<h1>Välkommen " + userEmail.email + "</h1>"
+    // // });
+
+    const userInfo = await UserInfoModel.findOne({
         email: req.body.email
     });
-    //skicka mail till användaren kommer ske här 
-    await transport.sendMail({
-        to: userEmail.email,
-        from: "<no-reply>Webshop-NMFVM", 
-        subject: "Välkommen!",
-        html: "<h1>Välkommen " + userEmail.email + "</h1>"
+    if (!userInfo) return res.render("errors", {
+        errmsg: 'Fel email!'
     });
+    const validUser = await bcrypt.compare(req.body.password, userInfo.password);
+        if (!validUser) return res.render("errors", {
+            errmsg: 'Fel lösenord!'
+        });
+        jwt.sign({ userInfo }, 'secretPriveteKey', (err, token) => {
+            if (err) return res.render('errors', {
+                errmsg: 'token funkar inte'
+            });
+            if (token) {
+                const cookie = req.cookies.jsonwebtoken;
+                if (!cookie) {
+                    res.cookie('jsonwebtoken', token, {
+                        maxAge: 400000,
+                        httpOnly: true
+                    })
+                }
+            }
+        res.redirect(constant.VIEW.userAccount);
+        })
+    }
 
-    //sedan skickas användaren till login-sidan! 
-    return res.redirect(constant.VIEW.loginUser, {constant});
-});  
+});   
+
+//------------------------//
 
 router.get(constant.ROUTE.loginUser, (req, res) => {
     res.status(200).render(constant.VIEW.loginUser, {
@@ -104,17 +131,17 @@ router.post(constant.ROUTE.login, async (req, res) => {
         if (userInfo.isAdmin) {
             res.redirect(constant.ROUTE.admin);
         }
-
         res.redirect(constant.VIEW.userAccount);
     })
     
 }); 
 
 router.get(constant.ROUTE.userAccount,verifyToken, async (req, res) => {
+    // const newUser = jwt.decode(req.cookies.jsonwebtoken).signedUpUser; 
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
     res.status(200).render(constant.VIEW.userAccount, {
         constant,
-        loggedIn
+        loggedIn, 
     });
 })
 

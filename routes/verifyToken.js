@@ -3,7 +3,6 @@ const config = require('../config/config');
 
 module.exports = (req, res, next) => {
 
-
     const token = req.cookies.jsonwebtoken
     console.log(token, "token")
     if (token) {
