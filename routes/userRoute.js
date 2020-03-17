@@ -185,7 +185,7 @@ router.post(constant.ROUTE.resetpassword, async (req, res) => {
 
 router.get(constant.ROUTE.resetpasswordToken, async (req, res) => { 
     const token = req.params.token;
-    const user = await UserInfoModel.findOne({ resetToken: token }); 
+    const user = await UserInfoModel.findOne({ resetToken: token, tokenExpiration: {$gt: Date.now()}  }); 
     res.render(constant.VIEW.resetform, {user, constant}) 
 })
 
@@ -195,6 +195,7 @@ router.post(constant.ROUTE.resetpasswordToken, async (req, res)=> {
        const hashPassword = await bcrypt.hash(req.body.password, 10); 
        user.password = hashPassword; 
        user.resetToken = undefined;
+       user.tokenExpiration = undefined; 
        await user.save(); 
    }
    res.redirect(constant.VIEW.loginUser); 
