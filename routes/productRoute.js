@@ -13,7 +13,7 @@ router.get(ROUTE.index, async (req, res) => {
         });
     }
     displayList = displayList.filter(el => el);
-    console.log(displayList);
+    // console.log(displayList);
     res.render(VIEW.index, {displayList: displayList, productListRoute: ROUTE.gallery});
 })
 
@@ -101,7 +101,7 @@ const getData = async (queryObject) => {
     return new Promise(async (resolve, reject) => {
         const page = queryObject.page;
         const genres = queryObject.genres;
-        console.log(genres);
+        // console.log(genres);
         let productAmount = 0;
         for (genre of genres) {
             productAmount += await Product.find({genre: genre}).countDocuments();
@@ -126,7 +126,7 @@ const getData = async (queryObject) => {
                 productListRoute: ROUTE.gallery,
                 genre: genres[0]
             });
-            console.log(productList);
+            // console.log(productList);
         } else {
             let error = new Error();
             error.name = "Invalid Query";

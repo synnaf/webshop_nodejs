@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const crypto = require("crypto"); 
 const UserInfoModel = require('../model/user');
+const ProductModel = require("../model/product"); 
 const config = require('../config/config');
 const constant = require('../constant');
 const jwt = require('jsonwebtoken');
@@ -66,7 +67,7 @@ router.post(constant.ROUTE.createUser, async (req, res) => {
                 errmsg: 'token funkar inte'
             });
             if (token) {
-                console.log("token som finns på signup" + token)
+                // console.log("token som finns på signup" + token)
                 const cookie = req.cookies.jsonwebtoken;
                 if (!cookie) {
                     res.cookie('jsonwebtoken', token, {
@@ -116,7 +117,7 @@ router.post(constant.ROUTE.login, async (req, res) => {
             errmsg: 'token funkar inte'
         });
 
-        console.log("token som finns login route matchar användaren som loggar in: ", token)
+        // console.log("token som finns login route matchar användaren som loggar in: ", token)
         if (token) {
             const cookie = req.cookies.jsonwebtoken;
             if (!cookie) {
@@ -171,6 +172,32 @@ router.post(constant.ROUTE.userAccount, async (req, res) => {
         res.redirect(constant.ROUTE.userAccount + "?failure");
     }
 })
+
+
+
+
+//---- route för checkout/cart/wishlist ----------//
+
+router.get("/wishlist/:id", verifyToken, async (req, res)=> {
+  
+    // const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
+    // console.log(loggedIn.userInfo)
+
+    console.log(req.body.userInfo); 
+
+    const product =  await ProductModel.findOne({_id:req.params.id})
+    console.log("Denna produkt vill user spara: " + product)
+
+    // const user = await UserInfoModel.findOne({_id: req.body.userInfo._id})
+    // console.log("Detta är user som vill spara i wishlist " + user)
+
+// await user.addToWishList(product)
+res.send("added to wishlist!");
+ 
+})
+
+
+//------------------- confirmation for checkout -------------- //
 
 
 router.get(constant.ROUTE.confirmation, (req, res) => {
