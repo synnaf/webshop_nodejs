@@ -64,7 +64,7 @@ router.post(constant.ROUTE.admin, (req, res) => {
      * For more information, read
      * https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow
      */
-    module.exports.fetchSpotifyApiData = function fetchSpotifyApiData(artistSearchValue, albumSearchValue) {
+    function fetchSpotifyApiData(artistSearchValue, albumSearchValue) {
         //skapa en request
         const client_id = config.spotify.client_id; // Your client id
         const client_secret = config.spotify.client_secret; // Your secret

@@ -16,7 +16,7 @@ describe('Testing functions for Vinylshop webshop', () => {
         })
     })
 
-    describe('Function fetchSpotifyData to return data from Spotify API', () => {
+    /* describe('Function fetchSpotifyData to return data from Spotify API', () => {
 
         it('Should return a JSON object', () => {
             const artistSearchValue = 'beyonce';
@@ -26,5 +26,5 @@ describe('Testing functions for Vinylshop webshop', () => {
             expect(spotifyResponse).to.equal({})
         });
 
-    })
+    }) */
 })
