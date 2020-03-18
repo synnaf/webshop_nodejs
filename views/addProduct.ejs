@@ -2,7 +2,7 @@
 <%- include ("navbar.ejs") %>
 <main>
     <div>Detta är admin-sida, visar formulär för att lägga till produkter i datbas</div>
-    <form action="/admin/addproduct" method="post">
+    <form action="<%= ROUTE.adminAddProduct %>" method="post">
         <div>
             <label for="artist">Artist</label>
             <input type="text" name="artist" value="<%= spotifyResponse.items[0].artists[0].name %>" readonly />
@@ -25,8 +25,8 @@
         </div>
         <div>
             <% for (const genre of genres) { %>
-                <label for="genre<%= genre %>"><%= genre %></label>
-                <input type="checkbox" name="genre<%= genre %>">
+            <label for="genre<%= genre %>"><%= genre %></label>
+            <input type="checkbox" name="genre<%= genre %>">
             <% } %>
         </div>
         <div>

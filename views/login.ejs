@@ -2,14 +2,14 @@
 <%- include ("navbar.ejs") %>
 <main>
     <h1>Inloggning</h1>
-    <form action="<%constant.ROUTE.login%>" method="POST" class="admin-login-form">
+    <form action="<%ROUTE.login%>" method="POST" class="admin-login-form">
         <input type="text" name="email" id="" placeholder="e-mail" />
         <input type="password" name="password" id="" placeholder="Lösenord" />
         <button type="submit">Logga in</button>
     </form>
 
     <div class="reset-password">
-        <a href="/resetpassword">Glömt ditt lösenord?</a>
+        <a href="<%ROUTE.resetpassword%>">Glömt ditt lösenord?</a>
     </div>
 </main>
 <%- include ("footer.ejs") %>

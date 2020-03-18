@@ -5,15 +5,18 @@
         <h1>Varukorg</h1>
     </div>
     <% showUserInfo.forEach( (obj)=> { %>
-        <div class="shoppingcart-container">
-            <div class="product-img">bild</div>
-            <h4><%= obj._id %></h4>
-            <span>Pris:</span>
-            <div class="changecart"><p>+</p> <p>-</p> </div>
+    <div class="shoppingcart-container">
+        <div class="product-img">bild</div>
+        <h4><%= obj._id %></h4>
+        <span>Pris:</span>
+        <div class="changecart">
+            <p>+</p>
+            <p>-</p>
         </div>
-    <% }); %> 
+    </div>
+    <% }); %>
     <div class="checkout-payment-container">
-        <form action="post">
+        <form action="<% ROUTE.checkout %>">
             <h2>Betalning</h2>
             <div class="checkout-user-container">
                 <input type="radio" checked>
@@ -22,7 +25,7 @@
             <h2>Leverans</h2>
             <div class="checkout-user-container">
                 <h3>Förnamn</h3>
-                <input type="text" value="<%=showUserInfo.firstName%>"size=30>
+                <input type="text" value="<%=showUserInfo.firstName%>" size=30>
             </div>
             <div class="checkout-user-container">
                 <h3>Efternamn</h3>
@@ -30,7 +33,7 @@
             </div>
             <div class="checkout-user-container">
                 <h3>Adress</h3>
-                <input type="text" value="<%=showUserInfo.address%>" size=30> 
+                <input type="text" value="<%=showUserInfo.address%>" size=30>
             </div>
             <div class="checkout-postal">
                 <div class="postal-city">

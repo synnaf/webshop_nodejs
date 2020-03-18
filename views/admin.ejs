@@ -2,11 +2,11 @@
 <%- include ("navbar.ejs") %>
 <main>
     <div class="logoutbutton">
-        <a href="<%= constant.ROUTE.logout %>">Logga ut</a>
+        <a href="<%= ROUTE.logout %>">Logga ut</a>
     </div>
 
     <h1>Sök artist och album</h1>
-    <form action="/admin" method="POST" class="search-album-form">
+    <form action="<%= ROUTE.admin %>" method="POST" class="search-album-form">
         <div>
             <label for="artistname">Artist</label>
             <input type="text" name="artist" />

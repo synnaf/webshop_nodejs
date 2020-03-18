@@ -1,36 +1,35 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
-<main>    
-    <div class="pageheadline"> 
-        <h1>Välkommen <i> <%= loggedIn.firstName %>  </i> </h1>
+<main>
+    <div class="pageheadline">
+        <h1>Välkommen <i> <%= loggedIn.firstName %> </i> </h1>
     </div>
-        <div class="userinfo">
-            <h3>Användare: </h3>
-            <span><%= loggedIn.firstName %> <%= loggedIn.lastName %></span>
-            <span><%= loggedIn.address %></span>
-            <span><%= loggedIn.email %></span> 
-        </div>
-        <div class="orderinfo">
-            <h3>Beställningar: </h3>
-            <ul>
-              <% for(let orders of loggedIn.orders) { %> 
-                    <li> Order: <%= orders %>. Detaljer</li>
-              <% } %>
-            </ul>
-        </div> 
-        <div class="logoutbutton">
-            <a href="<%= constant.ROUTE.logout %>">Logga ut</a>
-        </div>
-        <div class="passwordinfo">
-            <form action="<%= constant.ROUTE.userAccount %>" method="POST">
-                <h3>Ändra lösenord:</h3>
-                <label>Nuvarande lösenord:</label>
-                    <input type="password" name="currentpassword" placeholder="Nuvarande lösenord" />
-                <label>Nytt lösenord:</label>
-                    <input type="password" name="newpassword" placeholder="Nytt lösenord" />
-                <button type="submit">Ändra lösenord</button>
-            </form>
-        </div>
+    <div class="userinfo">
+        <h3>Användare: </h3>
+        <span><%= loggedIn.firstName %> <%= loggedIn.lastName %></span>
+        <span><%= loggedIn.address %></span>
+        <span><%= loggedIn.email %></span>
+    </div>
+    <div class="orderinfo">
+        <h3>Beställningar: </h3>
+        <ul>
+            <% for(let orders of loggedIn.orders) { %>
+            <li> Order: <%= orders %>. Detaljer</li>
+            <% } %>
+        </ul>
+    </div>
+    <div class="logoutbutton">
+        <a href="<%= ROUTE.logout %>">Logga ut</a>
+    </div>
+    <div class="passwordinfo">
+        <form action="<%= ROUTE.userAccount %>" method="POST">
+            <h3>Ändra lösenord:</h3>
+            <label>Nuvarande lösenord:</label>
+            <input type="password" name="currentpassword" placeholder="Nuvarande lösenord" />
+            <label>Nytt lösenord:</label>
+            <input type="password" name="newpassword" placeholder="Nytt lösenord" />
+            <button type="submit">Ändra lösenord</button>
+        </form>
+    </div>
 </main>
 <%- include ("footer.ejs") %>
-

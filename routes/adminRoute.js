@@ -1,22 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../model/product');
-const constant = require('../constant');
+const { ROUTE, VIEW, PRODUCT } = require('../constant');
 const request = require('request'); // SPOTIFY REQUEST LIBRARY
 const config = require('../config/config');
 const bcrypt = require('bcrypt');
 const verifyAdminToken = require('./verifyAdminToken');
 
-router.get(constant.ROUTE.admin, verifyAdminToken, async (req, res) => {
+router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
 
     const productList = (await Product.find()).reverse()
-    res.render(constant.VIEW.admin, {
+    res.render(VIEW.admin, {
         productList,
-        constant
+        ROUTE
     })
 })
 
-router.post(constant.ROUTE.admin, (req, res) => {
+router.post(ROUTE.admin, (req, res) => {
 
     const artistSearchValue = req.body.artist;
     const albumSearchValue = req.body.album;
@@ -67,18 +67,19 @@ router.post(constant.ROUTE.admin, (req, res) => {
                 };
 
                 request.get(options, function (error, response, body) {
-                    console.log(response.statusCode + "===== is the response status code for request.get")
-                    console.log(JSON.parse(body).albums);
+                    //console.log(response.statusCode + "===== is the response status code for request.get")
+                    //console.log(JSON.parse(body).albums);
 
+                    // RETURN THE SPOTIFY API DATA AS A JSON OBJECT
                     const spotifyResponse = JSON.parse(body).albums;
 
                     if (spotifyResponse.items == 0) {
                         res.render("errors", { errmsg: 'Titeln saknas hos Spotify' });
                     } else {
-                        const genres = constant.PRODUCT.genres.filter(genre => {
+                        const genres = PRODUCT.genres.filter(genre => {
                             return genre !== "All";
                         });
-                        res.render(constant.VIEW.adminAddProduct, { spotifyResponse: spotifyResponse, genres: genres })
+                        res.render(VIEW.adminAddProduct, { ROUTE, spotifyResponse: spotifyResponse, genres: genres })
                     }
                 });
             }
@@ -87,7 +88,7 @@ router.post(constant.ROUTE.admin, (req, res) => {
     fetchSpotifyApiData(artistSearchValue, albumSearchValue)
 })
 
-router.post(constant.ROUTE.adminAddProduct, async (req, res) => {
+router.post(ROUTE.adminAddProduct, async (req, res) => {
     console.log(req.body)
     let genres = ["All"];
     for (const property in req.body) {
@@ -113,7 +114,7 @@ router.post(constant.ROUTE.adminAddProduct, async (req, res) => {
             });
         } else {
             product.save();
-            res.redirect(constant.ROUTE.admin);
+            res.redirect(ROUTE.admin);
         }
     });
 })
