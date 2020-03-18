@@ -13,7 +13,8 @@ router.get(constant.ROUTE.admin, verifyAdminToken, async (req, res) => {
 
     const productList = (await Product.find()).reverse()
     res.render(constant.VIEW.admin, {
-        productList
+        productList,
+        constant
     })
 })
 

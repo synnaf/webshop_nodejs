@@ -21,6 +21,7 @@ const ROUTE = {
     adminAddProduct: '/admin/addproduct',
     login: '/login',
     loginUser: '/loginuser',
+    logout: "/logout",
     userAccountId: '/account/:username',
     userAccount: "/useraccount",
     createUser: "/createuser",
