@@ -183,19 +183,25 @@ router.get("/wishlist/:id", verifyToken, async (req, res)=> {
     // const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
     // console.log(loggedIn.userInfo)
     if(verifyToken) {
-        console.log(req.body.userInfo); 
+        
+        console.log(req.body.userInfo);
+        
         const product =  await ProductModel.findOne({_id:req.params.id})
-        console.log("Denna produkt vill user spara: " + product)
+            console.log("Denna produkt vill user spara: " + product)
     
         const user = await UserInfoModel.findOne({_id: req.body.userInfo._id})
-        console.log("Detta är user som vill spara i wishlist " + user)
+            console.log("Detta är user som vill spara i wishlist " + user)
     
-    // await user.addToWishList(product)
-    res.send("added to wishlist!");    
+            user.addToWishlist(product)
+             
+            console.log(user + "La till product i listan")
 
+        res.send("added to wishlist!");    
     }
     else {
-        res.send("du är inte inloggad"); 
+        res.render('errors', {
+            errmsg: 'Du måste logga in för att handla!'
+        });
     }
 
 

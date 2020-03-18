@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
 
         const userInfo = jwt.verify(token, 'secretPriveteKey')
         // console.log("user info som kommer ifrån verifyToken", userInfo)
-        req.userInfo = userInfo;
+        req.body = userInfo;
         next()
     } else {
         res.render('errors', {
