@@ -5,16 +5,17 @@ const userModel= require("../model/user")
 const verifyToken = require("./verifyToken")
 
 
-    router.get(constant.ROUTE.checkout, async (req, res) => {
-    const token=req.cookies.jsonwebtoken 
-    console.log(token,"finns på checkout")
-    const showUserInfo = await  userModel.findOne()
+router.get(constant.ROUTE.checkout, verifyToken, async (req, res) => {
+    
+    // const token = req.cookies.jsonwebtoken 
+    // const user = await UserInfoModel.findOne({_id: req.body.userInfo._id});
    
-    if(token){
-        return verifyToken, res.status(202).render(constant.VIEW.checkout,{showUserInfo})
-       
+    if(verifyToken){
+        const showUserInfo = await userModel.findOne({_id: req.body.userInfo._id })
+        res.status(202).render(constant.VIEW.checkout,{showUserInfo: showUserInfo.wishlist})
+
     } else{
-       
+
         return res.status(202).render(constant.VIEW.checkout,{showUserInfo:"empty cart"})
     }
 
