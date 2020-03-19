@@ -18,9 +18,10 @@
             <% } %>
         </ul>
     </div>
-    <div class="logoutbutton">
-        <a href="<%= ROUTE.logout %>">Logga ut</a>
-    </div>
+    <form class="startbuttons" method="get">
+        <button type="submit" formaction="gallery">GÅ TILL WEBBSHOP</button>
+        <button type="submit" formaction="logout">LOGGA UT</button>
+    </form>
     <div class="passwordinfo">
         <form action="<%= ROUTE.userAccount %>" method="POST">
             <h3>Ändra lösenord:</h3>
