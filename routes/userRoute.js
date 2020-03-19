@@ -75,8 +75,9 @@ router.post(ROUTE.createUser, async (req, res) => {
                         httpOnly: true
                     })
                 }
+                res.redirect(VIEW.userAccount);
             }
-            res.redirect(VIEW.userAccount);
+            
         })
     }
 
@@ -126,12 +127,12 @@ router.post(ROUTE.login, async (req, res) => {
                     httpOnly: true
                 })
             }
+            if (userInfo.isAdmin) {
+                res.redirect(ROUTE.admin);
+            }
+            res.redirect(VIEW.userAccount);
         }
 
-        if (userInfo.isAdmin) {
-            res.redirect(ROUTE.admin);
-        }
-        res.redirect(VIEW.userAccount);
     })
 
 });
@@ -178,14 +179,14 @@ router.post(ROUTE.userAccount, async (req, res) => {
 
 //---- route för checkout/cart/wishlist ----------//
 
-router.get("/wishlist/:id", verifyToken, async (req, res) => {
+router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
 
     if (verifyToken) {
         const product = await ProductModel.findOne({ _id: req.params.id });
         console.log("Denna produkt vill user spara: " + product)
         const user = await UserInfoModel.findOne({ _id: req.body.userInfo._id });
         console.log("Detta är user som vill spara i wishlist " + user)
-        user.addToWishlist(product);
+        user.addToCart(product);
         console.log(user + "La till product i listan")
 
         res.redirect(ROUTE.checkout);

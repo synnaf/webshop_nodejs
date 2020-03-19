@@ -31,7 +31,7 @@ const schemaUser = new Schema({
     },
     resetToken: String, 
     expirationToken: Date, 
-    wishlist: [{
+    shoppingcart: [{
         productId: {
             type: mongoose.Schema.Types.ObjectId, 
             ref: "Product" //det som exporteras i product-model 
@@ -39,8 +39,8 @@ const schemaUser = new Schema({
     }]
 })
 
-schemaUser.methods.addToWishlist = function(product) {
-    this.wishlist.push({productId: product._id})
+schemaUser.methods.addToCart = function(product) {
+    this.shoppingcart.push({productId: product._id})
     //hämtar sitt id från mongoose
     return this.save(); 
 }
