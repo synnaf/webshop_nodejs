@@ -12,10 +12,11 @@
     </div>
     <div class="orderinfo">
         <h3>Beställningar: </h3>
-        <ul>
-            <% for(let orders of loggedIn.orders) { %>
-            <li> Order: <%= orders %>. Detaljer</li>
-            <% } %>
+            <ul>
+              
+                <% loggedIn.shoppingcart.forEach( (obj)=> { %>
+                    <li> Order: <%= obj._id %> </li> 
+                <% }); %>
         </ul>
     </div>
     <form class="startbuttons" method="get">

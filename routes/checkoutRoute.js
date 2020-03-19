@@ -12,10 +12,9 @@ router.get(ROUTE.checkout, verifyToken, async (req, res) => {
 
     if (verifyToken) {
         const showUserInfo = await userModel.findOne({ _id: req.body.userInfo._id })
-        res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo: showUserInfo.wishlist })
+        res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo: showUserInfo.shoppingcart })
 
     } else {
-
         return res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo: "empty cart" })
     }
 
