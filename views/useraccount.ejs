@@ -12,8 +12,11 @@
     </div>
     <div class="orderinfo">
         <h3>Beställningar: </h3>
-        <ul>
-
+            <ul>
+              
+                <% loggedIn.shoppingcart.forEach( (obj)=> { %>
+                    <li> Order: <%= obj._id %> </li> 
+                <% }); %>
         </ul>
     </div>
     <div class="logoutbutton">

@@ -83,7 +83,7 @@ router.post(ROUTE.createUser, async (req, res) => {
 
 });
 
-//------------------------//
+//--------- LOG IN---------------//
 
 router.get(ROUTE.loginUser, (req, res) => {
     res.status(200).render(VIEW.loginUser, {
