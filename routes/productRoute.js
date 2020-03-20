@@ -13,13 +13,16 @@ router.get(ROUTE.index, async (req, res) => {
         });
     }
     displayList = displayList.filter(el => el);
-    // console.log(displayList);
-    res.render(VIEW.index, {displayList: displayList, productListRoute: ROUTE.gallery});
+    res.render(VIEW.index, {
+        displayList: displayList,
+        productListRoute: ROUTE.gallery,
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+    });
 })
 
 router.get(ROUTE.product, async (req, res) => {
     const oneProduct = await Product.findById({ _id: req.params.id });
-    res.render(VIEW.product, { oneProduct });
+    res.render(VIEW.product, { oneProduct, token: (req.cookies.jsonwebtoken !== undefined) ? true : false });
 })
 
 router.get(ROUTE.gallery, async (req, res) => {
@@ -37,7 +40,7 @@ router.get(ROUTE.gallery, async (req, res) => {
             return await validateGenre(query);
         })
         .then(async queryObject => {
-            return await getData(queryObject);
+            return await getData(queryObject, req.cookies.jsonwebtoken);
         })
         .then(async object => {
             res.render(VIEW.gallery, object);
@@ -97,11 +100,10 @@ const validateGenre = async (query) => {
     })
 }
 
-const getData = async (queryObject) => {
+const getData = async (queryObject, token) => {
     return new Promise(async (resolve, reject) => {
         const page = queryObject.page;
         const genres = queryObject.genres;
-        // console.log(genres);
         let productAmount = 0;
         for (genre of genres) {
             productAmount += await Product.find({genre: genre}).countDocuments();
@@ -113,6 +115,7 @@ const getData = async (queryObject) => {
                 productList = productList.concat(await Product.find({genre: genre}).skip(PRODUCT.perPage * (page - 1)).limit(PRODUCT.perPage));
             }
             resolve({
+                token: (token !== undefined) ? true : false,
                 productList,
                 productAmount,
                 currentPage: page,

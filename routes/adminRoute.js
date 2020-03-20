@@ -12,7 +12,8 @@ router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
     const productList = (await Product.find()).reverse()
     res.render(VIEW.admin, {
         productList,
-        ROUTE
+        ROUTE,
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     })
 })
 
@@ -79,7 +80,11 @@ router.post(ROUTE.admin, (req, res) => {
                         const genres = PRODUCT.genres.filter(genre => {
                             return genre !== "All";
                         });
-                        res.render(VIEW.adminAddProduct, { ROUTE, spotifyResponse: spotifyResponse, genres: genres })
+                        res.render(VIEW.adminAddProduct, {
+                            ROUTE, spotifyResponse: spotifyResponse,
+                            genres: genres,
+                            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+                        });
                     }
                 });
             }
@@ -110,7 +115,8 @@ router.post(ROUTE.adminAddProduct, async (req, res) => {
         if (err) {
             console.log(err);
             res.render("errors", {
-                err
+                err,
+                token: (req.cookies.jsonwebtoken !== undefined) ? true : false
             });
         } else {
             product.save();
