@@ -18,6 +18,7 @@ router.get(ROUTE.createUser, (req, res) => {
     res.status(200).render(VIEW.createUser, { ROUTE });
 
 })
+
 router.post(ROUTE.createUser, async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt)
