@@ -23,7 +23,8 @@ module.exports = (req, res, next) => {
 
     } else {
         res.render('errors', {
-            errmsg: 'Du är inte inloggad!'
+            errmsg: 'Du är inte inloggad!',
+            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         });
     }
 

@@ -15,7 +15,11 @@ router.get(ROUTE.checkout, verifyToken, async (req, res) => {
         res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo: showUserInfo.shoppingcart })
 
     } else {
-        return res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo: "empty cart" })
+        return res.status(202).render(VIEW.checkout, {
+            ROUTE,
+            showUserInfo: "empty cart",
+            token: (req.cookies.jsonwebtoken !== undefined) ? true : false 
+        })
     }
 
 })

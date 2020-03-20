@@ -15,7 +15,10 @@ const transport = nodemailer.createTransport(sendgridTransport({
 }))
 
 router.get(ROUTE.createUser, (req, res) => {
-    res.status(200).render(VIEW.createUser, { ROUTE });
+    res.status(200).render(VIEW.createUser, {
+        ROUTE,
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+    });
 
 })
 
@@ -57,15 +60,18 @@ router.post(ROUTE.createUser, async (req, res) => {
             email: req.body.email
         });
         if (!userInfo) return res.render("errors", {
-            errmsg: 'Fel email!'
+            errmsg: 'Fel email!',
+            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         });
         const validUser = await bcrypt.compare(req.body.password, userInfo.password);
         if (!validUser) return res.render("errors", {
-            errmsg: 'Fel lösenord!'
+            errmsg: 'Fel lösenord!',
+            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         });
         jwt.sign({ userInfo }, 'secretPriveteKey', (err, token) => {
             if (err) return res.render('errors', {
-                errmsg: 'token funkar inte'
+                errmsg: 'token funkar inte',
+                token: (req.cookies.jsonwebtoken !== undefined) ? true : false
             });
             if (token) {
                 // console.log("token som finns på signup" + token)
@@ -88,13 +94,15 @@ router.post(ROUTE.createUser, async (req, res) => {
 
 router.get(ROUTE.loginUser, (req, res) => {
     res.status(200).render(VIEW.loginUser, {
-        ROUTE
+        ROUTE,
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     });
 })
 
 router.get(ROUTE.login, (req, res) => {
     res.status(200).render(VIEW.login, {
-        ROUTE
+        ROUTE,
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     });
 })
 
@@ -104,19 +112,22 @@ router.post(ROUTE.login, async (req, res) => {
     });
 
     if (!userInfo) return res.render("errors", {
-        errmsg: 'Fel email!'
+        errmsg: 'Fel email!',
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     });
 
 
     const validUser = await bcrypt.compare(req.body.password, userInfo.password);
     if (!validUser) return res.render("errors", {
-        errmsg: 'Fel lösenord!'
+        errmsg: 'Fel lösenord!',
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     });
     jwt.sign({
         userInfo
     }, 'secretPriveteKey', (err, token) => {
         if (err) return res.render('errors', {
-            errmsg: 'token funkar inte'
+            errmsg: 'token funkar inte',
+            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         });
 
         // console.log("token som finns login route matchar användaren som loggar in: ", token)
@@ -144,6 +155,7 @@ router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
     res.status(200).render(VIEW.userAccount, {
         ROUTE,
         loggedIn,
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     });
 })
 
@@ -194,7 +206,8 @@ router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
     }
     else {
         res.render('errors', {
-            errmsg: 'Du måste logga in för att handla!'
+            errmsg: 'Du måste logga in för att handla!',
+            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         });
     }
 
@@ -206,7 +219,9 @@ router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
 
 
 router.get(ROUTE.confirmation, (req, res) => {
-    res.status(200).render(VIEW.confirmation);
+    res.status(200).render(VIEW.confirmation, {
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+    });
 })
 
 
@@ -214,7 +229,10 @@ router.get(ROUTE.confirmation, (req, res) => {
 //-------------- Fanny lägger in routes för att reset password ------------ // 
 
 router.get(ROUTE.resetpassword, (req, res) => {
-    res.status(200).render(VIEW.resetpassword, { ROUTE });
+    res.status(200).render(VIEW.resetpassword, {
+        ROUTE,
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+    });
 })
 
 router.post(ROUTE.resetpassword, async (req, res) => {
@@ -244,7 +262,11 @@ router.post(ROUTE.resetpassword, async (req, res) => {
 router.get(ROUTE.resetpasswordToken, async (req, res) => {
     const token = req.params.token;
     const user = await UserInfoModel.findOne({ resetToken: token, tokenExpiration: { $gt: Date.now() } });
-    res.render(VIEW.resetform, { user, ROUTE })
+    res.render(VIEW.resetform, {
+        user,
+        ROUTE,
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+     })
 })
 
 router.post(ROUTE.resetpasswordToken, async (req, res) => {
