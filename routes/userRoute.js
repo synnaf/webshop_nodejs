@@ -114,38 +114,40 @@ router.post(ROUTE.login, async (req, res) => {
         errmsg: 'Fel email!',
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     });
-
-
+    
     const validUser = await bcrypt.compare(req.body.password, userInfo.password);
     if (!validUser) return res.render("errors", {
         errmsg: 'Fel lösenord!',
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     });
-    jwt.sign({
-        userInfo
-    }, 'secretPriveteKey', (err, token) => {
-        if (err) return res.render('errors', {
-            errmsg: 'token funkar inte',
-            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-        });
+    else {
 
-        // console.log("token som finns login route matchar användaren som loggar in: ", token)
-        if (token) {
-            const cookie = req.cookies.jsonwebtoken;
-            if (!cookie) {
-                res.cookie('jsonwebtoken', token, {
-                    maxAge: 400000,
-                    httpOnly: true
-                })
+        jwt.sign({
+            userInfo
+        }, 'secretPriveteKey', (err, token) => {
+            if (err) return res.render('errors', {
+                errmsg: 'token funkar inte',
+                token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+            });
+    
+            // console.log("token som finns login route matchar användaren som loggar in: ", token)
+            if (token) {
+                const cookie = req.cookies.jsonwebtoken;
+                if (!cookie) {
+                    res.cookie('jsonwebtoken', token, {
+                        maxAge: 400000,
+                        httpOnly: true
+                    })
+                }
+                if (userInfo.isAdmin) {
+                    res.redirect(ROUTE.admin);
+                }
+                res.redirect(VIEW.userAccount);
             }
-            if (userInfo.isAdmin) {
-                res.redirect(ROUTE.admin);
-            }
-            res.redirect(VIEW.userAccount);
-        }
+    
+        })
 
-    })
-
+    } 
 });
 
 router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
@@ -190,18 +192,19 @@ router.post(ROUTE.userAccount, async (req, res) => {
 
 
 //---- route för checkout/cart/wishlist ----------//
+// --------- borde det egentligen vara en post här?? ---// 
 
 router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
 
     if (verifyToken) {
         const product = await ProductModel.findOne({ _id: req.params.id });
-        console.log("Denna produkt vill user spara: " + product)
+            console.log("Denna produkt vill user spara: " + product)
         const user = await UserInfoModel.findOne({ _id: req.body.userInfo._id });
-        console.log("Detta är user som vill spara i wishlist " + user)
+            console.log("Detta är user som vill spara i wishlist " + user)
         user.addToCart(product);
-        console.log(user + "La till product i listan")
+            console.log(user + "La till product i listan")
 
-        res.redirect(ROUTE.checkout);
+        return res.redirect("/gallery"); 
     }
     else {
         res.render('errors', {
