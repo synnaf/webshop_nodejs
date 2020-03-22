@@ -18,13 +18,10 @@
         </div>
         <% } %>
     </div>
+
     <form class="startbuttons" method="get">
         <button type="submit" formaction="gallery">WEBSHOP</button>
-        <% if (token) { %>
-            <button type="submit" formaction="useraccount">MIN PROFIL</button> 
-        <% } else { %> 
-            <button type="submit" formaction="login">LOGGA IN</button> 
-        <% }%>
+        <button type="submit" formaction="login">LOGGA IN</button>
         <button type="submit" formaction="createuser">BLI MEDLEM</button>
     </form>
 

@@ -110,44 +110,47 @@ router.post(ROUTE.login, async (req, res) => {
     const userInfo = await UserInfoModel.findOne({
         email: req.body.email
     });
+
     if (!userInfo) return res.render("errors", {
         errmsg: 'Fel email!',
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     });
+
+
     const validUser = await bcrypt.compare(req.body.password, userInfo.password);
     if (!validUser) return res.render("errors", {
         errmsg: 'Fel lösenord!',
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     });
-    else {
-        jwt.sign({
-            userInfo
-        }, 'secretPriveteKey', (err, token) => {
-            if (err) return res.render('errors', {
-                errmsg: 'token funkar inte',
-                token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-            });
-    
-            if (token) {
-                const cookie = req.cookies.jsonwebtoken;
-                if (!cookie) {
-                    res.cookie('jsonwebtoken', token, {
-                        maxAge: 400000,
-                        httpOnly: true
-                    })
-                }
-                if (userInfo.isAdmin) {
-                    res.redirect(ROUTE.admin);
-                }
-                res.redirect(VIEW.userAccount);
-            }
-    
-        })
+    jwt.sign({
+        userInfo
+    }, 'secretPriveteKey', (err, token) => {
+        if (err) return res.render('errors', {
+            errmsg: 'token funkar inte',
+            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+        });
 
-    }
+        // console.log("token som finns login route matchar användaren som loggar in: ", token)
+        if (token) {
+            const cookie = req.cookies.jsonwebtoken;
+            if (!cookie) {
+                res.cookie('jsonwebtoken', token, {
+                    maxAge: 400000,
+                    httpOnly: true
+                })
+            }
+            if (userInfo.isAdmin) {
+                res.redirect(ROUTE.admin);
+            }
+            res.redirect(VIEW.userAccount);
+        }
+
+    })
+
 });
 
-router.get(ROUTE.userAccount, verifyToken, async (req, res) => { 
+router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
+    // const newUser = jwt.decode(req.cookies.jsonwebtoken).signedUpUser; 
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
     res.status(200).render(VIEW.userAccount, {
         ROUTE,
@@ -159,9 +162,11 @@ router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
 router.post(ROUTE.userAccount, async (req, res) => {
     //showUserInfo kommer sen att hämta användare via jwt istället för att bara hämta en
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
+
     if (await bcrypt.compare(req.body.currentpassword, loggedIn.password)) {
         const salt = await bcrypt.genSalt(10);
         const newHashPassword = await bcrypt.hash(req.body.newpassword, salt)
+
         await UserInfoModel.updateOne({
             email: loggedIn.email
         }, {
@@ -183,12 +188,11 @@ router.post(ROUTE.userAccount, async (req, res) => {
 })
 
 
-//---- route för när man lägger till en product i cart ----------//
-//----- ska denna vara en post-request?? --------// 
+
+
+//---- route för checkout/cart/wishlist ----------//
 
 router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
-
-    //Lägga till i shoppingcart: 
 
     if (verifyToken) {
         const product = await ProductModel.findOne({ _id: req.params.id });
@@ -196,11 +200,9 @@ router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
         const user = await UserInfoModel.findOne({ _id: req.body.userInfo._id });
         console.log("Detta är user som vill spara i wishlist " + user)
         user.addToCart(product);
-        console.log(user + "La till product i listan") 
+        console.log(user + "La till product i listan")
 
-        //hur vill vi notifiera användaren att något las till i varukorgen? 
-        // res.redirect(ROUTE.checkout);
-        res.send("la till produkt"); 
+        res.redirect(ROUTE.checkout);
     }
     else {
         res.render('errors', {
@@ -208,6 +210,7 @@ router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
             token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         });
     }
+
 
 })
 
@@ -220,6 +223,7 @@ router.get(ROUTE.confirmation, (req, res) => {
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     });
 })
+
 
 
 //-------------- Fanny lägger in routes för att reset password ------------ // 
