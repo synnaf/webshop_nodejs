@@ -1,5 +1,6 @@
 // Härifrån startar vi upp vår webshop
 const mongoose = require('mongoose')
+require('dotenv').config()
 
 const {
     app,

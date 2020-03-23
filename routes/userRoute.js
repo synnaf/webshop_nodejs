@@ -67,7 +67,7 @@ router.post(ROUTE.createUser, async (req, res) => {
             errmsg: 'Fel lösenord!',
             token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         });
-        jwt.sign({ userInfo }, 'secretPriveteKey', (err, token) => {
+        jwt.sign({ userInfo }, config.tokenkey.userjwt, (err, token) => {
             if (err) return res.render('errors', {
                 errmsg: 'token funkar inte',
                 token: (req.cookies.jsonwebtoken !== undefined) ? true : false
@@ -90,13 +90,6 @@ router.post(ROUTE.createUser, async (req, res) => {
 });
 
 //--------- LOG IN---------------//
-
-router.get(ROUTE.loginUser, (req, res) => {
-    res.status(200).render(VIEW.loginUser, {
-        ROUTE,
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-    });
-})
 
 router.get(ROUTE.login, (req, res) => {
     res.status(200).render(VIEW.login, {
@@ -124,13 +117,11 @@ router.post(ROUTE.login, async (req, res) => {
 
         jwt.sign({
             userInfo
-        }, 'secretPriveteKey', (err, token) => {
+        }, config.tokenkey.userjwt, (err, token) => {
             if (err) return res.render('errors', {
                 errmsg: 'token funkar inte',
                 token: (req.cookies.jsonwebtoken !== undefined) ? true : false
             });
-    
-            // console.log("token som finns login route matchar användaren som loggar in: ", token)
             if (token) {
                 const cookie = req.cookies.jsonwebtoken;
                 if (!cookie) {
@@ -256,7 +247,7 @@ router.post(ROUTE.resetpassword, async (req, res) => {
                     html: `http://localhost:8003/reset/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord!<h2>`
                 });
             })
-        return res.redirect(VIEW.loginUser)
+        return res.redirect(VIEW.login)
     })
 })
 
@@ -280,7 +271,7 @@ router.post(ROUTE.resetpasswordToken, async (req, res) => {
         user.tokenExpiration = undefined;
         await user.save();
     }
-    res.redirect(VIEW.loginUser);
+    res.redirect(VIEW.login);
 })
 
 router.get(ROUTE.logout, (req, res) => {
