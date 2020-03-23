@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const verifyToken = require("./verifyToken");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
+const url = require("url");
 const transport = nodemailer.createTransport(sendgridTransport({
     auth: { api_key: config.mailkey }
 }))
@@ -58,10 +59,12 @@ router.post(ROUTE.createUser, async (req, res) => {
         const userInfo = await UserInfoModel.findOne({
             email: req.body.email
         });
-        if (!userInfo) return res.render("errors", {
-            errmsg: 'Fel email!',
-            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-        });
+        if (!userInfo) return res.redirect(url.format({
+            pathname: ROUTE.error,
+            query: {
+                errmsg: 'Fel email!'
+            }
+        }));
         const validUser = await bcrypt.compare(req.body.password, userInfo.password);
         if (!validUser) return res.render("errors", {
             errmsg: 'Fel lösenord!',
@@ -103,25 +106,33 @@ router.post(ROUTE.login, async (req, res) => {
         email: req.body.email
     });
 
-    if (!userInfo) return res.render("errors", {
-        errmsg: 'Fel email!',
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-    });
+    if (!userInfo) return res.redirect(url.format({
+        pathname: ROUTE.error,
+        query: {
+            errmsg: 'Fel email!'
+        }
+    }));
     
     const validUser = await bcrypt.compare(req.body.password, userInfo.password);
-    if (!validUser) return res.render("errors", {
-        errmsg: 'Fel lösenord!',
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-    });
+    if (!validUser) return res.redirect(url.format({
+        pathname: ROUTE.error,
+        query: {
+            errmsg: 'Fel lösenord!'
+        }
+    }));
     else {
 
         jwt.sign({
             userInfo
         }, config.tokenkey.userjwt, (err, token) => {
-            if (err) return res.render('errors', {
-                errmsg: 'token funkar inte',
-                token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-            });
+            if (err) return res.redirect(url.format({
+                pathname: ROUTE.error,
+                query: {
+                    errmsg: 'Token fungerar ej!'
+                }
+            }));
+    
+            // console.log("token som finns login route matchar användaren som loggar in: ", token)
             if (token) {
                 const cookie = req.cookies.jsonwebtoken;
                 if (!cookie) {
@@ -198,10 +209,12 @@ router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
         return res.redirect("/gallery"); 
     }
     else {
-        res.render('errors', {
-            errmsg: 'Du måste logga in för att handla!',
-            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-        });
+        res.redirect(url.format({
+            pathname: ROUTE.error,
+            query: {
+                errmsg: 'Du måste logga in för att handla!'
+            }
+        }));
     }
 
 

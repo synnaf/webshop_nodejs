@@ -20,10 +20,12 @@ module.exports = (req, res, next) => {
         }
 
     } else {
-        res.render('errors', {
-            errmsg: 'Du är inte inloggad!',
-            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-        });
+        res.redirect(url.format({
+            pathname: ROUTE.error,
+            query: {
+                errmsg: 'Du är inte inloggad!'
+            }
+        }));
     }
 
 }

@@ -75,7 +75,12 @@ router.post(ROUTE.admin, (req, res) => {
                     const spotifyResponse = JSON.parse(body).albums;
 
                     if (spotifyResponse.items == 0) {
-                        res.render("errors", { errmsg: 'Titeln saknas hos Spotify' });
+                        res.redirect(url.format({
+                            pathname: ROUTE.error,
+                            query: {
+                                errmsg: 'Titeln saknas hos spotify!'
+                            }
+                        }));
                     } else {
                         const genres = PRODUCT.genres.filter(genre => {
                             return genre !== "All";
@@ -114,10 +119,12 @@ router.post(ROUTE.adminAddProduct, async (req, res) => {
     product.validate(function (err) {
         if (err) {
             console.log(err);
-            res.render("errors", {
-                err,
-                token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-            });
+            res.redirect(url.format({
+                pathname: ROUTE.error,
+                query: {
+                    errmsg: 'Valideringsfel i Mongoose'
+                }
+            }));
         } else {
             product.save();
             res.redirect(ROUTE.admin);

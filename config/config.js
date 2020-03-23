@@ -1,6 +1,5 @@
 const mongoDB ={
     databaseUrl: process.env.MONGO_DB
-    //MONGO_DB
 } 
 
 const spotify ={

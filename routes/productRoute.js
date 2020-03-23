@@ -49,7 +49,9 @@ router.get(ROUTE.gallery, async (req, res) => {
             console.error(error);
             res.redirect(url.format({
                 pathname: ROUTE.error,
-                query: {}
+                query: {
+                    errmsg: error.errmsg
+                }
             }));
         });
     }
@@ -61,8 +63,9 @@ const validatePage = async (query) => {
             resolve(query);
         } else {
             let error = new Error();
-            error.name = "Invalid Query"
-            error.errmsg = "page is not an integer";
+            error.name = "Invalid Query";
+            error.description = "page is not an integer";
+            error.errmsg = "Kunde inte hitta sidan";
             reject(error);
         }
     })
@@ -87,14 +90,16 @@ const validateGenre = async (query) => {
                 resolve(queryObject);
             } else {
                 let error = new Error();
-                error.name = "Invalid Query"
-                error.errmsg = "genre does not exist";
+                error.name = "Invalid Query";
+                error.description = "genre does not exist";
+                error.errmsg = "Kunde inte hitta sidan";
                 reject(error);
             }
         } else {
             let error = new Error();
-            error.name = "Invalid Query"
-            error.errmsg = "genre is undefined";
+            error.name = "Invalid Query";
+            error.description = "genre is undefined";
+            error.errmsg = "Kunde inte hitta sidan";
             reject(error);
         }
     })
@@ -133,7 +138,8 @@ const getData = async (queryObject, token) => {
         } else {
             let error = new Error();
             error.name = "Invalid Query";
-            error.errmsg = "page is not within range"
+            error.description = "page is not within range";
+            error.errmsg = "Kunde inte hitta sidan";
             reject(error);
         }
     })
