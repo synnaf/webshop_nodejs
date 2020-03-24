@@ -21,6 +21,10 @@ describe('Testing routes', () => {
         supertest(server).post('/admin/addproduct').expect(302, done)
     })
 
+    it("Should do 404 on everything else", (done) => {
+        supertest(server).get("/ensidasomintefinns").expect(404, done)
+    })
+
     afterEach((done) => {
         server.close(done)
     })
