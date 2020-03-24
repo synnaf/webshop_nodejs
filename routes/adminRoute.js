@@ -7,7 +7,11 @@ const config = require('../config/config');
 const bcrypt = require('bcrypt');
 const url = require("url");
 const verifyAdminToken = require('./verifyAdminToken');
+<<<<<<< HEAD
 const verifyToken = require('./verifyToken');
+=======
+const url = require('url');
+>>>>>>> 6298ccb38ee28acf7dcd7a5b24e295f895e5f541
 
 router.get(ROUTE.admin, verifyToken, async (req, res) => {
 
