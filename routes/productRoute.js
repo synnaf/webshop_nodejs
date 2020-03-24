@@ -76,7 +76,7 @@ const validateGenre = async (query) => {
         if (query.genre !== undefined) {
             let correct = true;
             const genres = query.genre.split(",");
-            for (genre of genres) {
+            for (const genre of genres) {
                 if (!PRODUCT.genres.includes(genre)) {
                     correct = false;
                     break;
@@ -110,13 +110,13 @@ const getData = async (queryObject, token) => {
         const page = queryObject.page;
         const genres = queryObject.genres;
         let productAmount = 0;
-        for (genre of genres) {
+        for (const genre of genres) {
             productAmount += await Product.find({genre: genre}).countDocuments();
         }
         const pageAmount = Math.ceil(productAmount / PRODUCT.perPage);
         if ((page >= 1) && (page <= pageAmount)) {
             let productList = [];
-            for (genre of genres) {
+            for (const genre of genres) {
                 productList = productList.concat(await Product.find({genre: genre}).skip(PRODUCT.perPage * (page - 1)).limit(PRODUCT.perPage));
             }
             resolve({

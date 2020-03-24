@@ -6,6 +6,7 @@ const request = require('request'); // SPOTIFY REQUEST LIBRARY
 const config = require('../config/config');
 const bcrypt = require('bcrypt');
 const verifyAdminToken = require('./verifyAdminToken');
+const url = require('url');
 
 router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
 
