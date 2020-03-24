@@ -1,11 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
-<<<<<<< HEAD
 const ROUTE = require('../constant')
 const url = require("url");
-=======
-const url = require('url');
->>>>>>> 6298ccb38ee28acf7dcd7a5b24e295f895e5f541
 
 module.exports = (req, res, next) => {
 
