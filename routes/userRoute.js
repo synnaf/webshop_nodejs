@@ -146,7 +146,9 @@ router.post(ROUTE.login, async (req, res) => {
                 if (userInfo.isAdmin) {
                     res.redirect(ROUTE.admin);
                 }
-                res.redirect(VIEW.userAccount);
+                else {
+                    res.redirect(ROUTE.userAccount);
+                }
             }
 
         })
