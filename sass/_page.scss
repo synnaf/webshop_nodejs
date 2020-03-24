@@ -21,7 +21,8 @@ html {
                 line-height: 100px;
                 text-align: center; 
             }
-            //admin sök formulär 
+
+            //admin formulär 
             .search-album-form, .admin-login-form, .create-admin-form, .add-product-form {
                 align-self: center;
                 width:70%; 
@@ -51,6 +52,7 @@ html {
                     }
                 }
             }
+
             //admin existerande produkter
             .productlist-container{
                 @include flexColumnCenter;
@@ -75,6 +77,7 @@ html {
                 }
 
             }
+
             //unikt för startsidan 
             .newscontainers {
                 font-size: $textSizeStandard;
@@ -162,6 +165,8 @@ html {
                     }
                 }
             }
+
+            //styling föt checkout och shoppingcart 
             .shoppingcart-container {
                 height:auto;
                 background-color:white; 
@@ -225,18 +230,6 @@ html {
                 }
 
             }
-            form {
-                label {
-                    display: block;
-                }
-                input{
-                    @include inputfieldStyle;
-                    width: 70%;
-                }
-                button {
-                    @include buttonShapeBig
-                }
-            }
             .product-container {
                 text-align: center;
                 margin-top: 2rem;
@@ -246,6 +239,7 @@ html {
                 }
             }
             
+            //styling för useraccount/userPorfile? 
             .userinfo {
                 @include flexColumnCenter; 
                 h3 {
@@ -297,13 +291,44 @@ html {
                 }
 
             }
-                #one-product-image {
-                    width: 70%;
+
+            //styling för enskilda produkter (one product) 
+            #one-product-image {
+                width: 70%;
+            }
+            #add-to-cart-button {
+                @include buttonShapeSmall;
+                background-color: $colorSecond;
+            }
+
+            //styling för create user 
+            .create-user-form {
+                align-self: center;
+                fieldset {
+                    align-self: center;
+                    text-align:left;
+                    padding:1.5rem;
+                    border:none;
+                    margin-bottom:1rem;
+                    label {
+                        text-align:left;
+                        font-size: 1rem;
+                        margin-bottom:0.2rem;
+                    }
+                    input {
+                        padding:0.5rem 0 0.5rem 0 ;
+                        width:100%;
+                        border:none;
+                        margin-bottom:1rem;
+                    }
+                    button {
+                        @include buttonShapeBig;
+                        background-color:lightgrey;
+                        margin-top:1rem;
+                        padding:0.5rem;  
+                    }
                 }
-                #add-to-cart-button {
-                    @include buttonShapeSmall;
-                    background-color: $colorSecond;
-                }
+            }
         }   
             
     }
