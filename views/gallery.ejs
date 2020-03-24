@@ -2,8 +2,7 @@
 <%- include ("navbar.ejs") %>
 <main>
     <p class="small-text">
-        Här visas flera produkter ur en kategori? loopar igenom produkter i db och presenterar utvalda
-        objekt.
+        Ett urval av alla godbitar som finns på lager just nu.
     </p>
     <%- include ("pagination.ejs") %>
     <ul class="product-list">
@@ -20,8 +19,9 @@
                     </div>
                 </div>
                 <div class="product-info-right">
-                    <a href="/cart"><button class="add-to-cart-button">KÖP</button></a>
-                    <a href="/gallery/<%= product._id%>"><button id="show-product-button">LÄS MER</button></a>
+                    <a href="/shoppingcart/<%=product._id%>"><button class="add-to-cart-button">KÖP</button></a>
+                    <a href="<%= productListRoute %>/<%= product._id%>"><button id="show-product-button">LÄS
+                            MER</button></a>
                 </div>
             </div>
         </li>

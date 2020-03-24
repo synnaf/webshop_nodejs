@@ -1,5 +1,6 @@
 // THIS IS WHERE THE APP RUNS
 const mongoose = require('mongoose')
+require('dotenv').config()
 
 const {
     app,

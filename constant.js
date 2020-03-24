@@ -2,24 +2,24 @@ const VIEW = {
     index: 'index',
     admin: "admin",
     adminAddProduct: 'addProduct',
-    createAdmin: "createadmin",
     createUser: "createuser",
-    loginAdmin: 'log-in-admin',
-    loginUser: 'log-in-user',
+    login: 'login',
     userAccount: 'useraccount',
     gallery: 'gallery',
     product: 'product',
     checkout: 'checkout',
     confirmation: 'confirmation',
-    error: 'errors'
+    error: 'errors', 
+    resetpassword: 'resetpassword', 
+    resetform: 'resetform'
 }
 
 const ROUTE = {
     index: '/',
     admin: '/admin',
     adminAddProduct: '/admin/addproduct',
-    loginAdmin: '/adminlogin',
-    loginUser: '/userlogin',
+    login: '/login',
+    logout: "/logout",
     userAccountId: '/account/:username',
     userAccount: "/useraccount",
     createUser: "/createuser",
@@ -28,9 +28,17 @@ const ROUTE = {
     checkout: '/checkout',
     confirmation: '/checkout/confirmation',
     error: '/*',
+    resetpassword: '/resetpassword', 
+    resetpasswordToken: '/resetpassword/:token'
+}
+
+const PRODUCT = {
+    perPage: 4,
+    genres: ["All", "Rock", "Pop", "Soul", "Rap", "Rnb", "Blues"]
 }
 
 module.exports = {
     VIEW,
-    ROUTE
+    ROUTE,
+    PRODUCT
 }

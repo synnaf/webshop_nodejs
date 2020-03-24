@@ -13,16 +13,16 @@ describe('Testing routes', () => {
         supertest(server).get('/gallery').expect(200, done());
     })
 
-    it('Should respond to post /', (done) => {
-        supertest(server).get('/').expect(200, done)
+    it('Should respond to /', (done) => {
+        supertest(server).get('/').expect(200, done())
     })
 
     it('Should respond to post /admin/addproduct', (done) => {
-        supertest(server).post('/admin/addproduct').expect(302, done)
+        supertest(server).post('/admin/addproduct').expect(302, done())
     })
 
     it("Should do 404 on everything else", (done) => {
-        supertest(server).get("/ensidasomintefinns").expect(404, done)
+        supertest(server).get("/ensidasomintefinns").expect(404, done())
     })
 
     afterEach((done) => {

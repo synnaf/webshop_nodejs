@@ -1,73 +1,44 @@
 const express = require('express');
 const router = express.Router();
-const Admin = require('../model/user');
 const Product = require('../model/product');
-const constant = require('../constant');
-const request = require('request'); // "Request" library
+const { ROUTE, VIEW, PRODUCT } = require('../constant');
+const request = require('request'); // SPOTIFY REQUEST LIBRARY
 const config = require('../config/config');
 const bcrypt = require('bcrypt');
+const verifyAdminToken = require('./verifyAdminToken');
 
-
-router.get(constant.ROUTE.loginAdmin, (req, res) => {
-    res.status(200).render(constant.VIEW.loginAdmin, {
-        constant
-    });
-})
-
-router.post(constant.ROUTE.loginAdmin, async (req, res) => {
-    const admin = await Admin.findOne({
-        email: req.body.adminName
-    });
-
-    if (!admin.isAdmin) {
-        res.redirect(constant.ROUTE.loginUser);
-    }
-
-    if (!admin) {
-        res.redirect(constant.ROUTE.index);
-    }
-
-    const validAdmin = await bcrypt.compare(req.body.adminPassword, admin.password);
-
-    if (validAdmin) {
-        res.redirect(constant.ROUTE.admin);
-    }
-
-    res.redirect(constant.ROUTE.loginAdmin);
-})
-
-router.get(constant.ROUTE.admin, async (req, res) => {
+router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
 
     const productList = (await Product.find()).reverse()
-    res.status(200).render(constant.VIEW.admin, {
-        productList
+    res.render(VIEW.admin, {
+        productList,
+        ROUTE,
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     })
 })
 
-router.post(constant.ROUTE.admin, (req, res) => {
+router.post(ROUTE.admin, (req, res) => {
 
-    //console.log(req.)
-    // när man trycker på "Sök" så kör funktionen som auktoriserar spotify web api
-    // värdet från inputfältet ska in i söksträngen 
     const artistSearchValue = req.body.artist;
     const albumSearchValue = req.body.album;
-    // hämta information från spotify 
-    fetchSpotifyApiData(artistSearchValue, albumSearchValue)
 
-    //------------------------------ SPOTIFY AUTH ---------------------------- //
-
-    /**
-     * This is an example of a basic node.js script that performs
-     * the Client Credentials oAuth2 flow to authenticate against
-     * the Spotify Accounts.
-     *
-     * For more information, read
-     * https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow
-     */
+    // THIS FUNCTION WILL AUTHORIZE AND FETCH DATA USING THE SPOTIFY API
+    // DATA WILL BE BASED ON THE VALUE FROM THE INPUTFIELDS IN ADMIN.EJS
     function fetchSpotifyApiData(artistSearchValue, albumSearchValue) {
-        //skapa en request
-        const client_id = config.spotify.client_id; // Your client id
-        const client_secret = config.spotify.client_secret; // Your secret
+        //------------------------------ SPOTIFY AUTH ---------------------------- //
+
+        /**
+         * This is an example of a basic node.js script that performs
+         * the Client Credentials oAuth2 flow to authenticate against
+         * the Spotify Accounts.
+         *
+         * For more information, read
+         * https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow
+         */
+
+        //CREATE A REQUEST
+        const client_id = config.spotify.client_id; // CLIENT ID
+        const client_secret = config.spotify.client_secret; // CLIENT SECRET
         var authOptions = {
             url: 'https://accounts.spotify.com/api/token',
             headers: {
@@ -84,7 +55,7 @@ router.post(constant.ROUTE.admin, (req, res) => {
             if (!error && response.statusCode === 200) {
                 console.log('no error and got statuscode 200')
 
-                // use the access token to access the Spotify Web API
+                // USE THE ACCESS TOKEN TO ACCESS THE SPOTIFY WEB API
                 var token = body.access_token;
 
                 var options = {
@@ -97,46 +68,66 @@ router.post(constant.ROUTE.admin, (req, res) => {
                 };
 
                 request.get(options, function (error, response, body) {
-                    console.log(response.statusCode + "===== is the response status code for request.get")
-                    console.log(JSON.parse(body).albums);
+                    //console.log(response.statusCode + "===== is the response status code for request.get")
+                    //console.log(JSON.parse(body).albums);
 
-                    //gör ett if-statement fär vi hanterar det som kommer tillbaka i body (vårt response) 
-                    //re-routa till error sidan annars! 
+                    // RETURN THE SPOTIFY API DATA AS A JSON OBJECT
                     const spotifyResponse = JSON.parse(body).albums;
 
-
                     if (spotifyResponse.items == 0) {
-                        res.render("errors", { errmsg: 'Titeln saknas hos Spotify' });
+                        res.redirect(url.format({
+                            pathname: ROUTE.error,
+                            query: {
+                                errmsg: 'Titeln saknas hos spotify!'
+                            }
+                        }));
                     } else {
-                        res.render(constant.VIEW.adminAddProduct, { spotifyResponse })
+                        const genres = PRODUCT.genres.filter(genre => {
+                            return genre !== "All";
+                        });
+                        res.render(VIEW.adminAddProduct, {
+                            ROUTE, spotifyResponse: spotifyResponse,
+                            genres: genres,
+                            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+                        });
                     }
                 });
             }
         });
     }
+    fetchSpotifyApiData(artistSearchValue, albumSearchValue)
 })
 
-router.post(constant.ROUTE.adminAddProduct, async (req, res) => {
+router.post(ROUTE.adminAddProduct, async (req, res) => {
     console.log(req.body)
+    let genres = ["All"];
+    for (const property in req.body) {
+        if (property.includes("genre")) {
+            genres.push(property.replace("genre", ""));
+        }
+    }
     const product = await new Product({
         artist: req.body.artist,
         album: req.body.album,
         tracks: req.body.tracks,
         spotifyId: req.body.spotifyId,
         imgUrl: req.body.imgUrl,
-        genre: req.body.genre,
+        genre: genres,
         price: req.body.price,
         addedBy: req.body.adminName
     });
     product.validate(function (err) {
         if (err) {
             console.log(err);
-            res.render("errors", {
-                err
-            });
+            res.redirect(url.format({
+                pathname: ROUTE.error,
+                query: {
+                    errmsg: 'Valideringsfel i Mongoose'
+                }
+            }));
         } else {
             product.save();
-            res.redirect(constant.ROUTE.admin);
+            res.redirect(ROUTE.admin);
         }
     });
 })

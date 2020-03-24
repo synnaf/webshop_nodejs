@@ -1,0 +1,15 @@
+<%- include ("header.ejs") %>
+<%- include ("navbar.ejs") %>
+<main>
+    <h1>Ändra lösenord</h1>
+    <form action="<% ROUTE.resetpasswordToken %>" method="POST" class="user-login-form">
+        <input type="hidden" name="token" value=<%= user.resetToken %>>
+        <label for="password">Nytt lösenord:</label>
+        <input type="password" name="password">
+        <label for="repeat-password">Upprepa nytt lösenord:</label>
+        <input type="password" name="repeat-password">
+
+        <button type="submit">Ändra</button>
+    </form>
+</main>
+<%- include ("footer.ejs") %>

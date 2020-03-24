@@ -4,17 +4,18 @@ const config = require('../config/config');
 module.exports = (req, res, next) => {
 
     const token = req.cookies.jsonwebtoken
-    console.log(token, "denna token är ifrån verifyToken")
+ 
     if (token) {
-
-        const userInfo = jwt.verify(token, 'secretPriveteKey')
-        console.log("user info som kommer ifrån verifyToken", userInfo)
-        req.userInfo = userInfo;
-        next()
+        const userInfo = jwt.verify(token, config.tokenkey.userjwt)
+        req.body = userInfo;
+        next(); 
     } else {
-        res.render('errors', {
-            errmsg: 'Du är inte inloggad!'
-        });
+        res.redirect(url.format({
+            pathname: ROUTE.error,
+            query: {
+                errmsg: 'Du är inte inloggad!'
+            }
+        }));
     }
 
 }

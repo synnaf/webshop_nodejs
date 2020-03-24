@@ -1,7 +1,7 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <!--lägger till ny användare-->
-<form action="/createuser" method="post">
+<form action="<%ROUTE.createUser%>" method="post">
     <div>Förnamn
         <input type="text" name="firstName" />
     </div>
@@ -12,10 +12,13 @@
         <input type="text" name="address" />
     </div>
     <div>Lösenord
-        <input type="text" name="password" />
+        <input type="password" name="password" />
     </div>
     <div>E-post
-        <input type="text" name="email" />
+        <input type="email" name="email" />
+    </div>
+    <div>admin
+        <input type="password" name="adminpass" />
     </div>
     <div>
         <button type="submit">Lägg till</button>

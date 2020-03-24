@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose'); 
+const Schema = require("mongoose").Schema;
 
-
-const schemaUser = new mongoose.Schema({
+const schemaUser = new Schema({
 
     isAdmin: {
         type: Boolean,
@@ -29,9 +29,22 @@ const schemaUser = new mongoose.Schema({
         type: String,
         minlength: 2
     },
-    orders: []
+    resetToken: String, 
+    expirationToken: Date, 
+    shoppingcart: [{
+        productId: {
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: "Product" //det som exporteras i product-model 
+        }
+    }]
 })
 
-const userModel = mongoose.model('user', schemaUser)
+schemaUser.methods.addToCart = function(product) {
+    this.shoppingcart.push({productId: product._id})
+    //hämtar sitt id från mongoose
+    return this.save(); 
+}
 
+
+const userModel = mongoose.model('User', schemaUser)
 module.exports = userModel

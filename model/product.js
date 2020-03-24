@@ -1,6 +1,7 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Schema = require("mongoose").Schema;
 
-const schemaProduct = new mongoose.Schema({
+const schemaProduct = new Schema({
     artist: String,
     album: String,
     tracks: String,
@@ -8,9 +9,15 @@ const schemaProduct = new mongoose.Schema({
     imgUrl: String,
     genre: [],
     price: Number,
-    addedBy: String
+    addedBy: String, 
+    user: {
+        //ett objekt id från mongoose 
+        type: mongoose.Schema.Types.ObjectId,
+        //referens från en user 
+        ref: "User" 
+    }
 })
 
-const Product = mongoose.model("product", schemaProduct)
+const Product = mongoose.model("Product", schemaProduct)
 
 module.exports = Product
