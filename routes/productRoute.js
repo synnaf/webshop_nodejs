@@ -115,10 +115,12 @@ const getData = async (queryObject, token) => {
         }
         const pageAmount = Math.ceil(productAmount / PRODUCT.perPage);
         if ((page >= 1) && (page <= pageAmount)) {
+            const perGenre = Math.ceil(PRODUCT.perPage / genres.length);
             let productList = [];
             for (const genre of genres) {
-                productList = productList.concat(await Product.find({genre: genre}).skip(PRODUCT.perPage * (page - 1)).limit(PRODUCT.perPage));
+                productList = productList.concat(await Product.find({genre: genre}).skip(perGenre * (page - 1)).limit(perGenre));
             }
+            const genreString = genres.toString();
             resolve({
                 token: (token !== undefined) ? true : false,
                 productList,
@@ -132,7 +134,7 @@ const getData = async (queryObject, token) => {
                 previousPage: page - 1,
                 lastPage: pageAmount,
                 productListRoute: ROUTE.gallery,
-                genre: genres[0]
+                genre: genreString
             });
             // console.log(productList);
         } else {

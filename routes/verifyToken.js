@@ -8,8 +8,8 @@ module.exports = (req, res, next) => {
     const token = req.cookies.jsonwebtoken
 
     if (token) {
-        const userInfo = jwt.verify(token, config.tokenkey.userjwt)
-        req.body.userInfo = userInfo;
+        //const userInfo = jwt.verify(token, config.tokenkey.userjwt)
+        req.body.userInfo = jwt.verify(token, config.tokenkey.userjwt).userInfo;
         next();
     } else {
         res.redirect(url.format({

@@ -11,6 +11,7 @@ router.get(ROUTE.checkout, verifyToken, async (req, res) => {
     // const user = await UserInfoModel.findOne({_id: req.body.userInfo._id});
 
     if (verifyToken) {
+        console.log(req.body)
         const showUserInfo = await UserModel.findOne({ _id: req.body.userInfo._id })
         res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo: showUserInfo.shoppingcart, token: (req.cookies.jsonwebtoken !== undefined) ? true : false })
 
