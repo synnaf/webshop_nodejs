@@ -8,9 +8,19 @@ module.exports = (req, res, next) => {
     const token = req.cookies.jsonwebtoken
 
     if (token) {
-        //const userInfo = jwt.verify(token, config.tokenkey.userjwt)
-        req.body.userInfo = jwt.verify(token, config.tokenkey.userjwt).userInfo;
-        next();
+        jwt.verify(token, config.tokenkey.userjwt, (err, result) => {
+            if (err) {
+                return res.redirect(url.format({
+                    pathname: ROUTE.error,
+                    query: {
+                        errmsg: 'TOKEN ERROR!'
+                    }
+                }));
+            } else {
+                req.body.userInfo = result.userInfo;
+                next();
+            }
+        })
     } else {
         res.redirect(url.format({
             pathname: ROUTE.error,

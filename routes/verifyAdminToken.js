@@ -9,16 +9,25 @@ module.exports = (req, res, next) => {
 
     if (token) {
 
-        const userInfo = jwt.verify(token, config.tokenkey.adminjwt)
-        req.body.userInfo = userInfo;
-
-        if (userInfo.userInfo.isAdmin == true) {
-            next();
-        }
-
-        else {
-            res.redirect(ROUTE.index);
-        }
+        jwt.verify(token, config.tokenkey.adminjwt, (err, result) => {
+            if (err) {
+                return res.redirect(url.format({
+                    pathname: ROUTE.error,
+                    query: {
+                        errmsg: 'TOKEN ERROR!'
+                    }
+                }));
+            } else {
+                console.log(result);
+                if (result.userInfo.isAdmin == true) {
+                    req.body.userInfo = result.userInfo;
+                    next();
+                }
+                else {
+                    res.redirect(ROUTE.index);
+                }
+            }
+        })
 
     } else {
         res.redirect(url.format({
