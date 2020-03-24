@@ -5,19 +5,22 @@ const { ROUTE, VIEW, PRODUCT } = require('../constant');
 const request = require('request'); // SPOTIFY REQUEST LIBRARY
 const config = require('../config/config');
 const bcrypt = require('bcrypt');
+const url = require("url");
 const verifyAdminToken = require('./verifyAdminToken');
+const verifyToken = require('./verifyToken');
 
-router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
+router.get(ROUTE.admin, verifyToken, async (req, res) => {
 
-    const productList = (await Product.find()).reverse()
+    const productList = await (await (Product.find().populate('user -password'))).reverse()
     res.render(VIEW.admin, {
         productList,
         ROUTE,
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     })
+    console.log('TOKEN NÄR MAN ÄR PÅ ADMIN', req.body.userInfo)
 })
 
-router.post(ROUTE.admin, (req, res) => {
+router.post(ROUTE.admin, verifyToken, (req, res) => {
 
     const artistSearchValue = req.body.artist;
     const albumSearchValue = req.body.album;
@@ -73,6 +76,7 @@ router.post(ROUTE.admin, (req, res) => {
 
                     // RETURN THE SPOTIFY API DATA AS A JSON OBJECT
                     const spotifyResponse = JSON.parse(body).albums;
+                    const userInfo = req.body.userInfo;
 
                     if (spotifyResponse.items == 0) {
                         res.redirect(url.format({
@@ -86,10 +90,13 @@ router.post(ROUTE.admin, (req, res) => {
                             return genre !== "All";
                         });
                         res.render(VIEW.adminAddProduct, {
-                            ROUTE, spotifyResponse: spotifyResponse,
+                            ROUTE,
+                            userInfo: userInfo,
+                            spotifyResponse: spotifyResponse,
                             genres: genres,
                             token: (req.cookies.jsonwebtoken !== undefined) ? true : false
                         });
+                        console.log('USERINFO NÄR MAN SKA ADDPRODUCT', req.body.userInfo)
                     }
                 });
             }
@@ -116,6 +123,7 @@ router.post(ROUTE.adminAddProduct, async (req, res) => {
         price: req.body.price,
         addedBy: req.body.adminName
     });
+
     product.validate(function (err) {
         if (err) {
             console.log(err);
@@ -126,6 +134,7 @@ router.post(ROUTE.adminAddProduct, async (req, res) => {
                 }
             }));
         } else {
+            console.log(product)
             product.save();
             res.redirect(ROUTE.admin);
         }

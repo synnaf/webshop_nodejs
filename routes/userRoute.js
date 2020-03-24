@@ -8,6 +8,7 @@ const config = require('../config/config');
 const { ROUTE, VIEW } = require('../constant');
 const jwt = require('jsonwebtoken');
 const verifyToken = require("./verifyToken");
+const verifyAdminToken = require("./verifyAdminToken");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const url = require("url");
@@ -86,7 +87,7 @@ router.post(ROUTE.createUser, async (req, res) => {
                 }
                 res.redirect(VIEW.userAccount);
             }
-            
+
         })
     }
 
@@ -112,7 +113,7 @@ router.post(ROUTE.login, async (req, res) => {
             errmsg: 'Fel email!'
         }
     }));
-    
+
     const validUser = await bcrypt.compare(req.body.password, userInfo.password);
     if (!validUser) return res.redirect(url.format({
         pathname: ROUTE.error,
@@ -131,7 +132,7 @@ router.post(ROUTE.login, async (req, res) => {
                     errmsg: 'Token fungerar ej!'
                 }
             }));
-    
+
             // console.log("token som finns login route matchar användaren som loggar in: ", token)
             if (token) {
                 const cookie = req.cookies.jsonwebtoken;
@@ -146,10 +147,10 @@ router.post(ROUTE.login, async (req, res) => {
                 }
                 res.redirect(VIEW.userAccount);
             }
-    
+
         })
 
-    } 
+    }
 });
 
 router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
@@ -200,13 +201,13 @@ router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
 
     if (verifyToken) {
         const product = await ProductModel.findOne({ _id: req.params.id });
-            console.log("Denna produkt vill user spara: " + product)
+        console.log("Denna produkt vill user spara: " + product)
         const user = await UserInfoModel.findOne({ _id: req.body.userInfo._id });
-            console.log("Detta är user som vill spara i wishlist " + user)
+        console.log("Detta är user som vill spara i wishlist " + user)
         user.addToCart(product);
-            console.log(user + "La till product i listan")
+        console.log(user + "La till product i listan")
 
-        return res.redirect("/gallery"); 
+        return res.redirect("/gallery");
     }
     else {
         res.redirect(url.format({
@@ -272,7 +273,7 @@ router.get(ROUTE.resetpasswordToken, async (req, res) => {
         user,
         ROUTE,
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-     })
+    })
 })
 
 router.post(ROUTE.resetpasswordToken, async (req, res) => {

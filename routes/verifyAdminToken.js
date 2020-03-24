@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 const constant = require('../constant');
+const url = require("url");
 
 module.exports = (req, res, next) => {
 
@@ -12,7 +13,7 @@ module.exports = (req, res, next) => {
         req.userInfo = userInfo;
 
         if (userInfo.userInfo.isAdmin == true) {
-            next(); 
+            next();
         }
 
         else {
