@@ -158,7 +158,6 @@ router.post(ROUTE.login, async (req, res) => {
 
 router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
     // const newUser = jwt.decode(req.cookies.jsonwebtoken).signedUpUser;
-    console.log(req.query)
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
     res.status(200).render(VIEW.userAccount, {
         ROUTE,
@@ -174,8 +173,6 @@ router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
 router.post(ROUTE.userAccount, async (req, res) => {
     //showUserInfo kommer sen att hämta användare via jwt istället för att bara hämta en
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
-
-    console.log(loggedIn);
 
     if (await bcrypt.compare(req.body.currentpassword, loggedIn.password)) {
         const salt = await bcrypt.genSalt(10);
