@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
 
     if (token) {
         const userInfo = jwt.verify(token, config.tokenkey.userjwt)
-        req.body = userInfo;
+        req.body.userInfo = userInfo;
         next();
     } else {
         res.redirect(url.format({
