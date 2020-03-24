@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
-const constant = require('../constant');
+const {ROUTE} = require('../constant');
 const url = require("url");
 
 module.exports = (req, res, next) => {
@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
         }
 
         else {
-            res.redirect(constant.ROUTE.index);
+            res.redirect(ROUTE.index);
         }
 
     } else {
@@ -28,5 +28,4 @@ module.exports = (req, res, next) => {
             }
         }));
     }
-
 }
