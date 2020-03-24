@@ -60,12 +60,12 @@ router.post(ROUTE.admin, verifyAdminToken, (req, res) => {
                 console.log('no error and got statuscode 200')
 
                 // USE THE ACCESS TOKEN TO ACCESS THE SPOTIFY WEB API
-                var token = body.access_token;
+                var spotifyToken = body.access_token;
 
                 var options = {
                     url: `https://api.spotify.com/v1/search?q=album:${albumSearchValue}%20artist:${artistSearchValue}&type=album&q=`,
                     headers: {
-                        Authorization: 'Bearer ' + token,
+                        Authorization: 'Bearer ' + spotifyToken,
                         Accept: 'application/json',
                         'Content-Type': 'application/json'
                     }
@@ -106,8 +106,8 @@ router.post(ROUTE.admin, verifyAdminToken, (req, res) => {
     fetchSpotifyApiData(artistSearchValue, albumSearchValue)
 })
 
-router.post(ROUTE.adminAddProduct, async (req, res) => {
-    console.log(req.body)
+router.post(ROUTE.adminAddProduct, verifyAdminToken, async (req, res) => {
+    console.log('USERINFO I POST ADMINADDPRODUCT', req.body.userInfo)
     let genres = ["All"];
     for (const property in req.body) {
         if (property.includes("genre")) {
@@ -122,9 +122,10 @@ router.post(ROUTE.adminAddProduct, async (req, res) => {
         imgUrl: req.body.imgUrl,
         genre: genres,
         price: req.body.price,
-        addedBy: req.body.adminName
+        addedBy: req.body.adminName,
+        user: req.body.userInfo._id
     });
-
+    console.log(product)
     product.validate(function (err) {
         if (err) {
             console.log(err);
@@ -135,7 +136,6 @@ router.post(ROUTE.adminAddProduct, async (req, res) => {
                 }
             }));
         } else {
-            console.log(product)
             product.save();
             res.redirect(ROUTE.admin);
         }

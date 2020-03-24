@@ -27,6 +27,8 @@
             <input type="number" name="price" />
             <label for="addedBy">Tillagd av</label>
             <input type="text" name="adminName" value="<%= userInfo.email %>">
+            <label for="adminId">Admin ID: </label>
+            <input type="text" name="adminId" value="<%= userInfo._id %>">
             <div class="submit-form">
                 <button type="submit">Lägg till i databas</button>
             </div>

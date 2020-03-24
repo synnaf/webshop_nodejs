@@ -9,9 +9,10 @@ const schemaProduct = new Schema({
     imgUrl: String,
     genre: [],
     price: Number,
-    addedBy: {
+    addedBy: String,
+    user: {
         //ett objekt id från mongoose 
-        type: mongoose.Schema.Types.Mixed,
+        type: mongoose.Schema.Types.ObjectId,
         //referens från en user 
         ref: "User"
     }
