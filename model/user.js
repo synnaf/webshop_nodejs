@@ -1,4 +1,4 @@
-const mongoose = require('mongoose'); 
+const mongoose = require('mongoose');
 const Schema = require("mongoose").Schema;
 
 const schemaUser = new Schema({
@@ -29,20 +29,39 @@ const schemaUser = new Schema({
         type: String,
         minlength: 2
     },
-    resetToken: String, 
-    expirationToken: Date, 
+    resetToken: String,
+    expirationToken: Date,
     shoppingcart: [{
         productId: {
-            type: mongoose.Schema.Types.ObjectId, 
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Product" //det som exporteras i product-model 
         }
     }]
 })
 
-schemaUser.methods.addToCart = function(product) {
-    this.shoppingcart.push({productId: product._id})
+schemaUser.methods.addToCart = function (product) {
+    this.shoppingcart.push({
+        productId: product._id
+    })
     //hämtar sitt id från mongoose
-    return this.save(); 
+
+
+    const filter = this.shoppingcart.filter(function ({
+        productId
+    }) {
+        console.log({
+            productId
+        })
+
+        return !this.has(`${productId}`) && this.add(`${productId}`)
+
+    }, new Set)
+
+    console.log(filter)
+
+    this.shoppingcart = [...filter]
+
+    return this.save();
 }
 
 
