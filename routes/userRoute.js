@@ -71,7 +71,8 @@ router.post(ROUTE.createUser, async (req, res) => {
             errmsg: 'Fel lösenord!',
             token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         });
-        jwt.sign({ userInfo }, config.tokenkey.userjwt, (err, token) => {
+        const tokenSignature = userInfo.isAdmin ? config.tokenkey.adminjwt : config.tokenkey.userjwt;
+        jwt.sign({ userInfo }, tokenSignature, (err, token) => {
             if (err) return res.render('errors', {
                 errmsg: 'token funkar inte',
                 token: (req.cookies.jsonwebtoken !== undefined) ? true : false
@@ -122,10 +123,10 @@ router.post(ROUTE.login, async (req, res) => {
         }
     }));
     else {
-
+        const tokenSignature = userInfo.isAdmin ? config.tokenkey.adminjwt : config.tokenkey.userjwt;
         jwt.sign({
             userInfo
-        }, config.tokenkey.userjwt, (err, token) => {
+        }, tokenSignature, (err, token) => {
             if (err) return res.redirect(url.format({
                 pathname: ROUTE.error,
                 query: {

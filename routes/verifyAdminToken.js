@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     if (token) {
 
         const userInfo = jwt.verify(token, config.tokenkey.adminjwt)
-        req.userInfo = userInfo;
+        req.body.userInfo = userInfo;
 
         if (userInfo.userInfo.isAdmin == true) {
             next();

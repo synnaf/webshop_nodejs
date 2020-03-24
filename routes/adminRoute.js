@@ -10,7 +10,7 @@ const verifyAdminToken = require('./verifyAdminToken');
 const verifyToken = require('./verifyToken');
 
 
-router.get(ROUTE.admin, verifyToken, async (req, res) => {
+router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
 
     const productList = await (await (Product.find().populate('user -password'))).reverse()
     res.render(VIEW.admin, {
@@ -21,7 +21,7 @@ router.get(ROUTE.admin, verifyToken, async (req, res) => {
     console.log('TOKEN NÄR MAN ÄR PÅ ADMIN', req.body.userInfo)
 })
 
-router.post(ROUTE.admin, verifyToken, (req, res) => {
+router.post(ROUTE.admin, verifyAdminToken, (req, res) => {
 
     const artistSearchValue = req.body.artist;
     const albumSearchValue = req.body.album;
