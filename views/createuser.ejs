@@ -1,28 +1,35 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <!--lägger till ny användare-->
-<form action="<%ROUTE.createUser%>" method="post">
-    <div>Förnamn
-        <input type="text" name="firstName" />
+<main>
+    <div class="pageheadline">
+        <h1>Bli medlem</h1>
     </div>
-    <div>Efternamn
-        <input type="text" name="lastName" />
-    </div>
-    <div>Adress
-        <input type="text" name="address" />
-    </div>
-    <div>Lösenord
-        <input type="password" name="password" />
-    </div>
-    <div>E-post
-        <input type="email" name="email" />
-    </div>
-    <div>admin
-        <input type="password" name="adminpass" />
-    </div>
-    <div>
-        <button type="submit">Lägg till</button>
-    </div>
-</form>
+    <form action="<%ROUTE.createUser%>" method="post" class="create-user-form">
+        <fieldset>
+            <label for="firstName">Förnamn</label>
+            <input type="text" name="firstName" />
+        
+            <label for="lastName">Efternamn</label>
+                <input type="text" name="lastName" />
+            
+            <label for="address">Adress</label>
+                <input type="text" name="address" />
+            
+            <label for="password">Lösenord</label>
+                <input type="password" name="password" />
+            
+            <label for="email">E-post</label>
+                <input type="email" name="email" />
+            
+            <label for="adminpass">Admin</label>
+                <input type="password" name="adminpass" />
+
+                <button type="submit">Lägg till</button>
+            
+        </fieldset>
+    </form>
+</main>
+
 
 <%- include ("footer.ejs") %>
