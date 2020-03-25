@@ -7,7 +7,7 @@
         <% } else if (passwordChanged.exists && !passwordChanged.value) { %>
         <h1>Fel lösenord</h1>
         <% } else { %>
-        <h1>Välkommen <i> <%= loggedIn.firstName %> </i> </h1>
+        <h1>Hej <i><%= loggedIn.firstName %> </i> </h1>
         <% } %>
     </div>
     <div class="userinfo">
@@ -36,15 +36,18 @@
         <button type="submit" formaction="checkout">GÅ TILL CHECKOUT</button>
         <button type="submit" formaction="logout">LOGGA UT</button>
     </form>
-    <div class="passwordinfo">
-        <form action="<%= ROUTE.userAccount %>" method="POST">
+
+    <div class="change-password">
+        <form action="<%= ROUTE.userAccount %>" method="POST" class="passwordinfo">
             <h3>Ändra lösenord:</h3>
-            <label>Nuvarande lösenord:</label>
-            <input type="password" name="currentpassword" placeholder="Nuvarande lösenord" />
-            <label>Nytt lösenord:</label>
-            <input type="password" name="newpassword" placeholder="Nytt lösenord" />
+            <label for="currentpassword">Nuvarande lösenord:</label>
+            <input type="password" name="currentpassword" />
+            <label for="newpassword">Nytt lösenord:</label>
+            <input type="password" name="newpassword" />
             <button type="submit">Ändra lösenord</button>
         </form>
     </div>
+
+
 </main>
 <%- include ("footer.ejs") %>
