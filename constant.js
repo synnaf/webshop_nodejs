@@ -20,7 +20,6 @@ const ROUTE = {
     adminAddProduct: '/admin/addproduct',
     login: '/login',
     logout: "/logout",
-    userAccountId: '/account/:username',
     userAccount: "/useraccount",
     createUser: "/createuser",
     gallery: '/gallery',

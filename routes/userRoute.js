@@ -12,9 +12,7 @@ const verifyAdminToken = require("./verifyAdminToken");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const url = require("url");
-const transport = nodemailer.createTransport(sendgridTransport({
-    auth: { api_key: config.mailkey }
-}))
+
 
 router.get(ROUTE.createUser, (req, res) => {
     res.status(200).render(VIEW.createUser, {
@@ -27,7 +25,7 @@ router.post(ROUTE.createUser, async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt)
 
-    if (req.body.adminpass == config.adminPassword) {
+    if (req.body.adminpass == config.admin.adminPassword) {
         await new UserInfoModel({
             isAdmin: true,
             email: req.body.email,
@@ -45,18 +43,7 @@ router.post(ROUTE.createUser, async (req, res) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
         }).save();
-
-        // const userEmail = await UserInfoModel.findOne({
-        //     email: req.body.email
-        // });
-        // //skicka mail till användaren kommer ske här 
-        // // await transport.sendMail({
-        // //     to: userEmail.email,
-        // //     from: "<no-reply>Webshop-NMFVM", 
-        // //     subject: "Välkommen!",
-        // //     html: "<h1>Välkommen " + userEmail.email + "</h1>"
-        // // });
-
+    }
         const userInfo = await UserInfoModel.findOne({
             email: req.body.email
         });
@@ -86,12 +73,10 @@ router.post(ROUTE.createUser, async (req, res) => {
                         httpOnly: true
                     })
                 }
-                res.redirect(VIEW.userAccount);
+                if(tokenSignature == config.tokenkey.adminjwt) return res.redirect(VIEW.admin);
+                if(tokenSignature == config.tokenkey.userjwt) return res.redirect(VIEW.userAccount);
             }
-
         })
-    }
-
 });
 
 //--------- LOG IN---------------//
@@ -254,61 +239,59 @@ router.get(ROUTE.confirmation, (req, res) => {
 })
 
 
-
 //-------------- Fanny lägger in routes för att reset password ------------ // 
 
-router.get(ROUTE.resetpassword, (req, res) => {
-    res.status(200).render(VIEW.resetpassword, {
-        ROUTE,
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-    });
-})
+// router.get(ROUTE.resetpassword, (req, res) => {
+//     res.status(200).render(VIEW.resetpassword, {
+//         ROUTE,
+//         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+//     });
+// })
 
-router.post(ROUTE.resetpassword, async (req, res) => {
-    crypto.randomBytes(32, async (error, token) => {
-        if (error) return res.redirect(VIEW.userAccount);
-        const resetToken = token.toString("hex");
-        const user = UserInfoModel.findOne({ email: req.body.resetMail })
-            .then(user => {
-                if (!user) return res.redirect(VIEW.userAccount)
-                user.resetToken = resetToken
-                user.tokenExpiration = Date.now() + 1000000
-                return user.save();
-            })
-            .then(() => {
-                transport.sendMail({
-                    to: user.resetMail,
-                    from: "<no-reply>Byt lösenord",
-                    subject: "Ändra ditt lösenord!",
-                    html: `http://localhost:8003/reset/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord!<h2>`
-                });
-            })
-        return res.redirect(VIEW.login)
-    })
-})
+// router.post(ROUTE.resetpassword, async (req, res) => {
+//     crypto.randomBytes(32, async (error, token) => {
+//         if (error) return res.redirect(VIEW.userAccount);
+//         const resetToken = token.toString("hex");
+//         const user = UserInfoModel.findOne({ email: req.body.resetMail })
+//             .then(user => {
+//                 if (!user) return res.redirect(VIEW.userAccount)
+//                 user.resetToken = resetToken
+//                 user.tokenExpiration = Date.now() + 1000000
+//                 return user.save();
+//             })
+//             .then(() => {
+//                 transport.sendMail({
+//                     to: user.resetMail,
+//                     from: "<no-reply>Byt lösenord",
+//                     subject: "Ändra ditt lösenord!",
+//                     html: `http://localhost:8003/reset/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord!<h2>`
+//                 });
+//             })
+//         return res.redirect(VIEW.login)
+//     })
+// })
 
+// router.get(ROUTE.resetpasswordToken, async (req, res) => {
+//     const token = req.params.token;
+//     const user = await UserInfoModel.findOne({ resetToken: token, tokenExpiration: { $gt: Date.now() } });
+//     res.render(VIEW.resetform, {
+//         user,
+//         ROUTE,
+//         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+//     })
+// })
 
-router.get(ROUTE.resetpasswordToken, async (req, res) => {
-    const token = req.params.token;
-    const user = await UserInfoModel.findOne({ resetToken: token, tokenExpiration: { $gt: Date.now() } });
-    res.render(VIEW.resetform, {
-        user,
-        ROUTE,
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-    })
-})
-
-router.post(ROUTE.resetpasswordToken, async (req, res) => {
-    const user = await UserInfoModel.findOne({ resetToken: req.body.token })
-    if (user) {
-        const hashPassword = await bcrypt.hash(req.body.password, 10);
-        user.password = hashPassword;
-        user.resetToken = undefined;
-        user.tokenExpiration = undefined;
-        await user.save();
-    }
-    res.redirect(VIEW.login);
-})
+// router.post(ROUTE.resetpasswordToken, async (req, res) => {
+//     const user = await UserInfoModel.findOne({ resetToken: req.body.token })
+//     if (user) {
+//         const hashPassword = await bcrypt.hash(req.body.password, 10);
+//         user.password = hashPassword;
+//         user.resetToken = undefined;
+//         user.tokenExpiration = undefined;
+//         await user.save();
+//     }
+//     res.redirect(VIEW.login);
+// })
 
 router.get(ROUTE.logout, (req, res) => {
     res.clearCookie("jsonwebtoken").redirect(ROUTE.index);

@@ -11,7 +11,6 @@ const verifyToken = require('./verifyToken');
 
 
 router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
-
     const productList = (await (Product.find().populate('user', { _id: 1 }))).reverse()
     res.render(VIEW.admin, {
         productList,
