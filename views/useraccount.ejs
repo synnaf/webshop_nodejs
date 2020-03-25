@@ -2,7 +2,13 @@
 <%- include ("navbar.ejs") %>
 <main>
     <div class="pageheadline">
-        <h1>Välkommen <i> <%= loggedIn.firstName %> </i> </h1>
+        <% if (passwordChanged.exists && passwordChanged.value) { %>
+            <h1>Lösenordet är ändrat</h1>
+        <% } else if (passwordChanged.exists && !passwordChanged.value) { %>
+            <h1>Fel lösenord</h1>
+        <% } else { %>
+            <h1>Välkommen <i> <%= loggedIn.firstName %> </i> </h1>
+        <% } %>
     </div>
     <div class="userinfo">
         <h3>Användare: </h3>

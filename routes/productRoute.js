@@ -7,12 +7,14 @@ const url = require('url');
 router.get(ROUTE.index, async (req, res) => {
     let displayList = [];
     for (const genre of PRODUCT.genres) {
-        displayList.push({
-            img: await Product.findOne({genre: genre}, { imgUrl: 1, _id: 0 }),
-            genre: genre
-        });
+        const img = await Product.findOne({genre: genre}, { imgUrl: 1, _id: 0 });
+        if (img) {
+            displayList.push({
+                img: img.imgUrl,
+                genre: genre
+            });
+        }
     }
-    displayList = displayList.filter(el => el);
     res.render(VIEW.index, {
         displayList: displayList,
         productListRoute: ROUTE.gallery,
@@ -49,7 +51,9 @@ router.get(ROUTE.gallery, async (req, res) => {
             console.error(error);
             res.redirect(url.format({
                 pathname: ROUTE.error,
-                query: {}
+                query: {
+                    errmsg: error.errmsg
+                }
             }));
         });
     }
@@ -61,8 +65,9 @@ const validatePage = async (query) => {
             resolve(query);
         } else {
             let error = new Error();
-            error.name = "Invalid Query"
-            error.errmsg = "page is not an integer";
+            error.name = "Invalid Query";
+            error.description = "page is not an integer";
+            error.errmsg = "Kunde inte hitta sidan";
             reject(error);
         }
     })
@@ -73,7 +78,7 @@ const validateGenre = async (query) => {
         if (query.genre !== undefined) {
             let correct = true;
             const genres = query.genre.split(",");
-            for (genre of genres) {
+            for (const genre of genres) {
                 if (!PRODUCT.genres.includes(genre)) {
                     correct = false;
                     break;
@@ -87,14 +92,16 @@ const validateGenre = async (query) => {
                 resolve(queryObject);
             } else {
                 let error = new Error();
-                error.name = "Invalid Query"
-                error.errmsg = "genre does not exist";
+                error.name = "Invalid Query";
+                error.description = "genre does not exist";
+                error.errmsg = "Kunde inte hitta sidan";
                 reject(error);
             }
         } else {
             let error = new Error();
-            error.name = "Invalid Query"
-            error.errmsg = "genre is undefined";
+            error.name = "Invalid Query";
+            error.description = "genre is undefined";
+            error.errmsg = "Kunde inte hitta sidan";
             reject(error);
         }
     })
@@ -105,15 +112,17 @@ const getData = async (queryObject, token) => {
         const page = queryObject.page;
         const genres = queryObject.genres;
         let productAmount = 0;
-        for (genre of genres) {
+        for (const genre of genres) {
             productAmount += await Product.find({genre: genre}).countDocuments();
         }
         const pageAmount = Math.ceil(productAmount / PRODUCT.perPage);
         if ((page >= 1) && (page <= pageAmount)) {
+            const perGenre = Math.ceil(PRODUCT.perPage / genres.length);
             let productList = [];
-            for (genre of genres) {
-                productList = productList.concat(await Product.find({genre: genre}).skip(PRODUCT.perPage * (page - 1)).limit(PRODUCT.perPage));
+            for (const genre of genres) {
+                productList = productList.concat(await Product.find({genre: genre}).skip(perGenre * (page - 1)).limit(perGenre));
             }
+            const genreString = genres.toString();
             resolve({
                 token: (token !== undefined) ? true : false,
                 productList,
@@ -127,13 +136,13 @@ const getData = async (queryObject, token) => {
                 previousPage: page - 1,
                 lastPage: pageAmount,
                 productListRoute: ROUTE.gallery,
-                genre: genres[0]
+                genre: genreString
             });
-            // console.log(productList);
         } else {
             let error = new Error();
             error.name = "Invalid Query";
-            error.errmsg = "page is not within range"
+            error.description = "page is not within range";
+            error.errmsg = "Kunde inte hitta sidan";
             reject(error);
         }
     })

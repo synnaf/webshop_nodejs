@@ -1,31 +1,40 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
-const constant = require('../constant');
+const {ROUTE} = require('../constant');
+const url = require("url");
 
 module.exports = (req, res, next) => {
 
-
     const token = req.cookies.jsonwebtoken
-    console.log(token, "token")
+
     if (token) {
 
-        const userInfo = jwt.verify(token, 'secretPriveteKey')
-        console.log("user info", userInfo)
-        req.userInfo = userInfo;
-
-        if (userInfo.userInfo.isAdmin == true) {
-            next()
-        }
-
-        else {
-            res.redirect(constant.ROUTE.index);
-        }
+        jwt.verify(token, config.tokenkey.adminjwt, (err, result) => {
+            if (err) {
+                return res.redirect(url.format({
+                    pathname: ROUTE.error,
+                    query: {
+                        errmsg: 'TOKEN ERROR!'
+                    }
+                }));
+            } else {
+                console.log(result);
+                if (result.userInfo.isAdmin == true) {
+                    req.body.userInfo = result.userInfo;
+                    next();
+                }
+                else {
+                    res.redirect(ROUTE.index);
+                }
+            }
+        })
 
     } else {
-        res.render('errors', {
-            errmsg: 'Du är inte inloggad!',
-            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-        });
+        res.redirect(url.format({
+            pathname: ROUTE.error,
+            query: {
+                errmsg: 'Du är inte inloggad!'
+            }
+        }));
     }
-
 }

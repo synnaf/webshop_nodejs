@@ -12,7 +12,7 @@
             <input type="text" name="artist" />
             <label for="albumName">Album</label>
             <input type="text" name="album" />
-            <div class="submit-form"> 
+            <div class="submit-form">
                 <button type="submit">Sök album</button>
             </div>
         </fieldset>
@@ -21,7 +21,8 @@
         <h2>Produkter på lager</h2>
         <% productList.forEach( (item)=> { %>
         <div class="product-container">
-            <div class="album-img"><a href="<%= item.imgUrl %>"><img src="<%= item.imgUrl %>" alt="album cover"></a></div>
+            <div class="album-img"><a href="<%= item.imgUrl %>"><img src="<%= item.imgUrl %>" alt="album cover"></a>
+            </div>
             <div class="info">
                 <div><b>Artist: </b><%= item.artist %></div>
                 <div><b>Album: </b><%= item.album %></div>
@@ -30,6 +31,8 @@
                 <div><b>Genre: </b><%= item.genre %></div>
                 <div><b>Pris: </b><%= item.price %></div>
                 <div><b>Tillagd av: </b><%= item.addedBy %></div>
+                <div><b>Admin ID: </b><%= item.user %></div>
+
             </div>
         </div>
         <% }); %>

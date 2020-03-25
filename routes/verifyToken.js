@@ -1,21 +1,33 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
+const {ROUTE} = require('../constant')
+const url = require("url");
 
 module.exports = (req, res, next) => {
 
     const token = req.cookies.jsonwebtoken
-    // console.log(token, "denna token är ifrån verifyToken")
-    if (token) {
 
-        const userInfo = jwt.verify(token, 'secretPriveteKey')
-        // console.log("user info som kommer ifrån verifyToken", userInfo)
-        req.body = userInfo;
-        next()
+    if (token) {
+        jwt.verify(token, config.tokenkey.userjwt, (err, result) => {
+            if (err) {
+                return res.redirect(url.format({
+                    pathname: ROUTE.error,
+                    query: {
+                        errmsg: 'TOKEN ERROR!'
+                    }
+                }));
+            } else {
+                req.body.userInfo = result.userInfo;
+                next();
+            }
+        })
     } else {
-        res.render('errors', {
-            errmsg: 'Du är inte inloggad!',
-            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-        });
+        res.redirect(url.format({
+            pathname: ROUTE.error,
+            query: {
+                errmsg: 'Du är inte inloggad!'
+            }
+        }));
     }
 
 }

@@ -11,7 +11,7 @@
         <div class="news">
             <a href="<%= productListRoute %>?genre=<%= display.genre %>&page=1">
                 <div class="placeholder">
-                    <img src="<%= display.img.imgUrl %>" style="width: 100%" alt="<%= display.genre %>" />
+                    <img src="<%= display.img %>" style="width: 100%" alt="<%= display.genre %>" />
                 </div>
             </a>
             <h3><%= display.genre %></h3>
@@ -21,7 +21,11 @@
 
     <form class="startbuttons" method="get">
         <button type="submit" formaction="gallery">WEBSHOP</button>
-        <button type="submit" formaction="login">LOGGA IN</button>
+        <% if (token) { %>
+            <button type="submit" formaction="useraccount">MIN PROFIL</button> 
+        <% } else { %> 
+            <button type="submit" formaction="login">LOGGA IN</button> 
+        <% }%>
         <button type="submit" formaction="createuser">BLI MEDLEM</button>
     </form>
 

@@ -8,8 +8,10 @@ const config = require('../config/config');
 const { ROUTE, VIEW } = require('../constant');
 const jwt = require('jsonwebtoken');
 const verifyToken = require("./verifyToken");
+const verifyAdminToken = require("./verifyAdminToken");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
+const url = require("url");
 const transport = nodemailer.createTransport(sendgridTransport({
     auth: { api_key: config.mailkey }
 }))
@@ -58,16 +60,19 @@ router.post(ROUTE.createUser, async (req, res) => {
         const userInfo = await UserInfoModel.findOne({
             email: req.body.email
         });
-        if (!userInfo) return res.render("errors", {
-            errmsg: 'Fel email!',
-            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-        });
+        if (!userInfo) return res.redirect(url.format({
+            pathname: ROUTE.error,
+            query: {
+                errmsg: 'Fel email!'
+            }
+        }));
         const validUser = await bcrypt.compare(req.body.password, userInfo.password);
         if (!validUser) return res.render("errors", {
             errmsg: 'Fel lösenord!',
             token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         });
-        jwt.sign({ userInfo }, 'secretPriveteKey', (err, token) => {
+        const tokenSignature = userInfo.isAdmin ? config.tokenkey.adminjwt : config.tokenkey.userjwt;
+        jwt.sign({ userInfo }, tokenSignature, (err, token) => {
             if (err) return res.render('errors', {
                 errmsg: 'token funkar inte',
                 token: (req.cookies.jsonwebtoken !== undefined) ? true : false
@@ -83,20 +88,13 @@ router.post(ROUTE.createUser, async (req, res) => {
                 }
                 res.redirect(VIEW.userAccount);
             }
-            
+
         })
     }
 
 });
 
 //--------- LOG IN---------------//
-
-router.get(ROUTE.loginUser, (req, res) => {
-    res.status(200).render(VIEW.loginUser, {
-        ROUTE,
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-    });
-})
 
 router.get(ROUTE.login, (req, res) => {
     res.status(200).render(VIEW.login, {
@@ -110,51 +108,65 @@ router.post(ROUTE.login, async (req, res) => {
         email: req.body.email
     });
 
-    if (!userInfo) return res.render("errors", {
-        errmsg: 'Fel email!',
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-    });
-
+    if (!userInfo) return res.redirect(url.format({
+        pathname: ROUTE.error,
+        query: {
+            errmsg: 'Fel email!'
+        }
+    }));
 
     const validUser = await bcrypt.compare(req.body.password, userInfo.password);
-    if (!validUser) return res.render("errors", {
-        errmsg: 'Fel lösenord!',
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-    });
-    jwt.sign({
-        userInfo
-    }, 'secretPriveteKey', (err, token) => {
-        if (err) return res.render('errors', {
-            errmsg: 'token funkar inte',
-            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-        });
-
-        // console.log("token som finns login route matchar användaren som loggar in: ", token)
-        if (token) {
-            const cookie = req.cookies.jsonwebtoken;
-            if (!cookie) {
-                res.cookie('jsonwebtoken', token, {
-                    maxAge: 400000,
-                    httpOnly: true
-                })
-            }
-            if (userInfo.isAdmin) {
-                res.redirect(ROUTE.admin);
-            }
-            res.redirect(VIEW.userAccount);
+    if (!validUser) return res.redirect(url.format({
+        pathname: ROUTE.error,
+        query: {
+            errmsg: 'Fel lösenord!'
         }
+    }));
+    else {
+        const tokenSignature = userInfo.isAdmin ? config.tokenkey.adminjwt : config.tokenkey.userjwt;
+        jwt.sign({
+            userInfo
+        }, tokenSignature, (err, token) => {
+            if (err) return res.redirect(url.format({
+                pathname: ROUTE.error,
+                query: {
+                    errmsg: 'Token fungerar ej!'
+                }
+            }));
 
-    })
+            // console.log("token som finns login route matchar användaren som loggar in: ", token)
+            if (token) {
+                const cookie = req.cookies.jsonwebtoken;
+                if (!cookie) {
+                    res.cookie('jsonwebtoken', token, {
+                        maxAge: 400000,
+                        httpOnly: true
+                    })
+                }
+                if (userInfo.isAdmin) {
+                    res.redirect(ROUTE.admin);
+                }
+                else {
+                    res.redirect(ROUTE.userAccount);
+                }
+            }
 
+        })
+
+    }
 });
 
 router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
-    // const newUser = jwt.decode(req.cookies.jsonwebtoken).signedUpUser; 
+    // const newUser = jwt.decode(req.cookies.jsonwebtoken).signedUpUser;
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
     res.status(200).render(VIEW.userAccount, {
         ROUTE,
         loggedIn,
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false,
+        passwordChanged: {
+            exists: req.query.passwordChanged ? true : false,
+            value: (req.query.passwordChanged == 'true') ? true : false
+        }
     });
 })
 
@@ -176,13 +188,28 @@ router.post(ROUTE.userAccount, async (req, res) => {
             runValidators: true
         }, (error, success) => {
             if (error) {
-                res.send(error._message);
+                res.redirect(url.format({
+                    pathname: ROUTE.error,
+                    query: {
+                        errmsg: error._message
+                    }
+                }));
             } else {
-                res.redirect(ROUTE.userAccount + "?success");
+                res.redirect(url.format({
+                    pathname: ROUTE.userAccount,
+                    query: {
+                        passwordChanged: "true"
+                    }
+                }));
             }
         });
     } else {
-        res.redirect(ROUTE.userAccount + "?failure");
+        res.redirect(url.format({
+            pathname: ROUTE.userAccount,
+            query: {
+                passwordChanged: "false"
+            }
+        }));
     }
 })
 
@@ -190,6 +217,7 @@ router.post(ROUTE.userAccount, async (req, res) => {
 
 
 //---- route för checkout/cart/wishlist ----------//
+// --------- borde det egentligen vara en post här?? ---// 
 
 router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
 
@@ -201,13 +229,15 @@ router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
         user.addToCart(product);
         console.log(user + "La till product i listan")
 
-        res.redirect(ROUTE.checkout);
+        return res.redirect("/gallery");
     }
     else {
-        res.render('errors', {
-            errmsg: 'Du måste logga in för att handla!',
-            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-        });
+        res.redirect(url.format({
+            pathname: ROUTE.error,
+            query: {
+                errmsg: 'Du måste logga in för att handla!'
+            }
+        }));
     }
 
 
@@ -253,7 +283,7 @@ router.post(ROUTE.resetpassword, async (req, res) => {
                     html: `http://localhost:8003/reset/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord!<h2>`
                 });
             })
-        return res.redirect(VIEW.loginUser)
+        return res.redirect(VIEW.login)
     })
 })
 
@@ -265,7 +295,7 @@ router.get(ROUTE.resetpasswordToken, async (req, res) => {
         user,
         ROUTE,
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-     })
+    })
 })
 
 router.post(ROUTE.resetpasswordToken, async (req, res) => {
@@ -277,7 +307,7 @@ router.post(ROUTE.resetpasswordToken, async (req, res) => {
         user.tokenExpiration = undefined;
         await user.save();
     }
-    res.redirect(VIEW.loginUser);
+    res.redirect(VIEW.login);
 })
 
 router.get(ROUTE.logout, (req, res) => {

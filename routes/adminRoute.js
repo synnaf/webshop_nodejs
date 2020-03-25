@@ -5,19 +5,23 @@ const { ROUTE, VIEW, PRODUCT } = require('../constant');
 const request = require('request'); // SPOTIFY REQUEST LIBRARY
 const config = require('../config/config');
 const bcrypt = require('bcrypt');
+const url = require("url");
 const verifyAdminToken = require('./verifyAdminToken');
+const verifyToken = require('./verifyToken');
+
 
 router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
 
-    const productList = (await Product.find()).reverse()
+    const productList = (await (Product.find().populate('user', { _id: 1 }))).reverse()
     res.render(VIEW.admin, {
         productList,
         ROUTE,
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     })
+    console.log('TOKEN NÄR MAN ÄR PÅ ADMIN', req.body.userInfo)
 })
 
-router.post(ROUTE.admin, (req, res) => {
+router.post(ROUTE.admin, verifyAdminToken, (req, res) => {
 
     const artistSearchValue = req.body.artist;
     const albumSearchValue = req.body.album;
@@ -56,12 +60,12 @@ router.post(ROUTE.admin, (req, res) => {
                 console.log('no error and got statuscode 200')
 
                 // USE THE ACCESS TOKEN TO ACCESS THE SPOTIFY WEB API
-                var token = body.access_token;
+                var spotifyToken = body.access_token;
 
                 var options = {
                     url: `https://api.spotify.com/v1/search?q=album:${albumSearchValue}%20artist:${artistSearchValue}&type=album&q=`,
                     headers: {
-                        Authorization: 'Bearer ' + token,
+                        Authorization: 'Bearer ' + spotifyToken,
                         Accept: 'application/json',
                         'Content-Type': 'application/json'
                     }
@@ -73,18 +77,27 @@ router.post(ROUTE.admin, (req, res) => {
 
                     // RETURN THE SPOTIFY API DATA AS A JSON OBJECT
                     const spotifyResponse = JSON.parse(body).albums;
+                    const userInfo = req.body.userInfo;
 
                     if (spotifyResponse.items == 0) {
-                        res.render("errors", { errmsg: 'Titeln saknas hos Spotify' });
+                        res.redirect(url.format({
+                            pathname: ROUTE.error,
+                            query: {
+                                errmsg: 'Titeln saknas hos spotify!'
+                            }
+                        }));
                     } else {
                         const genres = PRODUCT.genres.filter(genre => {
                             return genre !== "All";
                         });
                         res.render(VIEW.adminAddProduct, {
-                            ROUTE, spotifyResponse: spotifyResponse,
+                            ROUTE,
+                            userInfo: userInfo,
+                            spotifyResponse: spotifyResponse,
                             genres: genres,
                             token: (req.cookies.jsonwebtoken !== undefined) ? true : false
                         });
+                        console.log('USERINFO NÄR MAN SKA ADDPRODUCT', req.body.userInfo)
                     }
                 });
             }
@@ -93,8 +106,8 @@ router.post(ROUTE.admin, (req, res) => {
     fetchSpotifyApiData(artistSearchValue, albumSearchValue)
 })
 
-router.post(ROUTE.adminAddProduct, async (req, res) => {
-    console.log(req.body)
+router.post(ROUTE.adminAddProduct, verifyAdminToken, async (req, res) => {
+    console.log('USERINFO I POST ADMINADDPRODUCT', req.body.userInfo)
     let genres = ["All"];
     for (const property in req.body) {
         if (property.includes("genre")) {
@@ -109,15 +122,19 @@ router.post(ROUTE.adminAddProduct, async (req, res) => {
         imgUrl: req.body.imgUrl,
         genre: genres,
         price: req.body.price,
-        addedBy: req.body.adminName
+        addedBy: req.body.adminName,
+        user: req.body.userInfo._id
     });
+    console.log(product)
     product.validate(function (err) {
         if (err) {
             console.log(err);
-            res.render("errors", {
-                err,
-                token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-            });
+            res.redirect(url.format({
+                pathname: ROUTE.error,
+                query: {
+                    errmsg: 'Valideringsfel i Mongoose'
+                }
+            }));
         } else {
             product.save();
             res.redirect(ROUTE.admin);
