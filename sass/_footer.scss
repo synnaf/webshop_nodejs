@@ -5,10 +5,12 @@ html  body footer {
         display: flex;
         flex-direction: column;
         .logo {
-            color: $colorMain;
             font-size: large;
             font-weight: 900;
             margin-left: 2.5rem;
+            a {
+                color: $colorMain;
+            }
         }
         p {
             color: $colorMain;

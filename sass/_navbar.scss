@@ -6,9 +6,12 @@
     .navbar-content {
         @include flexRowBetween; 
         padding: $paddingSmall;
-        color: $colorMain;
         .navbar-logo {
             font-weight: $textBold;
+            color: $colorMain;
+        }
+        i {
+            color: $colorMain;
         }
         i:hover {
             color: $colorSecond;
@@ -25,7 +28,7 @@
         transition: $transitionFaster;
         a {
             margin-top: 2px;
-            color: $colorMain;
+            color: $colorSecond;
             font-weight: $textBold;
             text-decoration: none;
             
@@ -42,8 +45,5 @@
         height: auto;
         overflow: visible;
         font-size: $textSizeSmall;
-        a {
-            color: $colorSecond;
-        }
     }
 }
