@@ -104,27 +104,38 @@ html {
                 }
             }
             .small-text {
+                text-align: center;
+                padding: 24px;
+                margin: 0px 30px 0px 30px;
                 border-width: 1px;
                 border-color: $colorThird;
-                border-top-style: solid;
                 border-bottom-style: solid;
+            }
+            .pagination {
+                font-size: 0.8rem;
+                margin: 0 30px;
+                padding: 4px 0;
                 text-align: center;
-                padding: $paddingMedium;
-                margin-top: 32px;
-                margin-bottom: 8px;
-                margin: 32px 30px 8px 30px;
+                border-width: 1px;
+                border-color: $colorThird;
+                border-bottom-style: solid;
+                a {
+                    margin: 0 18px;
+                    color: $colorSecond;
+                    text-decoration: none;
+                }
+                span {
+                    margin: 0 18px;
+                    color: $colorThird;
+                }
             }
             .product-list {
                 padding: 0;
+                margin: 0;
                 list-style-type: none;
-                .line {
-                    border-top-style: solid;
-                    border-top-width: 1px;
-                    border-top-color: $colorThird;
-                    margin: 0px 30px 26px 30px;
-                }
                 .product-display {
-                    padding: $paddingMedium;
+                    padding: 0 32px;
+                    margin: 32px 0 0 0;
                     .product-image-container {
                         width: 100%;
                         img {
@@ -136,13 +147,19 @@ html {
                     }
                     .product-info-container {
                         @include flexRowBetween;
-                        padding: $paddingSmall;
-                        margin: 8px 0 0 0;
+                        padding: 12px 0;
+                        margin: 0;
+                        border-width: 1px;
+                        border-color: $colorThird;
+                        border-bottom-style: solid;
                         .product-info-left {
                             @include flexColumnCenter;
+                            .product-artist{
+                                font-size: 1.4rem;
+                            }
                             .product-price-container {
                                 .product-price {
-                                    font-size: 1.4rem; /*fixa variabel*/
+                                    font-size: 1.8rem; /*fixa variabel*/
                                     color: $colorThird;
                                 }
                                 .product-currency {
@@ -152,11 +169,13 @@ html {
                         }
                         .product-info-right {
                             @include flexColumnCenter;
+                            text-align: right;
                             button {
-                                @include buttonShapeSmall;
+                                @include buttonShapeMedium;
                                 font-size: $textFontStandard;
                                 color: $colorSecond;
-                                background: $colorThird;
+                                background: none;
+                                margin: 4px 0;
                             }
                         }
                     }

@@ -1,14 +1,15 @@
 .navbar {
-    background: $colorThird;
-    border-radius: $roundedSmall;
+    background: $colorMain;
     position: sticky;
-    top: 8px;
+    top: 0;
+    border-bottom: 1px solid black;;
     .navbar-content {
         @include flexRowBetween; 
-        padding: $paddingSmall;
-        color: $colorMain;
+        padding: 18px 32px;
+        color: $colorThird;
         .navbar-logo {
             font-weight: $textBold;
+            color: $colorSecond;
         }
         i:hover {
             color: $colorSecond;
@@ -16,28 +17,26 @@
     }
     .hidden-menu {
         @include flexRowBetween;
-        padding: 0 32px;
-        border-bottom-left-radius: $roundedSmall;
-        border-bottom-right-radius: $roundedSmall;
+        padding: 0 44px;
+        border-top: 1px solid rgb(255, 145, 200);
         height: 0;
         overflow: hidden;
         font-size: 0;
         transition: $transitionFaster;
         a {
             margin-top: 2px;
-            color: $colorMain;
-            font-weight: $textBold;
+            color: $colorSecond;
             text-decoration: none;
             
         }
         a:hover {
-            color: $colorThird;
+            color: $colorThird;;
         }
     }
     .drop-down-menu {
+        border-bottom: 1px solid rgb(255, 145, 200);
         background: $colorMain;
-        padding: $paddingSmall;
-        border-top: 2px solid black;
+        padding: 6px 32px;
         transition: $transitionFast;
         height: auto;
         overflow: visible;
