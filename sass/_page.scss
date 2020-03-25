@@ -2,6 +2,7 @@ html {
     height: 100%;
     font-size:12pt; 
     body {
+        margin: 0;
         @include flexColumn;
         background-color: $colorMain;
         color: $colorSecond;
@@ -10,7 +11,8 @@ html {
             background-color:white;
         }
         main, .adminpage {
-            @include flexColumn; 
+            @include flexColumn;
+            margin: auto 8px 32px 8px;
             flex-direction: column;
             flex: 1 0 auto;
             font-family: $textFontStandard; //tillfällig font
