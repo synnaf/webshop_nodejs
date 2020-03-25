@@ -155,8 +155,6 @@ router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
             value: (req.query.passwordChanged == 'true') ? true : false
         }
     });
-    console.log('user är', user)
-    console.log(req.body.userInfo._id)
 })
 
 router.post(ROUTE.userAccount, async (req, res) => {

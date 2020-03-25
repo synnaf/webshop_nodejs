@@ -22,9 +22,9 @@
 
             <% user.wishlist.forEach( (obj)=> { %>
             <li>
-                <div>Album: <%= obj.album %> </div>
-                <div>Artist: <%= obj.artist %> </div>
-                <div>Pris: <%= obj.price %> SEK</div>
+                <div>Album: <%= obj.productId.album %> </div>
+                <div>Artist: <%= obj.productId.artist %> </div>
+                <div>Pris: <%= obj.productId.price %> SEK</div>
                 <div>Album ID: <%= obj.productId %> </div>
 
             </li>
