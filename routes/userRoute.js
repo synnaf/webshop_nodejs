@@ -144,7 +144,7 @@ router.post(ROUTE.login, async (req, res) => {
 router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
     // const newUser = jwt.decode(req.cookies.jsonwebtoken).signedUpUser;
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
-    const user = await UserInfoModel.findOne({ _id: req.body._id }).populate('wishlist', { artist: 1, album: 1 })
+    const user = await UserInfoModel.findOne({ _id: req.body._id }).populate('wishlist', { artist: 1, album: 1, price: 1 })
     res.status(200).render(VIEW.userAccount, {
         ROUTE,
         loggedIn,

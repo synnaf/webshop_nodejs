@@ -7,19 +7,14 @@
     <div class="shoppingcart-container"></div>
     <ul>
 
-        <% showUserInfo.forEach( (obj)=> { %>
+        <% showUserInfo.wishlist.forEach( (obj)=> { %>
         <li>
             <div>Album: <%= obj.album %> </div>
             <div>Artist: <%= obj.artist %> </div>
             <div>Album ID: <%= obj.productId %> </div>
             <div class="product-img">bild</div>
-            <span>Pris:</span>
-            <div class="changecart">
-                <p>+</p>
-                <p>-</p>
-            </div>
-        </li>
-        <% }); %>
+            <span>Pris: <%= obj.price %> SEK</span>
+            <% }); %>
     </ul>
     </div>
 
@@ -46,11 +41,15 @@
             <div class="checkout-postal">
                 <div class="postal-city">
                     <h3>Stad</h3>
-                    <input type="text" value="<%=showUserInfo.email%>">
+                    <input type="text">
                 </div>
                 <div class="postal-code">
                     <h3>Postnummer</h3>
                     <input type="text">
+                </div>
+                <div class="postal-city">
+                    <h3>E-mail</h3>
+                    <input type="email" value="<%=showUserInfo.email%>">
                 </div>
             </div>
             <button type="submit">Beställ</button>
