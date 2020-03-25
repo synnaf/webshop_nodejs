@@ -159,9 +159,11 @@ router.post(ROUTE.login, async (req, res) => {
 router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
     // const newUser = jwt.decode(req.cookies.jsonwebtoken).signedUpUser;
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
+    const user = await UserInfoModel.findOne({ _id: req.body._id }).populate('wishlist', { artist: 1, album: 1 })
     res.status(200).render(VIEW.userAccount, {
         ROUTE,
         loggedIn,
+        user,
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false,
         passwordChanged: {
             exists: req.query.passwordChanged ? true : false,
@@ -214,28 +216,26 @@ router.post(ROUTE.userAccount, async (req, res) => {
 })
 
 
-
-
 //---- route för checkout/cart/wishlist ----------//
 // --------- borde det egentligen vara en post här?? ---// 
 
-router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
+router.get(ROUTE.wishlistId, verifyToken, async (req, res) => {
 
     if (verifyToken) {
         const product = await ProductModel.findOne({ _id: req.params.id });
         console.log("Denna produkt vill user spara: " + product)
         const user = await UserInfoModel.findOne({ _id: req.body.userInfo._id });
         console.log("Detta är user som vill spara i wishlist " + user)
-        user.addToCart(product);
-        console.log(user + "La till product i listan")
+        user.addToWishlist(product);
+        console.log(user, "La till", product, "i listan")
 
-        return res.redirect("/gallery");
+        return res.redirect(ROUTE.userAccount);
     }
     else {
         res.redirect(url.format({
             pathname: ROUTE.error,
             query: {
-                errmsg: 'Du måste logga in för att handla!'
+                errmsg: 'Du måste logga in för att lägga till produkten i din önskelista!'
             }
         }));
     }
