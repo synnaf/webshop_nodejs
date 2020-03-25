@@ -27,7 +27,7 @@ html {
             }
 
             //admin formulär 
-            .search-album-form, .admin-login-form, .create-admin-form, .add-product-form {
+            .search-album-form, .add-product-form {
                 align-self: center;
                 width:70%; 
                 h3 {
@@ -270,31 +270,34 @@ html {
                     list-style: none;
                 }
             }
-            .passwordinfo {
+            .change-password{
                 @include flexColumnCenter;
-                align-items:center;
-                margin-top:20px;
-                margin:10px;
-                form {
-                    background-color:whitesmoke; 
-                    padding:10px;
+                align-self:center;
+                width:70%;
+                margin-bottom:2rem;
+                .passwordinfo {
                     text-align:center;
-                    width:50%;
+                    background-color:whitesmoke;
                     h3,label {
+                        display:block; 
                         color:lightslategray;
                     }
                     input {
-                        @include inputfieldStyle;
+                        padding:0.5rem 0 0.5rem 0 ;
+                        width:80%;
+                        border:none;
+                        margin-bottom:1rem;
                     }
                     button {
-                        margin:20px;
+                        @include buttonShapeBig;
                         background-color:$colorSecond;
-                        padding:10px;
-                        font-size:1rem;
+                        margin-top:1rem;
+                        margin-bottom:1rem;
+                        padding:0.5rem;  
                     }
                 }
-
             }
+
 
             //styling för enskilda produkter (one product) 
             #one-product-image {
@@ -305,8 +308,8 @@ html {
                 background-color: $colorSecond;
             }
 
-            //styling för create user 
-            .create-user-form {
+            //styling för create-user och login 
+            .create-user-form, .admin-login-form {
                 align-self: center;
                 fieldset {
                     align-self: center;
@@ -332,6 +335,9 @@ html {
                         padding:0.5rem;  
                     }
                 }
+            }
+            .reset-password{
+                text-align:center;
             }
         }   
             

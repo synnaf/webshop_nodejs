@@ -1,7 +1,9 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main>
-    <h1>Ändra lösenord</h1>
+    <div class="pageheadline">
+        <h1>Ändra lösenord</h1>
+    </div>
     <form action="<% ROUTE.resetpasswordToken %>" method="POST" class="user-login-form">
         <input type="hidden" name="token" value=<%= user.resetToken %>>
         <label for="password">Nytt lösenord:</label>

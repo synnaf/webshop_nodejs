@@ -16,6 +16,9 @@
         i:hover {
             color: $colorSecond;
         }
+        #loggedin {
+            color:white;
+        }
     }
     .hidden-menu {
         @include flexRowBetween;
