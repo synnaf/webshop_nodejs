@@ -9,6 +9,10 @@ html {
         .adminpage {
             background-color:white;
         }
+        a {
+            text-decoration: none;
+            color: $colorSecond;
+        }
         main, .adminpage {
             @include flexColumn; 
             flex-direction: column;
