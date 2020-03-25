@@ -36,29 +36,12 @@ const schemaUser = new Schema({
         productId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Product" //det som exporteras i product-model 
-        },
-        album: {
-            type: mongoose.Schema.Types.String,
-            ref: "Product"
-        },
-        artist: {
-            type: mongoose.Schema.Types.String,
-            ref: "Product"
-        },
-        price: {
-            type: mongoose.Schema.Types.Number,
-            ref: "Product"
         }
     }]
 })
 
 schemaUser.methods.addToWishlist = function (product) {
-    this.wishlist.push({
-        productId: product._id,
-        artist: product.artist,
-        album: product.album,
-        price: product.price
-    })
+    this.wishlist.push({ productId: product._id })
     //hämtar sitt id från mongoose
 
 

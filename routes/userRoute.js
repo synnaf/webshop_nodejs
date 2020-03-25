@@ -44,39 +44,39 @@ router.post(ROUTE.createUser, async (req, res) => {
             lastName: req.body.lastName,
         }).save();
     }
-        const userInfo = await UserInfoModel.findOne({
-            email: req.body.email
-        });
-        if (!userInfo) return res.redirect(url.format({
-            pathname: ROUTE.error,
-            query: {
-                errmsg: 'Fel email!'
-            }
-        }));
-        const validUser = await bcrypt.compare(req.body.password, userInfo.password);
-        if (!validUser) return res.render("errors", {
-            errmsg: 'Fel lösenord!',
+    const userInfo = await UserInfoModel.findOne({
+        email: req.body.email
+    });
+    if (!userInfo) return res.redirect(url.format({
+        pathname: ROUTE.error,
+        query: {
+            errmsg: 'Fel email!'
+        }
+    }));
+    const validUser = await bcrypt.compare(req.body.password, userInfo.password);
+    if (!validUser) return res.render("errors", {
+        errmsg: 'Fel lösenord!',
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+    });
+    const tokenSignature = userInfo.isAdmin ? config.tokenkey.adminjwt : config.tokenkey.userjwt;
+    jwt.sign({ userInfo }, tokenSignature, (err, token) => {
+        if (err) return res.render('errors', {
+            errmsg: 'token funkar inte',
             token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         });
-        const tokenSignature = userInfo.isAdmin ? config.tokenkey.adminjwt : config.tokenkey.userjwt;
-        jwt.sign({ userInfo }, tokenSignature, (err, token) => {
-            if (err) return res.render('errors', {
-                errmsg: 'token funkar inte',
-                token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-            });
-            if (token) {
-                // console.log("token som finns på signup" + token)
-                const cookie = req.cookies.jsonwebtoken;
-                if (!cookie) {
-                    res.cookie('jsonwebtoken', token, {
-                        maxAge: 400000,
-                        httpOnly: true
-                    })
-                }
-                if(tokenSignature == config.tokenkey.adminjwt) return res.redirect(VIEW.admin);
-                if(tokenSignature == config.tokenkey.userjwt) return res.redirect(VIEW.userAccount);
+        if (token) {
+            // console.log("token som finns på signup" + token)
+            const cookie = req.cookies.jsonwebtoken;
+            if (!cookie) {
+                res.cookie('jsonwebtoken', token, {
+                    maxAge: 400000,
+                    httpOnly: true
+                })
             }
-        })
+            if (tokenSignature == config.tokenkey.adminjwt) return res.redirect(VIEW.admin);
+            if (tokenSignature == config.tokenkey.userjwt) return res.redirect(VIEW.userAccount);
+        }
+    })
 });
 
 //--------- LOG IN---------------//
@@ -144,7 +144,7 @@ router.post(ROUTE.login, async (req, res) => {
 router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
     // const newUser = jwt.decode(req.cookies.jsonwebtoken).signedUpUser;
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
-    const user = await UserInfoModel.findOne({ _id: req.body._id }).populate('wishlist', { artist: 1, album: 1, price: 1 })
+    const user = await UserInfoModel.findOne({ _id: req.body.userInfo._id }).populate('wishlist.productId', { artist: 1, album: 1, price: 1 })
     res.status(200).render(VIEW.userAccount, {
         ROUTE,
         loggedIn,
@@ -155,6 +155,8 @@ router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
             value: (req.query.passwordChanged == 'true') ? true : false
         }
     });
+    console.log('user är', user)
+    console.log(req.body.userInfo._id)
 })
 
 router.post(ROUTE.userAccount, async (req, res) => {
