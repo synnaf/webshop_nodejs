@@ -11,6 +11,9 @@
             font-weight: $textBold;
             color: $colorSecond;
         }
+        a {
+            color: $colorThird;
+        }
         i:hover {
             color: $colorSecond;
         }
