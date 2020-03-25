@@ -9,8 +9,8 @@ const VIEW = {
     product: 'product',
     checkout: 'checkout',
     confirmation: 'confirmation',
-    error: 'errors', 
-    resetpassword: 'resetpassword', 
+    error: 'errors',
+    resetpassword: 'resetpassword',
     resetform: 'resetform'
 }
 
@@ -24,10 +24,11 @@ const ROUTE = {
     createUser: "/createuser",
     gallery: '/gallery',
     product: '/gallery/:id',
+    wishlistId: '/wishlist/:id',
     checkout: '/checkout',
     confirmation: '/checkout/confirmation',
     error: '/*',
-    resetpassword: '/resetpassword', 
+    resetpassword: '/resetpassword',
     resetpasswordToken: '/resetpassword/:token'
 }
 

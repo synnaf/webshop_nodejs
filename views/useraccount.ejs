@@ -3,11 +3,11 @@
 <main>
     <div class="pageheadline">
         <% if (passwordChanged.exists && passwordChanged.value) { %>
-            <h1>Lösenordet är ändrat</h1>
+        <h1>Lösenordet är ändrat</h1>
         <% } else if (passwordChanged.exists && !passwordChanged.value) { %>
-            <h1>Fel lösenord</h1>
+        <h1>Fel lösenord</h1>
         <% } else { %>
-            <h1>Välkommen <i> <%= loggedIn.firstName %> </i> </h1>
+        <h1>Välkommen <i> <%= loggedIn.firstName %> </i> </h1>
         <% } %>
     </div>
     <div class="userinfo">
@@ -17,16 +17,22 @@
         <span><%= loggedIn.email %></span>
     </div>
     <div class="orderinfo">
-        <h3>Beställningar: </h3>
-            <ul>
-              
-                <% loggedIn.shoppingcart.forEach( (obj)=> { %>
-                    <li> Order: <%= obj._id %> </li> 
-                <% }); %>
+        <h3>Önskelista: </h3>
+        <ul>
+
+            <% loggedIn.wishlist.forEach( (obj)=> { %>
+            <li>
+                <div>Album: <%= obj.album %> </div>
+                <div>Artist: <%= obj.artist %> </div>
+                <div>Album ID: <%= obj.productId %> </div>
+
+            </li>
+            <% }); %>
         </ul>
     </div>
     <form class="startbuttons" method="get">
         <button type="submit" formaction="gallery">GÅ TILL WEBBSHOP</button>
+        <button type="submit" formaction="checkout">GÅ TILL CHECKOUT</button>
         <button type="submit" formaction="logout">LOGGA UT</button>
     </form>
     <div class="passwordinfo">
