@@ -135,7 +135,7 @@ const getData = async (queryObject, token) => {
                 nextPage: page + 1,
                 previousPage: page - 1,
                 lastPage: pageAmount,
-                productListRoute: ROUTE.gallery,
+                ROUTE: ROUTE,
                 genre: genreString
             });
         } else {
