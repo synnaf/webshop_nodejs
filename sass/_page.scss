@@ -244,14 +244,12 @@ html {
                 height: auto;
                 background-color: $colorSecond;
                 margin: 10px;
-                @include flexRowBetween;
-
                 .wishlist-shoppingcart-continer {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-
+                    @include flexColumnCenter; 
+                    padding-top:1rem; 
+                    padding-bottom:1rem;
                     .wishlist-shoppingcart-innercontiner {
+                        align-self:center;
                         border: $colorMain;
                         border-style: solid;
                         margin: 7px;
@@ -259,25 +257,15 @@ html {
                         display: flex;
                         flex-direction: row;
                         width: 70%;
-                        justify-content: center;
-
                         .wishlist-shoppingcart-info {
                             display: flex;
                             flex-direction: column;
-
                             .wishlist-shoppingcart-item {
                                 margin: 7px;
                                 font-size: $textSizeSmall;
                                 display: flex;
                                 color: $colorMain;
                             }
-                        }
-
-                        .product-img {
-                            width: 150px;
-                            height: 100px;
-                            background-color: lightslategray;
-                            margin: 10px;
                         }
 
                     }
