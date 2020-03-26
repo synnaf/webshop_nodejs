@@ -142,7 +142,7 @@ router.post(ROUTE.login, async (req, res) => {
                 const cookie = req.cookies.jsonwebtoken;
                 if (!cookie) {
                     res.cookie('jsonwebtoken', token, {
-                        maxAge: 400000,
+                        maxAge: 3600000,
                         httpOnly: true
                     })
                 }
@@ -168,6 +168,7 @@ router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
         album: 1,
         price: 1
     })
+
     res.status(200).render(VIEW.userAccount, {
         ROUTE,
         loggedIn,
@@ -266,14 +267,6 @@ router.get("/remove/:id", verifyToken, async (req, res) => {
 })
 
 
-//------------------- confirmation for checkout -------------- //
-
-
-router.get(ROUTE.confirmation, (req, res) => {
-    res.status(200).render(VIEW.confirmation, {
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-    });
-})
 
 
 //-------------- Fanny lägger in routes för att reset password ------------ // 
