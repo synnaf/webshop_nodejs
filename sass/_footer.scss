@@ -19,6 +19,7 @@ html body footer {
         }
 
         p {
+            font-family: $textFontStandard;
             color: $colorMain;
             margin-left: 2.5rem;
         }
@@ -26,12 +27,13 @@ html body footer {
         ul li {
             list-style-type: none;
             margin: 5px;
+            font-family: $textFontStandard;
 
             a {
                 color: black;
 
                 &:hover {
-                    color: $colorSecond;
+                    color: $colorFourth
                 }
             }
         }
