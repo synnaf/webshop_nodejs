@@ -112,7 +112,8 @@ router.post(ROUTE.createUser, async (req, res) => {
 
 //--------- LOG IN---------------//
 
-router.get(ROUTE.login, (req, res) => {
+router.get(ROUTE.login, async (req, res) => {
+    
     res.status(200).render(VIEW.login, {
         ROUTE,
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false

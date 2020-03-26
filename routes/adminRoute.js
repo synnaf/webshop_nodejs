@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Product = require('../model/product');
+const ProductModel = require('../model/product');
 const { ROUTE, VIEW, PRODUCT } = require('../constant');
 const request = require('request'); // SPOTIFY REQUEST LIBRARY
 const config = require('../config/config');
@@ -11,7 +11,7 @@ const verifyToken = require('./verifyToken');
 
 
 router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
-    const productList = (await (Product.find().populate('user', { _id: 1 }))).reverse()
+    const productList = (await (ProductModel.find().populate('user', { _id: 1 }))).reverse()
     res.render(VIEW.admin, {
         productList,
         ROUTE,
