@@ -42,21 +42,14 @@ const schemaUser = new Schema({
 
 schemaUser.methods.addToWishlist = function (product) {
     this.wishlist.push({ productId: product._id })
-    //hämtar sitt id från mongoose
-
-
+ 
     const filter = this.wishlist.filter(function ({
         productId
     }) {
-        console.log({
-            productId
-        })
 
         return !this.has(`${productId}`) && this.add(`${productId}`)
 
     }, new Set)
-
-    console.log(filter)
 
     this.wishlist = [...filter]
 
