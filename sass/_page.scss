@@ -400,12 +400,15 @@ html {
                         flex-direction: column;
                         justify-items: center;
                         justify-content: center;
-
-
                         .wishlist-item {
                             margin: 7px;
-
-
+                        }
+                        button {
+                            @include buttonShapeMedium;
+                            font-size: $textFontStandard;
+                            color: whitesmoke;
+                            background: none;
+                            margin: 4px 0;
                         }
                     }
                 }
@@ -416,7 +419,6 @@ html {
                 align-self: center;
                 width: 70%;
                 margin-bottom: 2rem;
-
                 .passwordinfo {
                     text-align: center;
                     background-color: whitesmoke;
@@ -433,14 +435,14 @@ html {
                         border: none;
                         margin-bottom: 1rem;
                     }
-
                     button {
-                        @include buttonShapeBig;
-                        background-color: $colorSecond;
-                        margin-top: 1rem;
-                        margin-bottom: 1rem;
-                        padding: 0.5rem;
+                        @include buttonShapeMedium;
+                        font-size: $textFontStandard;
+                        color:$colorThird;
+                        background: none;
+                        
                     }
+
                 }
             }
 
