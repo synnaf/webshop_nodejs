@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
                 return res.redirect(url.format({
                     pathname: ROUTE.error,
                     query: {
-                        errmsg: 'TOKEN ERROR!'
+                        errmsg: 'Behörighet saknas!'
                     }
                 }));
             } else {

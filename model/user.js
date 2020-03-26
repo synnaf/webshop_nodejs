@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = require("mongoose").Schema;
 
+
 const schemaUser = new Schema({
 
     isAdmin: {
@@ -31,7 +32,7 @@ const schemaUser = new Schema({
     },
     resetToken: String,
     expirationToken: Date,
-    shoppingcart: [{
+    wishlist: [{
         productId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Product" //det som exporteras i product-model 
@@ -39,14 +40,12 @@ const schemaUser = new Schema({
     }]
 })
 
-schemaUser.methods.addToCart = function (product) {
-    this.shoppingcart.push({
-        productId: product._id
-    })
+schemaUser.methods.addToWishlist = function (product) {
+    this.wishlist.push({ productId: product._id })
     //hämtar sitt id från mongoose
 
 
-    const filter = this.shoppingcart.filter(function ({
+    const filter = this.wishlist.filter(function ({
         productId
     }) {
         console.log({
@@ -59,11 +58,22 @@ schemaUser.methods.addToCart = function (product) {
 
     console.log(filter)
 
-    this.shoppingcart = [...filter]
+    this.wishlist = [...filter]
 
     return this.save();
 }
 
 
+schemaUser.methods.removeWishList = function (productId) {
+
+    const currentProducts = this.wishlist.filter((product) => {
+        return product.productId.toString()
+            !==productId.toString()
+    })
+
+    this.wishlist = currentProducts;
+    return this.save();
+
+}
 const userModel = mongoose.model('User', schemaUser)
 module.exports = userModel

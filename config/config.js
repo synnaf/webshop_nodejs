@@ -1,4 +1,6 @@
-const mongoDB ={
+require('dotenv').config()
+
+const mongoDB = {
     databaseUrl: process.env.MONGO_DB
 } 
 
@@ -16,5 +18,9 @@ const tokenkey ={
     userjwt: process.env.USER_TOKEN,
 }
 
+const admin={
+    adminPassword: process.env.ADMIN_PASSWORD
+}
 
-module.exports = {mongoDB, spotify, mailkey, tokenkey} ;  
+
+module.exports = {mongoDB, spotify, mailkey, tokenkey, admin} ;  

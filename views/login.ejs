@@ -1,15 +1,23 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main>
-    <h1>Inloggning</h1>
+    <div class="pageheadline">
+        <h1>Inloggning</h1>
+    </div>
     <form action="<%ROUTE.login%>" method="POST" class="admin-login-form">
-        <input type="text" name="email" id="" placeholder="e-mail" />
-        <input type="password" name="password" id="" placeholder="Lösenord" />
-        <button type="submit">Logga in</button>
+        <fieldset>
+            <label for="email">Email:</label>
+            <input type="text" name="email" />
+            
+            <label for="password">Lösenord:</label>
+            <input type="password" name="password" />
+            
+            <button type="submit">Logga in</button>
+        </fieldset>
     </form>
 
     <div class="reset-password">
-        <a href="<% ROUTE.resetpassword %>">Glömt ditt lösenord?</a>
+        <a href="<%=ROUTE.resetpassword %>">Glömt ditt lösenord?</a>
     </div>
 </main>
 <%- include ("footer.ejs") %>

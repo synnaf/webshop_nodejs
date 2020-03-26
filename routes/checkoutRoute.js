@@ -11,15 +11,19 @@ router.get(ROUTE.checkout, verifyToken, async (req, res) => {
     // const user = await UserInfoModel.findOne({_id: req.body.userInfo._id});
 
     if (verifyToken) {
-        console.log(req.body)
         const showUserInfo = await UserModel.findOne({ _id: req.body.userInfo._id })
-        res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo: showUserInfo.shoppingcart, token: (req.cookies.jsonwebtoken !== undefined) ? true : false })
-
+            .populate('wishlist.productId', {
+                artist: 1,
+                album: 1,
+                price: 1
+            })
+        res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo, token: (req.cookies.jsonwebtoken !== undefined) ? true : false })
+        console.log('ALBUM ÄR', showUserInfo.wishlist.album)
     } else {
         return res.status(202).render(VIEW.checkout, {
             ROUTE,
             showUserInfo: "empty cart",
-            token: (req.cookies.jsonwebtoken !== undefined) ? true : false 
+            token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         })
     }
 

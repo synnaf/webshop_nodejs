@@ -17,6 +17,9 @@
         i:hover {
             color: $colorSecond;
         }
+        #loggedin {
+            color:white;
+        }
     }
     .hidden-menu {
         @include flexRowBetween;
@@ -44,8 +47,5 @@
         height: auto;
         overflow: visible;
         font-size: $textSizeSmall;
-        a {
-            color: $colorSecond;
-        }
     }
 }

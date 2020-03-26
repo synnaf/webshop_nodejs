@@ -3,11 +3,11 @@
 <main>
     <div class="pageheadline">
         <% if (passwordChanged.exists && passwordChanged.value) { %>
-            <h1>Lösenordet är ändrat</h1>
+        <h1>Lösenordet är ändrat</h1>
         <% } else if (passwordChanged.exists && !passwordChanged.value) { %>
-            <h1>Fel lösenord</h1>
+        <h1>Fel lösenord</h1>
         <% } else { %>
-            <h1>Välkommen <i> <%= loggedIn.firstName %> </i> </h1>
+        <h1>Hej <i><%= loggedIn.firstName %> </i> </h1>
         <% } %>
     </div>
     <div class="userinfo">
@@ -17,27 +17,37 @@
         <span><%= loggedIn.email %></span>
     </div>
     <div class="orderinfo">
-        <h3>Beställningar: </h3>
-            <ul>
-              
-                <% loggedIn.shoppingcart.forEach( (obj)=> { %>
-                    <li> Order: <%= obj._id %> </li> 
-                <% }); %>
+        <h3>Önskelista: </h3>
+        <ul>
+
+            <% user.wishlist.forEach( (obj)=> { %>
+            <li>
+                <div>Album: <%= obj.productId.album %> </div>
+                <div>Artist: <%= obj.productId.artist %> </div>
+                <div>Pris: <%= obj.productId.price %> SEK</div>
+                <div>Album ID: <%= obj.productId._id %> </div>
+                <div><a href="/remove/<%=obj.productId._id%>"><button id="">Ta bort</button></a></div>
+            </li>
+            <% }) %>
         </ul>
     </div>
     <form class="startbuttons" method="get">
-        <button type="submit" formaction="gallery">GÅ TILL WEBBSHOP</button>
+        <button type="submit" formaction="gallery">GÅ TILL WEBSHOP</button>
+        <button type="submit" formaction="checkout">GÅ TILL CHECKOUT</button>
         <button type="submit" formaction="logout">LOGGA UT</button>
     </form>
-    <div class="passwordinfo">
-        <form action="<%= ROUTE.userAccount %>" method="POST">
+
+    <div class="change-password">
+        <form action="<%= ROUTE.userAccount %>" method="POST" class="passwordinfo">
             <h3>Ändra lösenord:</h3>
-            <label>Nuvarande lösenord:</label>
-            <input type="password" name="currentpassword" placeholder="Nuvarande lösenord" />
-            <label>Nytt lösenord:</label>
-            <input type="password" name="newpassword" placeholder="Nytt lösenord" />
+            <label for="currentpassword">Nuvarande lösenord:</label>
+            <input type="password" name="currentpassword" />
+            <label for="newpassword">Nytt lösenord:</label>
+            <input type="password" name="newpassword" />
             <button type="submit">Ändra lösenord</button>
         </form>
     </div>
+
+
 </main>
 <%- include ("footer.ejs") %>

@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../model/product');
-const {ROUTE, VIEW, PRODUCT} = require('../constant');
+const { ROUTE, VIEW, PRODUCT } = require('../constant');
 const url = require('url');
 
 router.get(ROUTE.index, async (req, res) => {
     let displayList = [];
     for (const genre of PRODUCT.genres) {
-        const img = await Product.findOne({genre: genre}, { imgUrl: 1, _id: 0 });
+        const img = await Product.findOne({ genre: genre }, { imgUrl: 1, _id: 0 });
         if (img) {
             displayList.push({
                 img: img.imgUrl,
@@ -38,24 +38,24 @@ router.get(ROUTE.gallery, async (req, res) => {
         }));
     } else {
         validatePage(req.query)
-        .then(async query => {
-            return await validateGenre(query);
-        })
-        .then(async queryObject => {
-            return await getData(queryObject, req.cookies.jsonwebtoken);
-        })
-        .then(async object => {
-            res.render(VIEW.gallery, object);
-        })
-        .catch(error => {
-            console.error(error);
-            res.redirect(url.format({
-                pathname: ROUTE.error,
-                query: {
-                    errmsg: error.errmsg
-                }
-            }));
-        });
+            .then(async query => {
+                return await validateGenre(query);
+            })
+            .then(async queryObject => {
+                return await getData(queryObject, req.cookies.jsonwebtoken);
+            })
+            .then(async object => {
+                res.render(VIEW.gallery, object);
+            })
+            .catch(error => {
+                console.error(error);
+                res.redirect(url.format({
+                    pathname: ROUTE.error,
+                    query: {
+                        errmsg: error.errmsg
+                    }
+                }));
+            });
     }
 })
 
@@ -113,14 +113,14 @@ const getData = async (queryObject, token) => {
         const genres = queryObject.genres;
         let productAmount = 0;
         for (const genre of genres) {
-            productAmount += await Product.find({genre: genre}).countDocuments();
+            productAmount += await Product.find({ genre: genre }).countDocuments();
         }
         const pageAmount = Math.ceil(productAmount / PRODUCT.perPage);
         if ((page >= 1) && (page <= pageAmount)) {
             const perGenre = Math.ceil(PRODUCT.perPage / genres.length);
             let productList = [];
             for (const genre of genres) {
-                productList = productList.concat(await Product.find({genre: genre}).skip(perGenre * (page - 1)).limit(perGenre));
+                productList = productList.concat(await Product.find({ genre: genre }).skip(perGenre * (page - 1)).limit(perGenre));
             }
             const genreString = genres.toString();
             resolve({
@@ -135,7 +135,7 @@ const getData = async (queryObject, token) => {
                 nextPage: page + 1,
                 previousPage: page - 1,
                 lastPage: pageAmount,
-                productListRoute: ROUTE.gallery,
+                ROUTE: ROUTE,
                 genre: genreString
             });
         } else {
