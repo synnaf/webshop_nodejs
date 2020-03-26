@@ -18,7 +18,6 @@ router.get(ROUTE.checkout, verifyToken, async (req, res) => {
                 price: 1
             })
         res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo, token: (req.cookies.jsonwebtoken !== undefined) ? true : false })
-        console.log('ALBUM ÄR', showUserInfo.wishlist.album)
     } else {
         return res.status(202).render(VIEW.checkout, {
             ROUTE,
@@ -26,8 +25,21 @@ router.get(ROUTE.checkout, verifyToken, async (req, res) => {
             token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         })
     }
-
 })
 
+router.post(ROUTE.checkout, verifyToken, (req, res) => {
+    const customer = {
+        fName: req.body.fName,
+        lName: req.body.lName,
+        address: req.body.address,
+        city: req.body.city,
+        email: req.body.email
+    }
+    console.log(customer)
+    res.render(VIEW.confirmation, {
+        customer,
+        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+    });
+})
 
 module.exports = router;

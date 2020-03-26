@@ -3,7 +3,14 @@
 <main>
     <div class="container">
         <h1 class="my-3"><%= errmsg %></h1>
-        <button onclick="goBack()">Tillbaka</button>
+
+        <form class="startbuttons" method="get">
+            <button type="submit" formaction="/">HEM</button>
+            <button type="submit" formaction="gallery">WEBSHOP</button>
+            <button type="submit" formaction="login">LOGGA IN</button>
+            <button type="submit" formaction="createuser">BLI MEDLEM</button>
+            <button onclick="goBack()">GÅ TILLBAKA</button>
+        </form>
     </div>
 </main>
 <script>
