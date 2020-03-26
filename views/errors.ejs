@@ -2,8 +2,10 @@
 <%- include ("navbar.ejs") %>
 <main>
     <div class="container">
-        <h1 class="my-3"><%= errmsg %></h1>
-
+        <div class="pageheadline">
+            <h2 class="my-3"><%= errmsg %></h2>
+        </div>
+    
         <form class="startbuttons" method="get">
             <button type="submit" formaction="/">HEM</button>
             <button type="submit" formaction="gallery">WEBSHOP</button>

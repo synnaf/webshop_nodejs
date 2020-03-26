@@ -1,7 +1,6 @@
 html {
     height: 100%;
     font-size: 12pt;
-
     body {
         margin: 0;
         @include flexColumn;
@@ -36,38 +35,53 @@ html {
             //admin formulär 
             .search-album-form,
             .add-product-form {
+                @include flexColumnCenter; 
                 align-self: center;
                 width: 70%;
-
                 h3 {
                     color: $colorMain;
                     text-align: center;
                 }
-
                 fieldset {
                     text-align: center;
                     padding: 1.5rem;
                     border: 4px solid lightgrey;
-                    margin-bottom: 1rem;
+                    margin-bottom:1rem; 
 
                     label {
+                        display:block;
                         font-size: 1rem;
                         color: $colorMain;
                         opacity: 0.5;
-                        margin-bottom: 0.2rem;
+                    }
+                    input {
+                        padding:0.5rem 0 0.5rem 0; 
+                        width:90%;
+                        margin-bottom: 1rem;
+                        border:1px solid lightgrey;
+                    }
+                    button {
+                        color:$colorSecond;
+                        font-size: $textSizeStandard;
+                        background-color:none;
+                        border:1px solid $colorSecond;
+                        align-self: center;
+                        line-height: 40px;
                     }
                 }
-
                 .submit-form {
                     text-align: center;
-                    margin-bottom: 1rem;
-
-                    button {
-                        background-color: lightgrey;
-                        margin-top: 1rem;
-                        padding: 0.5rem;
+                    margin: 2rem;
+                        button {
+                            color:$colorSecond;
+                            font-size: $textSizeStandard;
+                            background-color:none;
+                            border:1px solid $colorSecond;
+                            align-self: center;
+                            line-height: 40px;
+                            width:40%;
+                        }
                     }
-                }
             }
 
             //admin existerande produkter
@@ -115,18 +129,20 @@ html {
                 }
             }
 
-            //unikt för startsidan 
+            //button styling  
             .startbuttons {
                 @include flexColumnCenter;
                 margin-bottom: 50px;
-
+                margin-top:20px;
                 button {
-                    @include buttonShapeBig;
+                    color:$colorSecond;
                     font-size: $textSizeStandard;
-                    background: $colorSecond;
+                    background-color:$colorMain;
+                    border:1px solid $colorSecond;
                     align-self: center;
                     line-height: 40px;
                     margin: 10px;
+                    width:40%;
                 }
             }
 
@@ -230,7 +246,6 @@ html {
                 margin: 10px;
                 @include flexRowBetween;
 
-
                 .wishlist-shoppingcart-continer {
                     display: flex;
                     flex-direction: column;
@@ -267,8 +282,6 @@ html {
 
                     }
                 }
-
-
 
                 .changecart {
                     border-left: 0.5px solid lightslategray;
@@ -347,18 +360,14 @@ html {
             //styling för useraccount/userPorfile? 
             .userinfo {
                 @include flexColumnCenter;
-
                 h3 {
                     align-self: center;
                     border-bottom: 1px solid $colorThird;
                     width: 80%;
                 }
-
-                span {
+                span,h4 {
                     align-self: center;
-
                 }
-
             }
 
             .orderinfo {
@@ -381,8 +390,6 @@ html {
                     justify-items: center;
                     justify-content: center;
                     width: 80%;
-
-
 
                     .wishlist-innercontiner {
                         border: $colorSecond;
@@ -444,13 +451,16 @@ html {
             }
 
             #add-to-cart-button {
-                @include buttonShapeSmall;
-                background-color: $colorSecond;
+                @include buttonShapeMedium;
+                font-size: $textFontStandard;
+                color: $colorSecond;
+                background: none;
+                margin: 4px 0;
             }
 
             //styling för create-user och login 
             .create-user-form,
-            .admin-login-form {
+            .admin-login-form, .reset-form {
                 align-self: center;
 
                 fieldset {
@@ -473,12 +483,6 @@ html {
                         margin-bottom: 1rem;
                     }
 
-                    button {
-                        @include buttonShapeBig;
-                        background-color: lightgrey;
-                        margin-top: 1rem;
-                        padding: 0.5rem;
-                    }
                 }
             }
 
