@@ -24,37 +24,38 @@
         <form action="<%= ROUTE.checkout %>" method="POST">
             <h2>Betalning</h2>
             <div class="checkout-user-container">
-                <input type="radio" checked>
                 <input type="number" placeholder="Kortnummer">
             </div>
             <h2>Leverans</h2>
             <div class="checkout-user-container">
-                <h3>Förnamn</h3>
+                <label>Förnamn</label>
                 <input type="text" name="fName" value="<%=showUserInfo.firstName%>" size=30>
             </div>
             <div class="checkout-user-container">
-                <h3>Efternamn</h3>
+                <label>Efternamn</label>
                 <input type="text" name="lName" value="<%=showUserInfo.lastName%>" size=30>
             </div>
             <div class="checkout-user-container">
-                <h3>Adress</h3>
+                <label>Adress</label>
                 <input type="text" name="address" value="<%=showUserInfo.address%>" size=30>
             </div>
             <div class="checkout-postal">
                 <div class="postal-city">
-                    <h3>Stad</h3>
+                    <label>Stad</label>
                     <input type="text" name="city">
                 </div>
                 <div class="postal-code">
-                    <h3>Postnummer</h3>
+                    <label>Postnummer</label>
                     <input type="text">
                 </div>
-                <div class="">
-                    <h3>E-mail</h3>
+                <div>
+                    <label>E-mail</label>
                     <input type="email" name="email" value="<%=showUserInfo.email%>">
                 </div>
             </div>
-            <button type="submit" class="startbuttons">Beställ</button>
+            <div class="checkout-button">
+                <button type="submit">Beställ</button>
+            </div>
         </form>
     </div>
 </main>
