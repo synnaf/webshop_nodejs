@@ -62,5 +62,18 @@ schemaUser.methods.addToWishlist = function (product) {
 
     return this.save();
 }
+
+
+schemaUser.methods.removeWishList = function (productId) {
+
+    const currentProducts = this.wishlist.filter((product) => {
+        return product.productId.toString()
+            !==productId.toString()
+    })
+
+    this.wishlist = currentProducts;
+    return this.save();
+
+}
 const userModel = mongoose.model('User', schemaUser)
 module.exports = userModel
