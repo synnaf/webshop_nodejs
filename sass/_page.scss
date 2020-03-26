@@ -288,73 +288,49 @@ html {
             }
 
             .checkout-payment-container {
+                @include flexColumnCenter;
                 background-color: white;
                 margin: 10px;
-
                 form {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-
-                    h2 {
-                        text-align: center;
-                        font-size: 2rem;
-                        color: black;
-                    }
-
-                    h3 {
-                        margin-top: 0px;
-                        margin-bottom: 5px;
-                        font-size: 1rem;
-                        color: grey;
-                        font-weight: lighter;
+                    align-self: center;
+                    text-align:center;
+                    .checkout-user-container, .checkout-postal {
+                        align-self: center;
                         text-align: left;
+                        border: none;
+                        margin-bottom: 1rem;
+                    label {
+                        text-align: left;
+                        font-size: 1rem;
+                        margin-bottom: 0.2rem;
                     }
-
-                    .checkout-user-container {
-                        align-self: center;
-
-                        input {
-                            @include inputfieldStyle;
-                        }
+                    input {
+                        padding: 0.5rem 0 0.5rem 0;
+                        width: 100%;
+                        border:1px solid lightgrey;
+                        margin-bottom: 1rem;
                     }
-
-                    .checkout-postal {
-                        align-self: center;
-                        margin-bottom: 30px;
-
-                        .postal-city>input {
-                            @include inputfieldStyle;
-                            width: 70%;
-                        }
-
-                        .postal-code>input {
-                            @include inputfieldStyle;
-                            width: 70%;
-                        }
                     }
-
                     button {
-                        align-self: center;
-                        @include buttonShapeBig;
-                        background-color: $colorSecond;
-                        padding: $paddingThin;
-                        margin-bottom: 30px;
+                        @include buttonShapeMedium;
+                        font-size: $textFontStandard;
+                        color: $colorThird;
+                        background: none;
+                        margin: 4px 0;
+                        margin-bottom:2rem;
                     }
                 }
-
             }
             .product-container {
                 text-align: center;
                 margin-top: 2rem;
                 margin-bottom: 3rem;
-
                 .album-img a img {
                     width: 50%;
                 }
             }
 
-            //styling för useraccount/userPorfile? 
+            //styling för useraccount/userPorfile 
             .userinfo {
                 @include flexColumnCenter;
                 h3 {
@@ -471,14 +447,13 @@ html {
                         font-size: 1rem;
                         margin-bottom: 0.2rem;
                     }
-
+                    
                     input {
                         padding: 0.5rem 0 0.5rem 0;
                         width: 100%;
                         border: none;
                         margin-bottom: 1rem;
                     }
-
                 }
             }
             .reset-password {
@@ -486,6 +461,5 @@ html {
                 margin-bottom: 3rem;
             }
         }
-
     }
 }
