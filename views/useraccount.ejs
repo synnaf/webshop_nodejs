@@ -17,19 +17,19 @@
         <span><%= loggedIn.email %></span>
     </div>
     <div class="orderinfo">
-        <h3>Önskelista: </h3>
-        <ul>
+        <h3>Min önskelista: </h3>
+        <div class="wishlist-continer">
 
             <% user.wishlist.forEach( (obj)=> { %>
-            <li>
-                <div>Album: <%= obj.album %> </div>
-                <div>Artist: <%= obj.artist %> </div>
-                <div>Pris: <%= obj.price %> SEK</div>
-                <div>Album ID: <%= obj.productId %> </div>
+            <div class="wishlist-innercontiner">
+                <div class="wishlist-item">Album: <%= obj.album %> </div>
+                <div class="wishlist-item">Artist: <%= obj.artist %> </div>
+                <div class="wishlist-item">Pris: <%= obj.price %> SEK</div>
+                <div class="wishlist-item">Album ID: <%= obj.productId %> </div>
 
-            </li>
+            </div>
             <% }); %>
-        </ul>
+        </div>
     </div>
     <form class="startbuttons" method="get">
         <button type="submit" formaction="gallery">GÅ TILL WEBBSHOP</button>
