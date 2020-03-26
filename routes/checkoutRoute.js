@@ -12,6 +12,11 @@ router.get(ROUTE.checkout, verifyToken, async (req, res) => {
 
     if (verifyToken) {
         const showUserInfo = await UserModel.findOne({ _id: req.body.userInfo._id })
+            .populate('wishlist.productId', {
+                artist: 1,
+                album: 1,
+                price: 1
+            })
         res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo, token: (req.cookies.jsonwebtoken !== undefined) ? true : false })
         console.log('ALBUM ÄR', showUserInfo.wishlist.album)
     } else {

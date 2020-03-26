@@ -25,7 +25,7 @@
                 <div>Album: <%= obj.productId.album %> </div>
                 <div>Artist: <%= obj.productId.artist %> </div>
                 <div>Pris: <%= obj.productId.price %> SEK</div>
-                <div>Album ID: <%= obj.productId %> </div>
+                <div>Album ID: <%= obj.productId._id %> </div>
                 <div><a href="/remove/<%=obj.productId._id%>"><button id="">Ta bort</button></a></div>
             </li>
             <% }) %>

@@ -9,12 +9,10 @@
 
         <% showUserInfo.wishlist.forEach( (obj)=> { %>
         <li>
-            <div>Album: <%= obj.album %> </div>
-            <div>Artist: <%= obj.artist %> </div>
-            <div>Album ID: <%= obj.productId %> </div>
-            <div class="product-img">bild</div>
-            <span>Pris: <%= obj.price %> SEK</span>
-            <div>HELA OBJEKTET: <%= obj %></div>
+            <div>Album: <%= obj.productId.album %> </div>
+            <div>Artist: <%= obj.productId.artist %> </div>
+            <div>Album ID: <%= obj.productId._id %> </div>
+            <span>Pris: <%= obj.productId.price %> SEK</span>
             <% }); %>
     </ul>
     </div>
