@@ -4,19 +4,24 @@
     <div class="pageheadline">
         <h1>Varukorg</h1>
     </div>
-    <div class="shoppingcart-container"></div>
-    <ul>
+    <div class="shoppingcart-container">
+        <div class="wishlist-shoppingcart-continer">
+            <% showUserInfo.wishlist.forEach( (obj)=> { %>
+            <div class="wishlist-shoppingcart-innercontiner">
+                <div class="product-img"> </div>
+                <div class="wishlist-shoppingcart-info">
+                    <div class="wishlist-shoppingcart-item ">Album: <%= obj.album %> </div>
+                    <div class="wishlist-shoppingcart-item ">Artist: <%= obj.artist %> </div>
+                    <div class="wishlist-shoppingcart-item ">Album ID: <%= obj.productId %> </div>
+                    <div class="wishlist-shoppingcart-item ">Pris: <%= obj.price %> SEK</div>
+                </div>
+            </div>
 
-        <% showUserInfo.wishlist.forEach( (obj)=> { %>
-        <li>
-            <div>Album: <%= obj.productId.album %> </div>
-            <div>Artist: <%= obj.productId.artist %> </div>
-            <div>Album ID: <%= obj.productId._id %> </div>
-            <span>Pris: <%= obj.productId.price %> SEK</span>
+
             <% }); %>
-    </ul>
+        </div>
     </div>
-
+    </div>
     <div class="checkout-payment-container">
         <form action="<%= ROUTE.checkout %>" method="POST">
             <h2>Betalning</h2>
