@@ -283,6 +283,7 @@ html {
                 margin: 10px;
                 form {
                     align-self: center;
+                    text-align:center;
                     .checkout-user-container, .checkout-postal {
                         align-self: center;
                         text-align: left;
@@ -299,11 +300,16 @@ html {
                         border:1px solid lightgrey;
                         margin-bottom: 1rem;
                     }
-                    .checkout-button{
-                        color:blue;
+                    }
+                    button {
+                        @include buttonShapeMedium;
+                        font-size: $textFontStandard;
+                        color: $colorThird;
+                        background: none;
+                        margin: 4px 0;
+                        margin-bottom:2rem;
                     }
                 }
-            }
             }
             .product-container {
                 text-align: center;
