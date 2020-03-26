@@ -10,17 +10,16 @@
             <div class="wishlist-shoppingcart-innercontiner">
                 <div class="product-img"> </div>
                 <div class="wishlist-shoppingcart-info">
-                    <div class="wishlist-shoppingcart-item ">Album: <%= obj.album %> </div>
-                    <div class="wishlist-shoppingcart-item ">Artist: <%= obj.artist %> </div>
-                    <div class="wishlist-shoppingcart-item ">Album ID: <%= obj.productId %> </div>
-                    <div class="wishlist-shoppingcart-item ">Pris: <%= obj.price %> SEK</div>
+                    <div class="wishlist-shoppingcart-item ">Album: <%= obj.productId.album %> </div>
+                    <div class="wishlist-shoppingcart-item ">Artist: <%= obj.productId.artist %> </div>
+                    <div class="wishlist-shoppingcart-item ">Album ID: <%= obj.productId._id %> </div>
+                    <div class="wishlist-shoppingcart-item ">Pris: <%= obj.productId.price %> SEK</div>
                 </div>
+
             </div>
-
-
             <% }); %>
+
         </div>
-    </div>
     </div>
     <div class="checkout-payment-container">
         <form action="<%= ROUTE.checkout %>" method="POST">

@@ -22,14 +22,18 @@
 
             <% user.wishlist.forEach( (obj)=> { %>
             <div class="wishlist-innercontiner">
-                <div class="wishlist-item">Album: <%= obj.album %> </div>
-                <div class="wishlist-item">Artist: <%= obj.artist %> </div>
-                <div class="wishlist-item">Pris: <%= obj.price %> SEK</div>
-                <div class="wishlist-item">Album ID: <%= obj.productId %> </div>
-
+                <div class="wishlist-item">Album: <%= obj.productId.album %> </div>
+                <div class="wishlist-item">Artist: <%= obj.productId.artist %> </div>
+                <div class="wishlist-item">Pris: <%= obj.productId.price %> SEK</div>
+                <div class="wishlist-item">Album ID: <%= obj.productId._Id %> </div>
+                <div class="wishlist-item"><a href="/remove/<%=obj.productId._id%>">
+                        <button id="">Ta bort</button></a></div>
             </div>
+
+
             <% }); %>
         </div>
+    </div>
     </div>
     <form class="startbuttons" method="get">
         <button type="submit" formaction="gallery">GÅ TILL WEBSHOP</button>
