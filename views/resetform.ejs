@@ -4,8 +4,13 @@
     <div class="pageheadline">
         <h1>Ändra lösenord</h1>
     </div>
-    <form action="<% ROUTE.resetpasswordToken %>" method="POST" class="user-login-form">
-        <input type="hidden" name="token" value=<%= user.resetToken %>>
+
+    <!-- resetpassword: '/resetpassword',
+    resetpasswordToken: '/resetpassword/:token' -->
+
+    <form action="<%=ROUTE.resetpasswordToken%>" method="POST" class="user-login-form">
+        <input type="hidden" name="token" value="<%= user.resetToken %>">
+
         <label for="password">Nytt lösenord:</label>
         <input type="password" name="password">
         <label for="repeat-password">Upprepa nytt lösenord:</label>
