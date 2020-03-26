@@ -1,28 +1,38 @@
-html  body footer {
+html body footer {
     background-color: $colorSecond;
+
     .footer-content {
+        margin: 20px;
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
+
         .logo {
             font-size: large;
             font-weight: 900;
             margin-left: 2.5rem;
+
             a {
+
                 color: $colorMain;
             }
         }
+
         p {
             color: $colorMain;
             margin-left: 2.5rem;
         }
+
         ul li {
             list-style-type: none;
+            margin: 5px;
+
             a {
                 color: black;
-            &:hover {
-                color: $colorSecond;
-            }
+
+                &:hover {
+                    color: $colorSecond;
+                }
             }
         }
     }

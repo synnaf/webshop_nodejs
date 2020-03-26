@@ -1,6 +1,7 @@
 html {
     height: 100%;
     font-size: 12pt;
+
     body {
         margin: 0;
         @include flexColumn;
@@ -35,53 +36,59 @@ html {
             //admin formulär 
             .search-album-form,
             .add-product-form {
-                @include flexColumnCenter; 
+                @include flexColumnCenter;
                 align-self: center;
                 width: 70%;
+
                 h3 {
                     color: $colorMain;
                     text-align: center;
                 }
+
                 fieldset {
                     text-align: center;
                     padding: 1.5rem;
                     border: 4px solid lightgrey;
-                    margin-bottom:1rem; 
+                    margin-bottom: 2rem;
 
                     label {
-                        display:block;
+                        display: block;
                         font-size: 1rem;
                         color: $colorMain;
                         opacity: 0.5;
                     }
+
                     input {
-                        padding:0.5rem 0 0.5rem 0; 
-                        width:90%;
+                        padding: 0.5rem 0 0.5rem 0;
+                        width: 90%;
                         margin-bottom: 1rem;
-                        border:1px solid lightgrey;
+                        border: 1px solid lightgrey;
                     }
+
                     button {
-                        color:$colorSecond;
+                        color: $colorSecond;
                         font-size: $textSizeStandard;
-                        background-color:none;
-                        border:1px solid $colorSecond;
+                        background-color: none;
+                        border: 1px solid $colorSecond;
                         align-self: center;
                         line-height: 40px;
                     }
                 }
+
                 .submit-form {
                     text-align: center;
                     margin: 2rem;
-                        button {
-                            color:$colorSecond;
-                            font-size: $textSizeStandard;
-                            background-color:none;
-                            border:1px solid $colorSecond;
-                            align-self: center;
-                            line-height: 40px;
-                            width:40%;
-                        }
+
+                    button {
+                        color: $colorSecond;
+                        font-size: $textSizeStandard;
+                        background-color: none;
+                        border: 1px solid $colorSecond;
+                        align-self: center;
+                        line-height: 40px;
+                        width: 40%;
                     }
+                }
             }
 
             //admin existerande produkter
@@ -125,9 +132,10 @@ html {
                         border: 2px solid grey;
                         height: 100px;
                         width: 100px;
+
                         &:hover {
-                        height: 120px;
-                        width: 120px;
+                            height: 120px;
+                            width: 120px;
                         }
                     }
                 }
@@ -137,19 +145,21 @@ html {
             .startbuttons {
                 @include flexColumnCenter;
                 margin-bottom: 50px;
-                margin-top:20px;
+                margin-top: 20px;
+
                 button {
-                    color:$colorSecond;
+                    color: $colorSecond;
                     font-size: $textSizeStandard;
-                    background-color:$colorMain;
-                    border:1px solid $colorSecond;
+                    background-color: $colorMain;
+                    border: 1px solid $colorSecond;
                     align-self: center;
                     line-height: 40px;
                     margin: 10px;
-                    width:40%;
+                    width: 40%;
+
                     &:hover {
                         @include buttonHover;
-                        }
+                    }
                 }
             }
 
@@ -240,6 +250,7 @@ html {
                                 color: $colorSecond;
                                 background: none;
                                 margin: 4px 0;
+
                                 &:hover {
                                     @include buttonHover;
                                 }
@@ -254,12 +265,14 @@ html {
                 height: auto;
                 background-color: $colorSecond;
                 margin: 10px;
+
                 .wishlist-shoppingcart-continer {
-                    @include flexColumnCenter; 
-                    padding-top:1rem; 
-                    padding-bottom:1rem;
+                    @include flexColumnCenter;
+                    padding-top: 1rem;
+                    padding-bottom: 1rem;
+
                     .wishlist-shoppingcart-innercontiner {
-                        align-self:center;
+                        align-self: center;
                         border: $colorMain;
                         border-style: solid;
                         margin: 7px;
@@ -267,9 +280,11 @@ html {
                         display: flex;
                         flex-direction: row;
                         width: 70%;
+
                         .wishlist-shoppingcart-info {
                             display: flex;
                             flex-direction: column;
+
                             .wishlist-shoppingcart-item {
                                 margin: 7px;
                                 font-size: $textSizeSmall;
@@ -291,40 +306,48 @@ html {
                 @include flexColumnCenter;
                 background-color: white;
                 margin: 10px;
+
                 form {
                     align-self: center;
-                    text-align:center;
-                    .checkout-user-container, .checkout-postal {
+                    text-align: center;
+
+                    .checkout-user-container,
+                    .checkout-postal {
                         align-self: center;
                         text-align: left;
                         border: none;
                         margin-bottom: 1rem;
-                    label {
-                        text-align: left;
-                        font-size: 1rem;
-                        margin-bottom: 0.2rem;
+
+                        label {
+                            text-align: left;
+                            font-size: 1rem;
+                            margin-bottom: 0.2rem;
+                        }
+
+                        input {
+                            padding: 0.5rem 0 0.5rem 0;
+                            width: 100%;
+                            border: 1px solid lightgrey;
+                            margin-bottom: 1rem;
+                        }
                     }
-                    input {
-                        padding: 0.5rem 0 0.5rem 0;
-                        width: 100%;
-                        border:1px solid lightgrey;
-                        margin-bottom: 1rem;
-                    }
-                    }
+
                     button {
                         @include buttonShapeMedium;
                         font-size: $textFontStandard;
                         color: $colorThird;
                         background: none;
                         margin: 4px 0;
-                        margin-bottom:2rem;
+                        margin-bottom: 2rem;
                     }
                 }
             }
+
             .product-container {
                 text-align: center;
                 margin-top: 2rem;
                 margin-bottom: 3rem;
+
                 .album-img a img {
                     width: 50%;
                 }
@@ -333,12 +356,15 @@ html {
             //styling för useraccount/userPorfile 
             .userinfo {
                 @include flexColumnCenter;
+
                 h3 {
                     align-self: center;
                     border-bottom: 1px solid $colorThird;
                     width: 80%;
                 }
-                span,h4 {
+
+                span,
+                h4 {
                     align-self: center;
                 }
             }
@@ -373,15 +399,21 @@ html {
                         flex-direction: column;
                         justify-items: center;
                         justify-content: center;
+
                         .wishlist-item {
                             margin: 7px;
                         }
+
                         button {
                             @include buttonShapeMedium;
                             font-size: $textFontStandard;
                             color: whitesmoke;
                             background: none;
                             margin: 4px 0;
+
+                            &:hover {
+                                @include buttonHover;
+                            }
                         }
                     }
                 }
@@ -392,6 +424,7 @@ html {
                 align-self: center;
                 width: 70%;
                 margin-bottom: 2rem;
+
                 .passwordinfo {
                     text-align: center;
                     background-color: whitesmoke;
@@ -408,20 +441,27 @@ html {
                         border: none;
                         margin-bottom: 1rem;
                     }
+
                     button {
                         @include buttonShapeMedium;
                         font-size: $textFontStandard;
-                        color:$colorThird;
+                        color: $colorThird;
                         background: none;
-                        
+
+                        &:hover {
+                            @include buttonHover;
+                        }
+
                     }
 
                 }
             }
+
             //styling för enskilda produkter (one product) 
             #one-product-image {
                 width: 70%;
             }
+
             #add-to-cart-button {
                 @include buttonShapeMedium;
                 font-size: $textFontStandard;
@@ -432,7 +472,8 @@ html {
 
             //styling för create-user och login 
             .create-user-form,
-            .admin-login-form, .reset-form {
+            .admin-login-form,
+            .reset-form {
                 align-self: center;
 
                 fieldset {
@@ -447,7 +488,7 @@ html {
                         font-size: 1rem;
                         margin-bottom: 0.2rem;
                     }
-                    
+
                     input {
                         padding: 0.5rem 0 0.5rem 0;
                         width: 100%;
@@ -456,6 +497,7 @@ html {
                     }
                 }
             }
+
             .reset-password {
                 text-align: center;
                 margin-bottom: 3rem;
