@@ -28,7 +28,7 @@
 
 @mixin buttonShapeMedium {
     padding: 6px 12px;
-    border: 1px solid rgb(255, 145, 200);
+    border: 1px solid $colorFourth;
 }
 
 @mixin buttonShapeBig {

@@ -21,7 +21,7 @@
     .hidden-menu {
         @include flexRowBetween;
         padding: 0 44px;
-        border-top: 1px solid rgb(255, 145, 200);
+        border-top: 1px solid $colorFourth;
         height: 0;
         overflow: hidden;
         font-size: 0;
@@ -37,7 +37,7 @@
         }
     }
     .drop-down-menu {
-        border-bottom: 1px solid rgb(255, 145, 200);
+        border-bottom: 1px solid $colorFourth;
         background: $colorMain;
         padding: 6px 32px;
         transition: $transitionFast;
