@@ -1,4 +1,6 @@
-const mongoDB ={
+require('dotenv').config()
+
+const mongoDB = {
     databaseUrl: process.env.MONGO_DB
 } 
 

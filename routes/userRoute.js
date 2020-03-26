@@ -5,7 +5,10 @@ const crypto = require("crypto");
 const UserInfoModel = require('../model/user');
 const ProductModel = require("../model/product");
 const config = require('../config/config');
-const { ROUTE, VIEW } = require('../constant');
+const {
+    ROUTE,
+    VIEW
+} = require('../constant');
 const jwt = require('jsonwebtoken');
 const verifyToken = require("./verifyToken");
 const verifyAdminToken = require("./verifyAdminToken");
@@ -34,49 +37,64 @@ router.post(ROUTE.createUser, async (req, res) => {
             firstName: "Admin",
             lastName: "Admin",
         }).save()
-    }
-    else {
-        await new UserInfoModel({
-            email: req.body.email,
-            password: hashPassword,
-            address: req.body.address,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-        }).save();
-    }
-    const userInfo = await UserInfoModel.findOne({
-        email: req.body.email
-    });
-    if (!userInfo) return res.redirect(url.format({
-        pathname: ROUTE.error,
-        query: {
-            errmsg: 'Fel email!'
+    } else {
+        try {
+            await new UserInfoModel({
+                email: req.body.email,
+                password: hashPassword,
+                address: req.body.address,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+            }).save();
+        } catch (error) {
+            console.log(error)
+
+            res.redirect(url.format({
+                pathname: ROUTE.error,
+                query: {
+                    errmsg: 'Mailet är upptaget,försök igen!'
+                }
+            }));
+
         }
-    }));
-    const validUser = await bcrypt.compare(req.body.password, userInfo.password);
-    if (!validUser) return res.render("errors", {
-        errmsg: 'Fel lösenord!',
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-    });
-    const tokenSignature = userInfo.isAdmin ? config.tokenkey.adminjwt : config.tokenkey.userjwt;
-    jwt.sign({ userInfo }, tokenSignature, (err, token) => {
-        if (err) return res.render('errors', {
-            errmsg: 'token funkar inte',
+
+        const userInfo = await UserInfoModel.findOne({
+            email: req.body.email
+        });
+        if (!userInfo) return res.redirect(url.format({
+            pathname: ROUTE.error,
+            query: {
+                errmsg: 'Fel email!'
+            }
+        }));
+        const validUser = await bcrypt.compare(req.body.password, userInfo.password);
+        if (!validUser) return res.render("errors", {
+            errmsg: 'Fel lösenord!',
             token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         });
-        if (token) {
-            // console.log("token som finns på signup" + token)
-            const cookie = req.cookies.jsonwebtoken;
-            if (!cookie) {
-                res.cookie('jsonwebtoken', token, {
-                    maxAge: 400000,
-                    httpOnly: true
-                })
+        const tokenSignature = userInfo.isAdmin ? config.tokenkey.adminjwt : config.tokenkey.userjwt;
+        jwt.sign({
+            userInfo
+        }, tokenSignature, (err, token) => {
+            if (err) return res.render('errors', {
+                errmsg: 'token funkar inte',
+                token: (req.cookies.jsonwebtoken !== undefined) ? true : false
+            });
+            if (token) {
+                // console.log("token som finns på signup" + token)
+                const cookie = req.cookies.jsonwebtoken;
+                if (!cookie) {
+                    res.cookie('jsonwebtoken', token, {
+                        maxAge: 400000,
+                        httpOnly: true
+                    })
+                }
+                if (tokenSignature == config.tokenkey.adminjwt) return res.redirect(VIEW.admin);
+                if (tokenSignature == config.tokenkey.userjwt) return res.redirect(VIEW.userAccount);
             }
-            if (tokenSignature == config.tokenkey.adminjwt) return res.redirect(VIEW.admin);
-            if (tokenSignature == config.tokenkey.userjwt) return res.redirect(VIEW.userAccount);
-        }
-    })
+        })
+
+    }
 });
 
 //--------- LOG IN---------------//
@@ -130,8 +148,7 @@ router.post(ROUTE.login, async (req, res) => {
                 }
                 if (userInfo.isAdmin) {
                     res.redirect(ROUTE.admin);
-                }
-                else {
+                } else {
                     res.redirect(ROUTE.userAccount);
                 }
             }
@@ -144,7 +161,13 @@ router.post(ROUTE.login, async (req, res) => {
 router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
     // const newUser = jwt.decode(req.cookies.jsonwebtoken).signedUpUser;
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
-    const user = await UserInfoModel.findOne({ _id: req.body.userInfo._id }).populate('wishlist.productId', { artist: 1, album: 1, price: 1 })
+    const user = await UserInfoModel.findOne({
+        _id: req.body.userInfo._id
+    }).populate('wishlist.productId', {
+        artist: 1,
+        album: 1,
+        price: 1
+    })
     res.status(200).render(VIEW.userAccount, {
         ROUTE,
         loggedIn,
@@ -207,16 +230,19 @@ router.post(ROUTE.userAccount, async (req, res) => {
 router.get(ROUTE.wishlistId, verifyToken, async (req, res) => {
 
     if (verifyToken) {
-        const product = await ProductModel.findOne({ _id: req.params.id });
+        const product = await ProductModel.findOne({
+            _id: req.params.id
+        });
         console.log("Denna produkt vill user spara: " + product)
-        const user = await UserInfoModel.findOne({ _id: req.body.userInfo._id });
+        const user = await UserInfoModel.findOne({
+            _id: req.body.userInfo._id
+        });
         console.log("Detta är user som vill spara i wishlist " + user)
         user.addToWishlist(product);
         console.log(user, "La till", product, "i listan")
 
         return res.redirect(ROUTE.userAccount);
-    }
-    else {
+    } else {
         res.redirect(url.format({
             pathname: ROUTE.error,
             query: {
@@ -226,6 +252,17 @@ router.get(ROUTE.wishlistId, verifyToken, async (req, res) => {
     }
 
 
+})
+
+
+router.get("/remove/:id", verifyToken, async (req, res) => {
+    console.log(req.body, "why")
+    const user = await UserInfoModel.findOne({
+        _id: req.body.userInfo._id
+    });
+    console.log(user, "hej")
+    user.removeWishList(req.params.id)
+    res.redirect(ROUTE.userAccount);
 })
 
 
