@@ -4,7 +4,6 @@ const { ROUTE, VIEW } = require('../constant');
 const UserModel = require("../model/user")
 const verifyToken = require("./verifyToken")
 
-
 router.get(ROUTE.checkout, verifyToken, async (req, res) => {
 
     // const token = req.cookies.jsonwebtoken 
@@ -35,7 +34,7 @@ router.post(ROUTE.checkout, verifyToken, (req, res) => {
         city: req.body.city,
         email: req.body.email
     }
-    console.log(customer)
+    //console.log(customer)
     res.render(VIEW.confirmation, {
         customer,
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
