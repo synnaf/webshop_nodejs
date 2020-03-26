@@ -125,6 +125,10 @@ html {
                         border: 2px solid grey;
                         height: 100px;
                         width: 100px;
+                        &:hover {
+                        height: 120px;
+                        width: 120px;
+                        }
                     }
                 }
             }
@@ -143,6 +147,9 @@ html {
                     line-height: 40px;
                     margin: 10px;
                     width:40%;
+                    &:hover {
+                        @include buttonHover;
+                        }
                 }
             }
 
@@ -233,6 +240,9 @@ html {
                                 color: $colorSecond;
                                 background: none;
                                 margin: 4px 0;
+                                &:hover {
+                                    @include buttonHover;
+                                }
                             }
                         }
                     }
@@ -334,7 +344,6 @@ html {
                 }
 
             }
-
             .product-container {
                 text-align: center;
                 margin-top: 2rem;
@@ -433,13 +442,10 @@ html {
 
                 }
             }
-
-
             //styling för enskilda produkter (one product) 
             #one-product-image {
                 width: 70%;
             }
-
             #add-to-cart-button {
                 @include buttonShapeMedium;
                 font-size: $textFontStandard;
@@ -475,9 +481,9 @@ html {
 
                 }
             }
-
             .reset-password {
                 text-align: center;
+                margin-bottom: 3rem;
             }
         }
 
