@@ -4,21 +4,25 @@
     <div class="pageheadline">
         <h1>Varukorg</h1>
     </div>
-    <div class="shoppingcart-container"></div>
-    <ul>
+    <div class="shoppingcart-container">
+        <div class="wishlist-shoppingcart-continer">
+            <% showUserInfo.wishlist.forEach( (obj)=> { %>
+            <div class="wishlist-shoppingcart-innercontiner">
+                <div class="product-img"> </div>
+                <div class="wishlist-shoppingcart-info">
+                    <div class="wishlist-shoppingcart-item ">Album: <%= obj.productId.album %> </div>
+                    <div class="wishlist-shoppingcart-item ">Artist: <%= obj.productId.artist %> </div>
+                    <div class="wishlist-shoppingcart-item ">Album ID: <%= obj.productId._id %> </div>
+                    <div class="wishlist-shoppingcart-item ">Pris: <%= obj.productId.price %> SEK</div>
+                </div>
 
-        <% showUserInfo.wishlist.forEach( (obj)=> { %>
-        <li>
-            <div>Album: <%= obj.productId.album %> </div>
-            <div>Artist: <%= obj.productId.artist %> </div>
-            <div>Album ID: <%= obj.productId._id %> </div>
-            <span>Pris: <%= obj.productId.price %> SEK</span>
+            </div>
             <% }); %>
-    </ul>
-    </div>
 
+        </div>
+    </div>
     <div class="checkout-payment-container">
-        <form action="<% ROUTE.checkout %>">
+        <form action="<%= ROUTE.checkout %>" method="POST">
             <h2>Betalning</h2>
             <div class="checkout-user-container">
                 <input type="radio" checked>
@@ -27,28 +31,28 @@
             <h2>Leverans</h2>
             <div class="checkout-user-container">
                 <h3>Förnamn</h3>
-                <input type="text" value="<%=showUserInfo.firstName%>" size=30>
+                <input type="text" name="fName" value="<%=showUserInfo.firstName%>" size=30>
             </div>
             <div class="checkout-user-container">
                 <h3>Efternamn</h3>
-                <input type="text" value="<%=showUserInfo.lastName%>" size=30>
+                <input type="text" name="lName" value="<%=showUserInfo.lastName%>" size=30>
             </div>
             <div class="checkout-user-container">
                 <h3>Adress</h3>
-                <input type="text" value="<%=showUserInfo.address%>" size=30>
+                <input type="text" name="address" value="<%=showUserInfo.address%>" size=30>
             </div>
             <div class="checkout-postal">
                 <div class="postal-city">
                     <h3>Stad</h3>
-                    <input type="text">
+                    <input type="text" name="city">
                 </div>
                 <div class="postal-code">
                     <h3>Postnummer</h3>
                     <input type="text">
                 </div>
-                <div class="postal-city">
+                <div class="">
                     <h3>E-mail</h3>
-                    <input type="email" value="<%=showUserInfo.email%>">
+                    <input type="email" name="email" value="<%=showUserInfo.email%>">
                 </div>
             </div>
             <button type="submit">Beställ</button>

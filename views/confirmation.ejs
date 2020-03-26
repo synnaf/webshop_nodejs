@@ -2,7 +2,18 @@
 <%- include ("navbar.ejs") %>
 <main>
     <div>
-        Orderbekräftelse
+        <h2>Orderbekräftelse</h2>
+        <div>Tack <%= customer.fName %>!</div>
+        <div>Dina varor kommer att levereras till följande adress:</div>
+        <div><%= customer.fName %> <%= customer.lName %></div>
+        <div><%= customer.address %></div>
+        <div><%= customer.city %></div>
+
     </div>
+    <form class="startbuttons" method="get">
+        <button type="submit" formaction="/">HEM</button>
+        <button type="submit" formaction="gallery">WEBSHOP</button>
+        <button type="submit" formaction="logout">LOGGA UT</button>
+    </form>
 </main>
 <%- include ("footer.ejs") %>

@@ -26,6 +26,11 @@
     border-radius: 50%;
 }
 
+@mixin buttonShapeMedium {
+    padding: 6px 12px;
+    border: 1px solid $colorFourth;
+}
+
 @mixin buttonShapeBig {
     width: 200px;
     border: none; 

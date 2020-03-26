@@ -19,10 +19,12 @@
                     </div>
                 </div>
                 <div class="product-info-right">
-                    <a href="/wishlist/<%= product._id %>"><button class="add-to-cart-button">SPARA I
-                            ÖNSKELISTA</button></a>
-                    <a href="<%= ROUTE.gallery %>/<%= product._id%>"><button id="show-product-button">LÄS
-                            MER</button></a>
+                    <a href="/wishlist/<%= product._id %>">
+                        <button class="add-to-cart-button">SPARA</button>
+                    </a>
+                    <a href="<%= ROUTE.gallery %>/<%= product._id%>">
+                        <button id="show-product-button">INFO</button>
+                    </a>
                 </div>
             </div>
         </li>
