@@ -72,6 +72,10 @@ html {
                         border: 1px solid $colorSecond;
                         align-self: center;
                         line-height: 40px;
+
+                        &:hover {
+                            @include buttonHover;
+                        }
                     }
                 }
 
@@ -87,9 +91,16 @@ html {
                         align-self: center;
                         line-height: 40px;
                         width: 40%;
+
+                        &:hover {
+                            @include buttonHover;
+                        }
                     }
                 }
             }
+
+
+
 
             //admin existerande produkter
             .productlist-container {
@@ -171,6 +182,7 @@ html {
                 border-color: $colorThird;
                 border-bottom-style: solid;
             }
+
             .pagination {
                 font-size: 0.8rem;
                 margin: 0 30px;
@@ -179,25 +191,31 @@ html {
                 border-width: 1px;
                 border-color: $colorThird;
                 border-bottom-style: solid;
+
                 a {
                     margin: 0 18px;
                     color: $colorSecond;
                     text-decoration: none;
                 }
+
                 span {
                     margin: 0 18px;
                     color: $colorThird;
                 }
             }
+
             .product-list {
                 padding: 0;
                 margin: 0;
                 list-style-type: none;
+
                 .product-display {
                     padding: 0 32px;
                     margin: 32px 0 0 0;
+
                     .product-image-container {
                         width: 100%;
+
                         img {
                             border-style: solid;
                             border-width: 1px;
@@ -205,6 +223,7 @@ html {
                             width: 100%;
                         }
                     }
+
                     .product-info-container {
                         @include flexRowBetween;
                         padding: 12px 0;
@@ -212,24 +231,32 @@ html {
                         border-width: 1px;
                         border-color: $colorThird;
                         border-bottom-style: solid;
+
                         .product-info-left {
                             @include flexColumnCenter;
-                            .product-artist{
+
+                            .product-artist {
                                 font-size: 1.4rem;
                             }
+
                             .product-price-container {
                                 .product-price {
-                                    font-size: 1.8rem; /*fixa variabel*/
+                                    font-size: 1.8rem;
+                                    /*fixa variabel*/
                                     color: $colorThird;
                                 }
+
                                 .product-currency {
-                                    font-size: 0.8rem;  /*fixa variabel*/
+                                    font-size: 0.8rem;
+                                    /*fixa variabel*/
                                 }
-                            } 
+                            }
                         }
+
                         .product-info-right {
                             @include flexColumnCenter;
                             text-align: right;
+
                             button {
                                 @include buttonShapeMedium;
                                 font-size: $textFontStandard;
@@ -286,12 +313,17 @@ html {
 
             .checkout-payment-container {
                 @include flexColumnCenter;
-                background-color: rgb(240, 240, 240);
+                background-color: rgb(248, 247, 247);
                 margin: 10px;
 
                 form {
                     align-self: center;
                     text-align: center;
+
+                    h3 {
+                        color: $colorSecond;
+
+                    }
 
                     .checkout-user-container,
                     .checkout-postal {
@@ -299,6 +331,7 @@ html {
                         text-align: left;
                         border: none;
                         margin-bottom: 1rem;
+
 
                         label {
                             text-align: left;
@@ -413,7 +446,7 @@ html {
 
                 .passwordinfo {
                     text-align: center;
-                    background-color: rgb(240, 240, 240);
+                    background-color: rgb(248, 247, 247);
 
                     h3,
                     label {
@@ -454,6 +487,10 @@ html {
                 color: $colorSecond;
                 background: none;
                 margin: 4px 0;
+
+                &:hover {
+                    @include buttonHover;
+                }
             }
 
             //styling för create-user och login 
