@@ -17,7 +17,6 @@ router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
         ROUTE,
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
     })
-    console.log('TOKEN NÄR MAN ÄR PÅ ADMIN', req.body.userInfo)
 })
 
 router.post(ROUTE.admin, verifyAdminToken, (req, res) => {
@@ -96,7 +95,6 @@ router.post(ROUTE.admin, verifyAdminToken, (req, res) => {
                             genres: genres,
                             token: (req.cookies.jsonwebtoken !== undefined) ? true : false
                         });
-                        console.log('USERINFO NÄR MAN SKA ADDPRODUCT', req.body.userInfo)
                     }
                 });
             }
@@ -106,14 +104,13 @@ router.post(ROUTE.admin, verifyAdminToken, (req, res) => {
 })
 
 router.post(ROUTE.adminAddProduct, verifyAdminToken, async (req, res) => {
-    console.log('USERINFO I POST ADMINADDPRODUCT', req.body.userInfo)
     let genres = ["All"];
     for (const property in req.body) {
         if (property.includes("genre")) {
             genres.push(property.replace("genre", ""));
         }
     }
-    const product = await new Product({
+    const product = await new ProductModel({
         artist: req.body.artist,
         album: req.body.album,
         tracks: req.body.tracks,
@@ -124,7 +121,6 @@ router.post(ROUTE.adminAddProduct, verifyAdminToken, async (req, res) => {
         addedBy: req.body.adminName,
         user: req.body.userInfo._id
     });
-    console.log(product)
     product.validate(function (err) {
         if (err) {
             console.log(err);

@@ -45,3 +45,7 @@
 @mixin hej{
     margin: auto;
 }
+@mixin buttonHover {
+    background-color: $colorFourth;
+    color: black;
+}

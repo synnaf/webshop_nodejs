@@ -57,7 +57,6 @@ router.post(ROUTE.createUser, async (req, res) => {
                 }
             }));
         }
-
         const userInfo = await UserInfoModel.findOne({
             email: req.body.email
         });
@@ -93,14 +92,13 @@ router.post(ROUTE.createUser, async (req, res) => {
                 if (tokenSignature == config.tokenkey.userjwt) return res.redirect(VIEW.userAccount);
             }
         })
-
     }
 });
 
 //--------- LOG IN---------------//
 
 router.get(ROUTE.login, async (req, res) => {
-    
+
     res.status(200).render(VIEW.login, {
         ROUTE,
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
@@ -143,7 +141,7 @@ router.post(ROUTE.login, async (req, res) => {
                 const cookie = req.cookies.jsonwebtoken;
                 if (!cookie) {
                     res.cookie('jsonwebtoken', token, {
-                        maxAge: 400000,
+                        maxAge: 3600000,
                         httpOnly: true
                     })
                 }
@@ -153,14 +151,11 @@ router.post(ROUTE.login, async (req, res) => {
                     res.redirect(ROUTE.userAccount);
                 }
             }
-
         })
-
     }
 });
 
 router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
-    // const newUser = jwt.decode(req.cookies.jsonwebtoken).signedUpUser;
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
     const user = await UserInfoModel.findOne({
         _id: req.body.userInfo._id
@@ -169,6 +164,7 @@ router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
         album: 1,
         price: 1
     })
+
     res.status(200).render(VIEW.userAccount, {
         ROUTE,
         loggedIn,
@@ -224,8 +220,7 @@ router.post(ROUTE.userAccount, async (req, res) => {
     }
 })
 
-
-//---- route för checkout/cart/wishlist ----------//
+//---- route för wishlist ----------//
 
 router.get(ROUTE.wishlistId, verifyToken, async (req, res) => {
 
@@ -233,13 +228,12 @@ router.get(ROUTE.wishlistId, verifyToken, async (req, res) => {
         const product = await ProductModel.findOne({
             _id: req.params.id
         });
-        console.log("Denna produkt vill user spara: " + product)
+        //console.log("Denna produkt vill user spara: " + product)
         const user = await UserInfoModel.findOne({
             _id: req.body.userInfo._id
         });
-        console.log("Detta är user som vill spara i wishlist " + user)
+        //console.log("Detta är user som vill spara i wishlist " + user)
         user.addToWishlist(product);
-        console.log(user, "La till", product, "i listan")
 
         return res.redirect(ROUTE.userAccount);
     } else {
@@ -250,10 +244,7 @@ router.get(ROUTE.wishlistId, verifyToken, async (req, res) => {
             }
         }));
     }
-
-
 })
-
 
 router.get(ROUTE.wishlistRemoveId, verifyToken, async (req, res) => {
     console.log(req.body, "why")
@@ -265,17 +256,6 @@ router.get(ROUTE.wishlistRemoveId, verifyToken, async (req, res) => {
     res.redirect(ROUTE.userAccount);
 })
 
-
-//------------------- confirmation for checkout -------------- //
-
-
-router.get(ROUTE.confirmation, (req, res) => {
-    res.status(200).render(VIEW.confirmation, {
-        token: (req.cookies.jsonwebtoken !== undefined) ? true : false
-    });
-})
-
-
 //-------------- routes för att reset password ------------ // 
 
 router.get(ROUTE.resetpassword, (req, res) => {
@@ -286,13 +266,13 @@ router.get(ROUTE.resetpassword, (req, res) => {
 })
 
 router.post(ROUTE.resetpassword, async (req, res) => {
-    
+
     const user = await UserInfoModel.findOne({ email: req.body.resetmail })
     if (!user) return res.redirect(ROUTE.error)
 
     crypto.randomBytes(32, async (error, token) => {
         if (error) return res.redirect(ROUTE.error);
-        
+
         const resetToken = token.toString("hex");
         user.resetToken = resetToken
         user.expirationToken = Date.now() + 1000000
@@ -304,17 +284,14 @@ router.post(ROUTE.resetpassword, async (req, res) => {
             subject: "Ändra ditt lösenord!",
             html: `http://localhost:8080/resetpassword/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord!<h2>`
         })
-
         res.redirect(ROUTE.login)
     })
 })
 
-//OBS!! redrict ska göras till en route, inte till en view. 
-
 router.get(ROUTE.resetpasswordToken, async (req, res) => {
     const token = req.params.token;
-    const user = await UserInfoModel.findOne({ resetToken: token, expirationToken: {$gt: Date.now()} });
-    
+    const user = await UserInfoModel.findOne({ resetToken: token, expirationToken: { $gt: Date.now() } });
+
     if (!user) return res.redirect(ROUTE.error);
     res.render(VIEW.resetform, {
         user,
@@ -334,7 +311,7 @@ router.post(ROUTE.resetpasswordToken, async (req, res) => {
         await user.save();
         return res.redirect(ROUTE.login);
     }
-        return res.redirect(ROUTE.error);
+    return res.redirect(ROUTE.error);
 })
 
 router.get(ROUTE.logout, (req, res) => {
