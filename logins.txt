@@ -1,0 +1,21 @@
+
+Admins:
+maria@admin.se
+Pw: kebabrulle
+
+fanny@admin.se
+Pw: boneappletee
+
+nina@admin.se
+Pw: 0000
+
+Markoolio@mail.se
+Pw: 654321
+
+
+Kunder:
+kund@mail.se
+Pw: 0000
+
+bill@gates.se
+Pw: 1234
