@@ -263,6 +263,11 @@ html {
                                 color: $colorSecond;
                                 background: none;
                                 margin: 4px 0;
+
+                                &:hover {
+                                    @include buttonHover;
+                                }
+
                             }
                         }
                     }
@@ -495,8 +500,7 @@ html {
 
             //styling för create-user och login 
             .create-user-form,
-            .admin-login-form,
-            .reset-form {
+            .admin-login-form .reset-form {
                 align-self: center;
 
                 fieldset {
