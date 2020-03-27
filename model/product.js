@@ -11,9 +11,7 @@ const schemaProduct = new Schema({
     price: Number,
     addedBy: String,
     user: {
-        //ett objekt id från mongoose 
         type: mongoose.Schema.Types.ObjectId,
-        //referens från en user 
         ref: "User"
     }
 })

@@ -4,9 +4,7 @@ const {ROUTE} = require('../constant')
 const url = require("url");
 
 module.exports = (req, res, next) => {
-
     const token = req.cookies.jsonwebtoken
-
     if (token) {
         jwt.verify(token, config.tokenkey.userjwt, (err, result) => {
             if (err) {
@@ -29,5 +27,4 @@ module.exports = (req, res, next) => {
             }
         }));
     }
-
 }
