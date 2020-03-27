@@ -214,7 +214,8 @@ html {
                 }
 
                 .product-display {
-                    padding: $paddingMedium;
+                    padding: 0 32px;
+                    margin: 32px 0 0 0;
 
                     .product-image-container {
                         width: 100%;
@@ -229,8 +230,11 @@ html {
 
                     .product-info-container {
                         @include flexRowBetween;
-                        padding: $paddingSmall;
-                        margin: 8px 0 0 0;
+                        padding: 12px 0;
+                        margin: 0;
+                        border-width: 1px;
+                        border-color: $colorThird;
+                        border-bottom-style: solid;
 
                         .product-info-left {
                             @include flexColumnCenter;
@@ -243,7 +247,7 @@ html {
                                 }
 
                                 .product-currency {
-                                    font-size: 0.8rem;
+                                    font-size: 1.8rem;
                                     /*fixa variabel*/
                                 }
                             }
