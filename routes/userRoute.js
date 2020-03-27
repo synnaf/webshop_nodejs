@@ -55,7 +55,7 @@ router.post(ROUTE.createUser, async (req, res) => {
             res.redirect(url.format({
                 pathname: ROUTE.error,
                 query: {
-                    errmsg: 'emailet-adressen är upptagen,försök igen :)!'
+                    errmsg: 'emailet-adressen är upptagen,försök igen! :)'
                 }
             }));
         }
