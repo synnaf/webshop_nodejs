@@ -1,7 +1,7 @@
 const express = require('express')
 const sassMiddleware = require('node-sass-middleware')
-const app = express()
-const PORT = process.env.PORT
+const app = express();
+const PORT = process.env.PORT || 8080;
 const adminRoute = require('../routes/adminRoute');
 const userRoute = require('../routes/userRoute');
 const checkOutRoute = require('../routes/checkoutRoute');
