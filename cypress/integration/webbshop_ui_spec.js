@@ -4,15 +4,15 @@ describe('UI test for Vinylshop gallery link and login function', () => {
         cy.url().should('include', '/')
         cy.contains('WEBSHOP').click()
         cy.url().should('include', 'gallery')
-        cy.contains('LÄS MER')
+        cy.contains('INFO')
     })
 
     it('Should go from gallery to sign in and log in', () => {
         cy.get('.fa-bars').click()
         cy.contains('LOGGA IN').click()
 
-        cy.get('input').first().type('rr').should('have.value', 'rr')
-        cy.get('input').last().type('pp').should('have.value', 'pp')
+        cy.get('input').first().type('kund@mail.se').should('have.value', 'kund@mail.se')
+        cy.get('input').last().type('0000').should('have.value', '0000')
         cy.contains('Logga in').click()
     })
 
