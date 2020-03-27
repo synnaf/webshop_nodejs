@@ -72,6 +72,10 @@ html {
                         border: 1px solid $colorSecond;
                         align-self: center;
                         line-height: 40px;
+
+                        &:hover {
+                            @include buttonHover;
+                        }
                     }
                 }
 
@@ -87,6 +91,10 @@ html {
                         align-self: center;
                         line-height: 40px;
                         width: 40%;
+
+                        &:hover {
+                            @include buttonHover;
+                        }
                     }
                 }
             }
@@ -304,12 +312,17 @@ html {
 
             .checkout-payment-container {
                 @include flexColumnCenter;
-                background-color: white;
+                background-color: rgb(248, 247, 247);
                 margin: 10px;
 
                 form {
                     align-self: center;
                     text-align: center;
+
+                    h3 {
+                        color: $colorSecond;
+
+                    }
 
                     .checkout-user-container,
                     .checkout-postal {
@@ -318,10 +331,12 @@ html {
                         border: none;
                         margin-bottom: 1rem;
 
+
                         label {
                             text-align: left;
                             font-size: 1rem;
                             margin-bottom: 0.2rem;
+
                         }
 
                         input {
@@ -339,6 +354,11 @@ html {
                         background: none;
                         margin: 4px 0;
                         margin-bottom: 2rem;
+
+                        &:hover {
+                            @include buttonHover;
+                        }
+
                     }
                 }
             }
@@ -427,12 +447,12 @@ html {
 
                 .passwordinfo {
                     text-align: center;
-                    background-color: whitesmoke;
+                    background-color: rgb(248, 247, 247);
 
                     h3,
                     label {
                         display: block;
-                        color: lightslategray;
+                        color: $colorSecond
                     }
 
                     input {
@@ -468,6 +488,10 @@ html {
                 color: $colorSecond;
                 background: none;
                 margin: 4px 0;
+
+                &:hover {
+                    @include buttonHover;
+                }
             }
 
             //styling för create-user och login 
