@@ -72,6 +72,10 @@ html {
                         border: 1px solid $colorSecond;
                         align-self: center;
                         line-height: 40px;
+
+                        &:hover {
+                            @include buttonHover;
+                        }
                     }
                 }
 
@@ -87,9 +91,16 @@ html {
                         align-self: center;
                         line-height: 40px;
                         width: 40%;
+
+                        &:hover {
+                            @include buttonHover;
+                        }
                     }
                 }
             }
+
+
+
 
             //admin existerande produkter
             .productlist-container {
@@ -198,15 +209,9 @@ html {
                 margin: 0;
                 list-style-type: none;
 
-                .line {
-                    border-top-style: solid;
-                    border-top-width: 1px;
-                    border-top-color: $colorThird;
-                    margin: 0px 30px 26px 30px;
-                }
-
                 .product-display {
-                    padding: $paddingMedium;
+                    padding: 0 32px;
+                    margin: 32px 0 0 0;
 
                     .product-image-container {
                         width: 100%;
@@ -221,15 +226,22 @@ html {
 
                     .product-info-container {
                         @include flexRowBetween;
-                        padding: $paddingSmall;
-                        margin: 8px 0 0 0;
+                        padding: 12px 0;
+                        margin: 0;
+                        border-width: 1px;
+                        border-color: $colorThird;
+                        border-bottom-style: solid;
 
                         .product-info-left {
                             @include flexColumnCenter;
 
+                            .product-artist {
+                                font-size: 1.4rem;
+                            }
+
                             .product-price-container {
                                 .product-price {
-                                    font-size: 1.4rem;
+                                    font-size: 1.8rem;
                                     /*fixa variabel*/
                                     color: $colorThird;
                                 }
@@ -243,6 +255,7 @@ html {
 
                         .product-info-right {
                             @include flexColumnCenter;
+                            text-align: right;
 
                             button {
                                 @include buttonShapeMedium;
@@ -254,6 +267,7 @@ html {
                                 &:hover {
                                     @include buttonHover;
                                 }
+
                             }
                         }
                     }
@@ -304,12 +318,17 @@ html {
 
             .checkout-payment-container {
                 @include flexColumnCenter;
-                background-color: rgb(240, 240, 240);
+                background-color: rgb(248, 247, 247);
                 margin: 10px;
 
                 form {
                     align-self: center;
                     text-align: center;
+
+                    h3 {
+                        color: $colorSecond;
+
+                    }
 
                     .checkout-user-container,
                     .checkout-postal {
@@ -317,6 +336,7 @@ html {
                         text-align: left;
                         border: none;
                         margin-bottom: 1rem;
+
 
                         label {
                             text-align: left;
@@ -431,7 +451,7 @@ html {
 
                 .passwordinfo {
                     text-align: center;
-                    background-color: rgb(240, 240, 240);
+                    background-color: rgb(248, 247, 247);
 
                     h3,
                     label {
@@ -472,12 +492,15 @@ html {
                 color: $colorSecond;
                 background: none;
                 margin: 4px 0;
+
+                &:hover {
+                    @include buttonHover;
+                }
             }
 
             //styling för create-user och login 
             .create-user-form,
-            .admin-login-form,
-            .reset-form {
+            .admin-login-form .reset-form {
                 align-self: center;
 
                 fieldset {
