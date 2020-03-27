@@ -38,13 +38,7 @@ router.post(ROUTE.createUser, async (req, res) => {
             address: req.body.address,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-        }).save(
-            transport.sendMail({
-                to: req.body.email,
-                from: "<no-reply>vinylshopen@info",
-                subject: "Login succeeded",
-                html: "<h1> Väkommen Admin </h1>"
-            }))
+        }).save(); 
     } else {
         try {
             await new UserInfoModel({
@@ -53,14 +47,7 @@ router.post(ROUTE.createUser, async (req, res) => {
                 address: req.body.address,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-            }).save(
-                transport.sendMail({
-                    to: req.body.email,
-                    from: "<no-reply>vinylshopen@info",
-                    subject: "Välkommen till Vinylshopen!",
-                    html: "<h1> Väkommen till Vinylshoppen " + req.body.firstName + "</h1>"
-                })
-            );
+            }).save();
         } catch (error) {
             console.log(error)
             res.redirect(url.format({
