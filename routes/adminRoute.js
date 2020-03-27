@@ -2,13 +2,10 @@ const express = require('express');
 const router = express.Router();
 const ProductModel = require('../model/product');
 const { ROUTE, VIEW, PRODUCT } = require('../constant');
-const request = require('request'); // SPOTIFY REQUEST LIBRARY
+const request = require('request');
 const config = require('../config/config');
-const bcrypt = require('bcrypt');
 const url = require("url");
 const verifyAdminToken = require('./verifyAdminToken');
-const verifyToken = require('./verifyToken');
-
 
 router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
     const productList = (await (ProductModel.find().populate('user', { _id: 1 }))).reverse()
@@ -20,27 +17,12 @@ router.get(ROUTE.admin, verifyAdminToken, async (req, res) => {
 })
 
 router.post(ROUTE.admin, verifyAdminToken, (req, res) => {
-
     const artistSearchValue = req.body.artist;
     const albumSearchValue = req.body.album;
 
-    // THIS FUNCTION WILL AUTHORIZE AND FETCH DATA USING THE SPOTIFY API
-    // DATA WILL BE BASED ON THE VALUE FROM THE INPUTFIELDS IN ADMIN.EJS
     function fetchSpotifyApiData(artistSearchValue, albumSearchValue) {
-        //------------------------------ SPOTIFY AUTH ---------------------------- //
-
-        /**
-         * This is an example of a basic node.js script that performs
-         * the Client Credentials oAuth2 flow to authenticate against
-         * the Spotify Accounts.
-         *
-         * For more information, read
-         * https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow
-         */
-
-        //CREATE A REQUEST
-        const client_id = config.spotify.client_id; // CLIENT ID
-        const client_secret = config.spotify.client_secret; // CLIENT SECRET
+        const client_id = config.spotify.client_id;
+        const client_secret = config.spotify.client_secret;
         var authOptions = {
             url: 'https://accounts.spotify.com/api/token',
             headers: {
@@ -53,13 +35,8 @@ router.post(ROUTE.admin, verifyAdminToken, (req, res) => {
         };
 
         request.post(authOptions, function (error, response, body) {
-
             if (!error && response.statusCode === 200) {
-                console.log('no error and got statuscode 200')
-
-                // USE THE ACCESS TOKEN TO ACCESS THE SPOTIFY WEB API
                 var spotifyToken = body.access_token;
-
                 var options = {
                     url: `https://api.spotify.com/v1/search?q=album:${albumSearchValue}%20artist:${artistSearchValue}&type=album&q=`,
                     headers: {
@@ -68,15 +45,9 @@ router.post(ROUTE.admin, verifyAdminToken, (req, res) => {
                         'Content-Type': 'application/json'
                     }
                 };
-
                 request.get(options, function (error, response, body) {
-                    //console.log(response.statusCode + "===== is the response status code for request.get")
-                    //console.log(JSON.parse(body).albums);
-
-                    // RETURN THE SPOTIFY API DATA AS A JSON OBJECT
                     const spotifyResponse = JSON.parse(body).albums;
                     const userInfo = req.body.userInfo;
-
                     if (spotifyResponse.items == 0) {
                         res.redirect(url.format({
                             pathname: ROUTE.error,
@@ -136,4 +107,5 @@ router.post(ROUTE.adminAddProduct, verifyAdminToken, async (req, res) => {
         }
     });
 })
+
 module.exports = router;

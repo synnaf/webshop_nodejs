@@ -11,7 +11,6 @@ const {
 } = require('../constant');
 const jwt = require('jsonwebtoken');
 const verifyToken = require("./verifyToken");
-const verifyAdminToken = require("./verifyAdminToken");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const url = require("url");
@@ -31,7 +30,6 @@ router.get(ROUTE.createUser, (req, res) => {
 router.post(ROUTE.createUser, async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt)
-
     if (req.body.adminpass == config.admin.adminPassword) {
         await new UserInfoModel({
             isAdmin: true,
@@ -51,7 +49,6 @@ router.post(ROUTE.createUser, async (req, res) => {
                 lastName: req.body.lastName,
             }).save();
         } catch (error) {
-            console.log(error)
             res.redirect(url.format({
                 pathname: ROUTE.error,
                 query: {
@@ -82,7 +79,6 @@ router.post(ROUTE.createUser, async (req, res) => {
                 token: (req.cookies.jsonwebtoken !== undefined) ? true : false
             });
             if (token) {
-                // console.log("token som finns på signup" + token)
                 const cookie = req.cookies.jsonwebtoken;
                 if (!cookie) {
                     res.cookie('jsonwebtoken', token, {
@@ -97,10 +93,7 @@ router.post(ROUTE.createUser, async (req, res) => {
     }
 });
 
-//--------- LOG IN---------------//
-
 router.get(ROUTE.login, async (req, res) => {
-
     res.status(200).render(VIEW.login, {
         ROUTE,
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
@@ -111,7 +104,6 @@ router.post(ROUTE.login, async (req, res) => {
     const userInfo = await UserInfoModel.findOne({
         email: req.body.email
     });
-
     if (!userInfo) return res.redirect(url.format({
         pathname: ROUTE.error,
         query: {
@@ -137,8 +129,6 @@ router.post(ROUTE.login, async (req, res) => {
                     errmsg: 'Token fungerar ej!'
                 }
             }));
-
-            // console.log("token som finns login route matchar användaren som loggar in: ", token)
             if (token) {
                 const cookie = req.cookies.jsonwebtoken;
                 if (!cookie) {
@@ -180,13 +170,10 @@ router.get(ROUTE.userAccount, verifyToken, async (req, res) => {
 })
 
 router.post(ROUTE.userAccount, async (req, res) => {
-    //showUserInfo kommer sen att hämta användare via jwt istället för att bara hämta en
     const loggedIn = jwt.decode(req.cookies.jsonwebtoken).userInfo;
-
     if (await bcrypt.compare(req.body.currentpassword, loggedIn.password)) {
         const salt = await bcrypt.genSalt(10);
         const newHashPassword = await bcrypt.hash(req.body.newpassword, salt)
-
         await UserInfoModel.updateOne({
             email: loggedIn.email
         }, {
@@ -222,21 +209,15 @@ router.post(ROUTE.userAccount, async (req, res) => {
     }
 })
 
-//---- route för wishlist ----------//
-
 router.get(ROUTE.wishlistId, verifyToken, async (req, res) => {
-
     if (verifyToken) {
         const product = await ProductModel.findOne({
             _id: req.params.id
         });
-        //console.log("Denna produkt vill user spara: " + product)
         const user = await UserInfoModel.findOne({
             _id: req.body.userInfo._id
         });
-        //console.log("Detta är user som vill spara i wishlist " + user)
         user.addToWishlist(product);
-
         return res.redirect(ROUTE.userAccount);
     } else {
         res.redirect(url.format({
@@ -249,16 +230,12 @@ router.get(ROUTE.wishlistId, verifyToken, async (req, res) => {
 })
 
 router.get(ROUTE.wishlistRemoveId, verifyToken, async (req, res) => {
-    console.log(req.body, "why")
     const user = await UserInfoModel.findOne({
         _id: req.body.userInfo._id
     });
-    console.log(user, "hej")
     user.removeWishList(req.params.id)
     res.redirect(ROUTE.userAccount);
 })
-
-//-------------- routes för att reset password ------------ // 
 
 router.get(ROUTE.resetpassword, (req, res) => {
     res.status(200).render(VIEW.resetpassword, {
@@ -268,20 +245,16 @@ router.get(ROUTE.resetpassword, (req, res) => {
 })
 
 router.post(ROUTE.resetpassword, async (req, res) => {
-
     const user = await UserInfoModel.findOne({
         email: req.body.resetmail
     })
     if (!user) return res.redirect(ROUTE.error)
-
     crypto.randomBytes(32, async (error, token) => {
         if (error) return res.redirect(ROUTE.error);
-
         const resetToken = token.toString("hex");
         user.resetToken = resetToken
         user.expirationToken = Date.now() + 1000000
         await user.save();
-
         await transport.sendMail({
             to: req.body.resetmail,
             from: "<no-reply>vinylshopen@info",
@@ -300,7 +273,6 @@ router.get(ROUTE.resetpasswordToken, async (req, res) => {
             $gt: Date.now()
         }
     });
-
     if (!user) return res.redirect(ROUTE.error);
     res.render(VIEW.resetform, {
         user,
@@ -313,7 +285,6 @@ router.post(ROUTE.resetpasswordToken, async (req, res) => {
     const user = await UserInfoModel.findOne({
         resetToken: req.body.token
     })
-
     if (user) {
         const hashPassword = await bcrypt.hash(req.body.password, 10);
         user.password = hashPassword;

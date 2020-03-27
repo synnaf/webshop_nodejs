@@ -5,10 +5,6 @@ const UserModel = require("../model/user")
 const verifyToken = require("./verifyToken")
 
 router.get(ROUTE.checkout, verifyToken, async (req, res) => {
-
-    // const token = req.cookies.jsonwebtoken 
-    // const user = await UserInfoModel.findOne({_id: req.body.userInfo._id});
-
     if (verifyToken) {
         const showUserInfo = await UserModel.findOne({ _id: req.body.userInfo._id })
             .populate('wishlist.productId', {
@@ -34,7 +30,6 @@ router.post(ROUTE.checkout, verifyToken, (req, res) => {
         city: req.body.city,
         email: req.body.email
     }
-    //console.log(customer)
     res.render(VIEW.confirmation, {
         customer,
         token: (req.cookies.jsonwebtoken !== undefined) ? true : false
