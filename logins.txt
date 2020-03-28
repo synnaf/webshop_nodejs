@@ -1,3 +1,4 @@
+Inloggningsuppgifter för users i databasen.
 
 Admins:
 maria@admin.se
