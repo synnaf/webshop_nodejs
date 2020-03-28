@@ -1,23 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include ("header.ejs") %>
+<%- include ("navbar.ejs") %>
+<main class="adminpage">
+    <h1 class="pageheadline">Lägg till:</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/index.css" type="text/css">
-    <title>Webshop</title>
-</head>
-
-<body>
-    <form action="/add-product" method="post">
-        <div>Name<input type="text" name="name" /></div>
-        <div>Price<input type="text" name="price" /></div>
-        <div>Desc<input type="text" name="description" /></div>
-        <div>imgUrl<input type="text" name="imgUrl" /></div>
-        <div><button type="submit">Add product</button></div>
+    <form action="<%= ROUTE.adminAddProduct %>" method="post" class="add-product-form">
+        <fieldset class="about-album">
+            <label for="artist">Artist</label>
+            <input type="text" name="artist" value="<%= spotifyResponse.items[0].artists[0].name %>" readonly />
+            <label for="album">Album</label>
+            <input type="text" name="album" value="<%= spotifyResponse.items[0].name %>" readonly />
+            <label for="tracks">Antal låtar</label>
+            <input type="text" name="tracks" value="<%= spotifyResponse.items[0].total_tracks %>" readonly />
+            <label for="spotifyid">Spotify ID</label>
+            <input type="text" name="spotifyId" id="" value="<%= spotifyResponse.items[0].artists[0].id %>" readonly />
+            <label for="imgUrl">Bildlänk</label>
+            <input type="text" name="imgUrl" value="<%= spotifyResponse.items[0].images[0].url %>" readonly />
+            <div class="checkboxes">
+                <% for (const genre of genres) { %>
+                <label for="genre<%= genre %>"><%= genre %></label>
+                <input type="checkbox" name="genre<%= genre %>">
+                <% } %>
+            </div>
+        </fieldset>
+        <fieldset>
+            <label for="price">Pris</label>
+            <input type="number" name="price" />
+            <label for="addedBy">Tillagd av</label>
+            <input type="text" name="adminName" value="<%= userInfo.email %>">
+            <label for="adminId">Admin ID: </label>
+            <input type="text" name="adminId" value="<%= userInfo._id %>">
+            <div class="add-album">
+                <button type="submit">Lägg till i databas</button>
+            </div>
+        </fieldset>
     </form>
-
-</body>
-
-</html>
+</main>
+<%- include ("footer.ejs") %>

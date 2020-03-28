@@ -1,0 +1,19 @@
+<%- include ("header.ejs") %>
+<%- include ("navbar.ejs") %>
+<main>
+    <div class="container">
+        <div class="pageheadline">
+            <h2 class="my-3"><%= errmsg %></h2>
+        </div>
+
+        <form class="startbuttons" method="get">
+            <button type="submit" formaction="/">HEM</button>
+            <button type="submit" formaction="gallery">WEBSHOP</button>
+            <button type="submit" formaction="useraccount">MIN PROFIL</button>
+            <button type="submit" formaction="login">LOGGA IN</button>
+            <button type="submit" formaction="createuser">BLI MEDLEM</button>
+            <button type="submit" formaction="admin">ADMIN</button>
+        </form>
+    </div>
+</main>
+<%- include ("footer.ejs") %>

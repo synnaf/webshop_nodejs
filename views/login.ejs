@@ -1,0 +1,27 @@
+<%- include ("header.ejs") %>
+<%- include ("navbar.ejs") %>
+<main>
+    <div class="pageheadline">
+        <h1>Inloggning</h1>
+    </div>
+    <form action="<%ROUTE.login%>" method="POST" class="admin-login-form">
+        <fieldset>
+            <label for="email">Email:</label>
+            <input type="text" name="email" />
+
+            <label for="password">Lösenord:</label>
+            <input type="password" name="password" />
+
+            <div class="startbuttons">
+                <button type="submit">LOGGA IN</button>
+            </div>
+        </fieldset>
+    </form>
+
+    <div class="reset-password">
+        <a href="<%=ROUTE.resetpassword%>">
+            Glömt ditt lösenord?
+        </a>
+    </div>
+</main>
+<%- include ("footer.ejs") %>

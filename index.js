@@ -1,14 +1,22 @@
-// Härifrån startar vi upp vår webshop
 const mongoose = require('mongoose')
+require('dotenv').config()
+const {
+    app,
+    PORT
+} = require('./src/server')
+const config = require('./config/config')
 
-const { app, PORT } = require('./src/server')
-const dbConfig = require('./config/config')
+const dbOptions = {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true
+}
 
-
-// Kicka igång servern
-const dbOptions = { useUnifiedTopology: true, useNewUrlParser: true }
-mongoose.connect(dbConfig.databaseURL, dbOptions).then(() => {
+mongoose.connect(config.mongoDB.databaseUrl, dbOptions).then(() => {
     app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
 })
 
-module.exports = { app, PORT }
+module.exports = {
+    app,
+    PORT
+}

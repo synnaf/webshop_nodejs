@@ -1,0 +1,25 @@
+<div class="navbar">
+    <script>
+        const showMenu = () => document.querySelector('#menu').classList.toggle('drop-down-menu')
+    </script>
+    <div class="navbar-content">
+        <div class="menu-icon"><i class="fa fa-bars" onclick="showMenu()"></i></div>
+        <div class="serach-icon"><i class="fa fa-search"></i></div>
+        <div class="navbar-logo">VINYLSHOP</div>
+        <div class="user-icon"><!--tillfällig inline css-->
+            <i class="fa fa-user"id= <%= token === true ? 'loggedin' : ''%> > </i> 
+        
+        </div>
+        <div class="cart-icon"><a href="/checkout"><i class="fa fa-shopping-bag"></i></a></div>
+    </div>
+    <div id="menu" class="hidden-menu">
+        <a href="/">HEM</a>
+        <a href="/gallery">PRODUKTER</a>
+        <% if (token) { %>
+            <a href="/logout">LOGGA UT</a>
+        <% } else { %>
+            <a href="/login">LOGGA IN</a>
+        <% } %>
+    </div>
+</div>
+

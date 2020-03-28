@@ -1,0 +1,49 @@
+<div class="pagination">
+    <% if (productList.length >= 1) { %>
+    <div>
+        <% if (isFirst || isSecond) { %>
+        <span>
+            <i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>
+        </span>
+        <% } %>
+        <% if (!isFirst && !isSecond) { %>
+        <a href="<%= ROUTE.gallery %>?genre=<%= genre %>&page=<%= 1 %>">
+            <i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>
+        </a>
+        <% } %>
+        <% if (isFirst) { %>
+        <span>
+            <i class="fa fa-angle-left"></i>
+        </span>
+        <% } %>
+        <% if (!isFirst) { %>
+        <a href="<%= ROUTE.gallery %>?genre=<%= genre %>&page=<%= previousPage %>">
+            <i class="fa fa-angle-left"></i>
+        </a>
+        <% } %>
+        <a href="<%= ROUTE.gallery %>?genre=<%= genre %>&page=<%= currentPage %>">
+            <%= currentPage %>/<%= lastPage %>
+        </a>
+        <% if (isLast) { %>
+        <span>
+            <i class="fa fa-angle-right"></i>
+        </span>
+        <% } %>
+        <% if (!isLast) { %>
+        <a href="<%= ROUTE.gallery %>?genre=<%= genre %>&page=<%= nextPage %>">
+            <i class="fa fa-angle-right"></i>
+        </a>
+        <% } %>
+        <% if (isLast || isSecondLast) { %>
+        <span>
+            <i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>
+        </span>
+        <% } %>
+        <% if (!isLast && !isSecondLast) { %>
+        <a href="<%= ROUTE.gallery %>?genre=<%= genre %>&page=<%= lastPage %>">
+            <i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>
+        </a>
+        <% } %>
+    </div>
+    <% } %>
+</div>

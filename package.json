@@ -4,7 +4,10 @@
   "description": "A simple webshop",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "unittest": "mocha",
+    "cypress": "cypress open",
+    "cy:run": "cypress run -- --record --spec 'cypress/integration/todo_ui_spec.js'",
+    "test": "npm run unittest & npm run cy:run",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./test,./npm-debug.log --copy-files,./sass",
     "sass": "node-sass --watch sass -o public",
     "start-dev": "nodemon index.js",
@@ -18,16 +21,27 @@
   "author": "Nina, Maria, Fanny, Marcus, Victor",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "mongoose": "^5.9.1"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.2",
+    "nodemailer": "^6.4.5",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "querystring": "^0.2.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "chai": "^4.2.0",
-    "mocha": "^7.0.1",
+    "cypress": "^4.1.0",
+    "mocha": "^7.1.0",
     "node-sass-middleware": "^0.11.0",
+    "nodemon": "^2.0.2",
     "rimraf": "^3.0.2",
     "supertest": "^4.0.2"
   }

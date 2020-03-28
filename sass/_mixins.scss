@@ -1,0 +1,51 @@
+@mixin flexRowBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
+@mixin flexRowCenter {
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+}
+
+@mixin flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flexColumnCenter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@mixin buttonShapeSmall {
+    padding: 20px 16px;
+    border:none; 
+    border-radius: 50%;
+}
+
+@mixin buttonShapeMedium {
+    padding: 6px 12px;
+    border: 1px solid $colorFourth;
+}
+
+@mixin buttonShapeBig {
+    width: 200px;
+    border: none; 
+    border-radius: $roundedBig;
+}
+
+@mixin inputfieldStyle {
+    border: 1px solid lightgrey;
+    padding:5px;
+    margin-bottom:8px;  
+}
+@mixin hej{
+    margin: auto;
+}
+@mixin buttonHover {
+    background-color: $colorFourth;
+    color: black;
+}

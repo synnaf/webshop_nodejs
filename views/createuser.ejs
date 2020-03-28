@@ -1,0 +1,35 @@
+<%- include ("header.ejs") %>
+<%- include ("navbar.ejs") %>
+<!--lägger till ny användare-->
+<main>
+    <div class="pageheadline">
+        <h1>Bli medlem</h1>
+    </div>
+    <form action="<%ROUTE.createUser%>" method="post" class="create-user-form">
+        <fieldset>
+            <label for="firstName">Förnamn</label>
+            <input type="text" name="firstName" />
+
+            <label for="lastName">Efternamn</label>
+            <input type="text" name="lastName" />
+
+            <label for="address">Adress</label>
+            <input type="text" name="address" />
+
+            <label for="password">Lösenord</label>
+            <input type="password" name="password" />
+
+            <label for="email">E-post</label>
+            <input type="email" name="email" />
+
+            <label for="adminpass">Admin</label>
+            <input type="password" name="adminpass" />
+            <div class="startbuttons">
+                <button type="submit">SKAPA KONTO</button>
+            </div>
+        </fieldset>
+    </form>
+</main>
+
+
+<%- include ("footer.ejs") %>

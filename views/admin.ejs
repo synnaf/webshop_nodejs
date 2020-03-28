@@ -1,0 +1,43 @@
+<%- include ("header.ejs") %>
+<%- include ("navbar.ejs") %>
+<main class="adminpage">
+    <h1 class="pageheadline">Välkommen admin!</h1>
+    <form action="<%= ROUTE.admin %>" method="POST" class="search-album-form">
+        <h3 class="searchAlbum">Lägg till ett album i produktlistan:</h3>
+        <fieldset>
+            <label for="artistname">Artist</label>
+            <input type="text" name="artist" />
+            <label for="albumName">Album</label>
+            <input type="text" name="album" />
+            <div class="search-album-button">
+                <button type="submit">Sök album</button>
+            </div>
+        </fieldset>
+    </form>
+    <div class="logoutbutton">
+        <form class="startbuttons" method="get">
+            <button type="submit" formaction="logout">LOGGA UT</button>
+        </form>
+    </div>
+    <div class="productlist-container">
+        <h2>Produkter på lager</h2>
+        <% productList.forEach( (item)=> { %>
+        <div class="product-container">
+            <div class="album-img"><a href="<%= item.imgUrl %>"><img src="<%= item.imgUrl %>" alt="album cover"></a>
+            </div>
+            <div class="info">
+                <div><b>Artist: </b><%= item.artist %></div>
+                <div><b>Album: </b><%= item.album %></div>
+                <div><b>Antal låtar: </b><%= item.tracks %></div>
+                <div><b>Spotify ID: </b><%= item.spotifyId %></div>
+                <div><b>Genre: </b><%= item.genre %></div>
+                <div><b>Pris: </b><%= item.price %></div>
+                <div><b>Tillagd av: </b><%= item.addedBy %></div>
+                <div><b>Admin ID: </b><%= item.user %></div>
+
+            </div>
+        </div>
+        <% }); %>
+    </div>
+</main>
+<%- include ("footer.ejs") %>
