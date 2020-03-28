@@ -83,7 +83,7 @@ router.post(ROUTE.createUser, async (req, res) => {
                 const cookie = req.cookies.jsonwebtoken;
                 if (!cookie) {
                     res.cookie('jsonwebtoken', token, {
-                        maxAge: 400000,
+                        maxAge: 3500000,
                         httpOnly: true
                     })
                 }
@@ -133,7 +133,7 @@ router.post(ROUTE.login, async (req, res) => {
                 const cookie = req.cookies.jsonwebtoken;
                 if (!cookie) {
                     res.cookie('jsonwebtoken', token, {
-                        maxAge: 3600000,
+                        maxAge: 3500000,
                         httpOnly: true
                     })
                 }
@@ -253,13 +253,13 @@ router.post(ROUTE.resetpassword, async (req, res) => {
         if (error) return res.redirect(ROUTE.error);
         const resetToken = token.toString("hex");
         user.resetToken = resetToken
-        user.expirationToken = Date.now() + 1000000
+        user.expirationToken = Date.now() + 3600000
         await user.save();
         await transport.sendMail({
             to: req.body.resetmail,
             from: "<no-reply>vinylshopen@info",
             subject: "Ändra ditt lösenord!",
-            html: `http://localhost:8080/resetpassword/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord!<h2>`
+            html: `http://localhost:8080/resetpassword/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord! Länken är giltig i 1 timme.<h2>`
         })
         res.redirect(ROUTE.login)
     })
