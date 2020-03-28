@@ -56,6 +56,7 @@ router.post(ROUTE.createUser, async (req, res) => {
                 }
             }));
         }
+    }
         const userInfo = await UserInfoModel.findOne({
             email: req.body.email
         });
@@ -90,7 +91,6 @@ router.post(ROUTE.createUser, async (req, res) => {
                 if (tokenSignature == config.tokenkey.userjwt) return res.redirect(VIEW.userAccount);
             }
         })
-    }
 });
 
 router.get(ROUTE.login, async (req, res) => {
