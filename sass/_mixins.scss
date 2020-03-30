@@ -2,23 +2,21 @@
     display: flex;
     justify-content: space-between;
 }
-
 @mixin flexRowCenter {
     display: flex; 
     flex-direction: row;
     justify-content: center;
 }
-
 @mixin flexColumn {
     display: flex;
     flex-direction: column;
 }
-
 @mixin flexColumnCenter {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
+
 
 @mixin buttonShapeSmall {
     padding: 20px 16px;
@@ -26,25 +24,82 @@
     border-radius: 50%;
 }
 
+
 @mixin buttonShapeMedium {
+    background-color: rgb(106, 238, 188);
+    border:none;
+    margin-bottom:0.5rem;
+    width:60px;
     padding: 6px 12px;
-    border: 1px solid $colorFourth;
+    font-size: $textFontStandard;
 }
-
-@mixin buttonShapeBig {
-    width: 200px;
+@mixin buttonBig {
     border: none; 
-    border-radius: $roundedBig;
+    border-radius: $rounded;
+    color: $colorSecond;
+    font-size: $textSizeStandard;
+    background-color: $colorMain;
+    border: 1px solid $colorSecond;
+    align-self: center;
+    line-height: 40px;
+    margin: 10px;
+    width: 40%;
 }
 
-@mixin inputfieldStyle {
-    border: 1px solid lightgrey;
-    padding:5px;
-    margin-bottom:8px;  
+
+
+
+
+@mixin formFieldset {
+    align-content: center;
+    padding: 1rem;
+    border: none;
+    margin-bottom: 1rem;
 }
+@mixin inputfieldStyle {
+    padding: 0.5rem 0 0.5rem 0;
+    width: 90%;
+    margin-bottom: 1rem;
+    border: 1px solid lightgrey;
+}
+@mixin inputlabelStyle {
+    text-align: left;
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+}
+
+
+
+
+@mixin headerText {
+    font-weight: $textBold;
+    font-size: $textSizeBig;
+    margin: 10px;
+    line-height: 100px;
+    text-align: center;
+}
+@mixin smallHeading {
+    font-size: $textSizeStandard;
+    font-family:$textFontStandard;
+    font-style:italic;
+    text-align:center;
+}
+@mixin breadText {
+    font-family:$textFontStandard;
+}
+
+
+
+
+
+
+
+
+
 @mixin hej{
     margin: auto;
 }
+
 @mixin buttonHover {
     background-color: $colorFourth;
     color: black;

@@ -1,0 +1,37 @@
+html {
+    height: 100%;
+    font-size: 12pt;
+
+    body {
+        margin: 0;
+        @include flexColumn;
+        background-color: $colorMain;
+        color: $colorSecond;
+        min-height: 100%;
+        a {
+            text-decoration: none;
+            color: $colorSecond;
+        }
+        //main: sånt som gäller alla sidor 
+        main {
+            @include flexColumn;
+            flex-direction: column;
+            flex: 1 0 auto;
+            font-family: $textFontStandard;
+            .pageheadline {
+                @include headerText; 
+            }
+            .search-album-form, .add-product-form {
+                //lägg in admin styling
+                @include flexColumnCenter; 
+            }
+
+        }
+
+
+
+
+
+    }
+
+}

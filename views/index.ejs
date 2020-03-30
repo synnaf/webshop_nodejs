@@ -6,15 +6,16 @@
         <h1>Hey, let's get some music!</h1>
     </div>
 
-    <div class="newscontainers" style="flex-wrap: wrap">
+    <div class="newscontainers">
         <% for (const display of displayList) { %>
         <div class="news">
             <a href="<%= productListRoute %>?genre=<%= display.genre %>&page=1">
-                <div class="placeholder">
+                <div class="img-news">
                     <img src="<%= display.img %>" style="width: 100%" alt="<%= display.genre %>" />
                 </div>
+                <h3><%= display.genre %></h3>
             </a>
-            <h3><%= display.genre %></h3>
+            
         </div>
         <% } %>
     </div>

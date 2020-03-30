@@ -1,23 +1,24 @@
-$colorMain : rgb(5, 5, 5);
-$colorSecond : rgb(146, 150, 240);
-$colorThird : rgb(86, 90, 223);
-$colorFourth : rgb(86, 90, 223);
+$colorMain: lightyellow;
+$colorSecond:black;
+$colorThird:grey;
+$colorFourth:white;
 
-$textFontStandard : sans-serif;
+$textFontStandard: sans-serif;
 
 $textSizeSmall: 0.8rem;
 $textSizeStandard : 1rem;
-$textSizeBig : 2rem;
+$textSizeBig: 2rem;
 
-$textBold : 800;
+$textBold: 800;
 
-$paddingSmall : 0.5rem 2rem;
+$paddingSmall: 0.5rem 2rem;
 $paddingThin : 0.5rem 3rem;
 $paddingMedium : 2rem 4rem;
 
 $roundedSmall : 5px;
 $roundedMedium : 12px;
-$roundedBig : 20px;
 
+
+$rounded: 25px 25px;
 $transitionFaster : 0.2s;
 $transitionFast : 0.2s ease-in;

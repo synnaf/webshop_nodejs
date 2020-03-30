@@ -3,14 +3,14 @@
     background: $colorMain;
     position: sticky;
     top: 0;
-    border-bottom: 1px solid black;;
     .navbar-content {
+        align-self:center;
+        border-bottom:1px solid black; 
         @include flexRowBetween; 
-        padding: 18px 32px;
+        padding: 26px 32px;
         color: $colorThird;
         .navbar-logo {
             font-weight: $textBold;
-            color: $colorSecond;
         }
         a {
             color: $colorThird;
@@ -19,7 +19,7 @@
             color: $colorSecond;
         }
         #loggedin {
-            color:white;
+            color:rgb(106, 238, 188);
         }
     }
     .hidden-menu {
@@ -32,17 +32,15 @@
         transition: $transitionFaster;
         a {
             margin-top: 2px;
+            padding:1rem;
             color: $colorSecond;
-            text-decoration: none;
-            
-        }
-        a:hover {
-            color: $colorThird;;
+            text-decoration: none; 
+            &:hover {
+                color: white;
+            }
         }
     }
     .drop-down-menu {
-        border-bottom: 1px solid $colorFourth;
-        background: $colorMain;
         padding: 6px 32px;
         transition: $transitionFast;
         height: auto;

@@ -1,286 +1,230 @@
 html {
     height: 100%;
     font-size: 12pt;
-
     body {
         margin: 0;
         @include flexColumn;
         background-color: $colorMain;
         color: $colorSecond;
         min-height: 100%;
-
         .adminpage {
             background-color: white;
         }
-
         a {
             text-decoration: none;
             color: $colorSecond;
         }
-
-        main,
-        .adminpage {
+        main,.adminpage {
             @include flexColumn;
-            flex-direction: column;
-            flex: 1 0 auto;
-            font-family: $textFontStandard; //tillfällig font
-
+            font-family: $textFontStandard;
             .pageheadline {
-                font-weight: $textBold;
-                font-size: $textSizeBig; //olika för startsidan/mobilläge/andra huvudrubriker
-                margin: 10px;
-                line-height: 100px;
-                text-align: center;
+                @include headerText; 
             }
-
-            //admin formulär 
-            .search-album-form,
-            .add-product-form {
-                @include flexColumnCenter;
-                align-self: center;
-                width: 70%;
-
-                h3 {
-                    color: $colorMain;
-                    text-align: center;
-                }
-
-                fieldset {
-                    text-align: center;
-                    padding: 1.5rem;
-                    border: 4px solid lightgrey;
-                    margin-bottom: 2rem;
-
-                    label {
-                        display: block;
-                        font-size: 1rem;
-                        color: $colorMain;
-                        opacity: 0.5;
-                    }
-
-                    input {
-                        padding: 0.5rem 0 0.5rem 0;
-                        width: 90%;
-                        margin-bottom: 1rem;
-                        border: 1px solid lightgrey;
-                    }
-
-                    button {
-                        color: $colorSecond;
-                        font-size: $textSizeStandard;
-                        background-color: none;
-                        border: 1px solid $colorSecond;
-                        align-self: center;
-                        line-height: 40px;
-
-                        &:hover {
-                            @include buttonHover;
-                        }
-                    }
-                }
-
-                .submit-form {
-                    text-align: center;
-                    margin: 2rem;
-
-                    button {
-                        color: $colorSecond;
-                        font-size: $textSizeStandard;
-                        background-color: none;
-                        border: 1px solid $colorSecond;
-                        align-self: center;
-                        line-height: 40px;
-                        width: 40%;
-
-                        &:hover {
-                            @include buttonHover;
-                        }
-                    }
-                }
-            }
-
-            //admin existerande produkter
-            .productlist-container {
-                @include flexColumnCenter;
-
-                h2 {
-                    color: $colorMain;
-                    margin-top: 3rem;
-                    text-align: center;
-                }
-
-                .product-container {
-                    margin-top: 0.5rem;
-                    color: $colorMain;
-                    text-align: center;
-
-                    .info {
-                        margin: 0.5rem 2rem 2rem 2rem;
-                        padding: 2rem;
-                        background-color: whitesmoke;
-                        display: inline-block;
-                        text-align: left;
-                    }
-
-                }
-
-            }
-
             //unikt för startsidan 
             .newscontainers {
-                font-size: $textSizeStandard;
-                display: flex;
                 @include flexRowCenter;
-
+                flex-wrap: wrap; 
                 .news {
-                    margin: 15px;
-
-                    //kan tas bort sen beroende på vilka bilder vi vill ha 
-                    .placeholder {
-                        border: 2px solid grey;
-                        height: 100px;
-                        width: 100px;
-
+                    margin: 10px;
+                    @include smallHeading; 
+                    .img-news {
+                        height: 200px;
+                        width: 200px;
                         &:hover {
-                            height: 120px;
-                            width: 120px;
+                            box-shadow:2px 2px 8px $colorThird;
                         }
                     }
                 }
             }
-
-            //button styling  
+            //button styling  startpage  
             .startbuttons {
                 @include flexColumnCenter;
                 margin-bottom: 50px;
                 margin-top: 20px;
-
                 button {
-                    color: $colorSecond;
-                    font-size: $textSizeStandard;
-                    background-color: $colorMain;
-                    border: 1px solid $colorSecond;
-                    align-self: center;
-                    line-height: 40px;
-                    margin: 10px;
-                    width: 40%;
-
+                    @include buttonBig; 
                     &:hover {
                         @include buttonHover;
                     }
                 }
             }
-
-            .small-text {
-                text-align: center;
-                padding: 24px;
-                margin: 0px 30px 0px 30px;
-                border-width: 1px;
-                border-color: $colorThird;
-                border-bottom-style: solid;
-            }
-
+            //gallery page 
             .pagination {
-                font-size: 0.8rem;
-                margin: 0 30px;
-                padding: 4px 0;
+                font-size:2rem; 
                 text-align: center;
-                border-width: 1px;
-                border-color: $colorThird;
-                border-bottom-style: solid;
-
+                padding:1rem;
+                margin:1rem;
                 a {
-                    margin: 0 18px;
-                    color: $colorSecond;
                     text-decoration: none;
                 }
-
-                span {
-                    margin: 0 18px;
-                    color: $colorThird;
-                }
             }
-
             .product-list {
-                padding: 0;
-                margin: 0;
+                padding:0; 
                 list-style-type: none;
-
                 .product-display {
                     padding: 0 32px;
-                    margin: 32px 0 0 0;
-
+                    margin-bottom:1.5rem;
                     .product-image-container {
                         width: 100%;
-
                         img {
-                            border-style: solid;
-                            border-width: 1px;
-                            border-color: $colorThird;
                             width: 100%;
                         }
                     }
-
                     .product-info-container {
                         @include flexRowBetween;
-                        padding: 12px 0;
-                        margin: 0;
-                        border-width: 1px;
-                        border-color: $colorThird;
-                        border-bottom-style: solid;
-
+                        padding: 1rem 0;
                         .product-info-left {
                             @include flexColumnCenter;
-
+                            line-height:1.2em;
                             .product-artist {
-                                font-size: 1.4rem;
+                                @include breadText; 
+                                font-weight:bold;
                             }
-
                             .product-price-container {
                                 .product-price {
-                                    font-size: 1.8rem;
-                                    /*fixa variabel*/
+                                    @include breadText; 
+                                    font-weight:bold;
                                     color: $colorThird;
                                 }
-
                                 .product-currency {
-                                    font-size: 0.8rem;
-                                    /*fixa variabel*/
+                                    @include breadText;
                                 }
                             }
                         }
-
                         .product-info-right {
                             @include flexColumnCenter;
-                            text-align: right;
-
+                            text-align: center;
                             button {
                                 @include buttonShapeMedium;
-                                font-size: $textFontStandard;
-                                color: $colorSecond;
-                                background: none;
-                                margin: 4px 0;
-
                                 &:hover {
-                                    @include buttonHover;
+                                    box-shadow:1px 1px 4px $colorThird;
                                 }
-                            }
+                            }  
                         }
                     }
                 }
             }
+            //product info page 
+            .oneproduct-image-container {
+                #one-product-image {
+                    width: 70%;
+                }
+            }
+            .oneproduct-info-container {
+                .product-info-left{
+                    text-align:center;
+                    padding:1rem;
+                }
+                .product-info-right {
+                    text-align:center;
+                }
+                #add-to-cart-button {
+                    @include buttonShapeMedium;
+                    &:hover {
+                        box-shadow:2px 2px 8px $colorThird;
+                    }
+                }
+            }
+            //styling för create-user och login 
+            .create-user-form,
+            .admin-login-form,
+            .reset-form {
+                @include flexColumnCenter;
+                fieldset {
+                    @include flexColumnCenter;
+                    @include formFieldset;
+                    label {
+                        @include inputlabelStyle; 
+                    }
+                    input {
+                        @include inputfieldStyle; 
+                    }
+                }
+            }
+            .reset-password {
+                text-align: center;
+                margin-bottom: 3rem;
+            }
+            //styling för useraccount/userPorfile 
+            .userinfo {
+                @include flexColumnCenter;
+                h3 {
+                    align-self: center;
+                    border-bottom: 1px solid $colorThird;
+                    width: 80%;
+                }
+                span,h4 {
+                    align-self: center;
+                }
+            }
+            .orderinfo {
+                @include flexColumnCenter;
+                margin-bottom: 50px;
+                h3 {
+                    align-self: center;
+                    border-bottom: 1px solid;
+                    border-width: 1px;
+                    border-color: $colorThird;
+                    width: 80%;
+                }
+                .wishlist-continer {
+                    align-self: center;
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    justify-items: center;
+                    justify-content: center;
+                    width: 80%;
+                    .wishlist-innercontiner {
+                        border: $colorSecond;
+                        border-style: solid;
+                        margin: 10px;
+                        border-width: 1px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-items: center;
+                        justify-content: center;
+                        .wishlist-item {
+                            margin: 7px;
+                        }
+                        button {
+                            @include buttonShapeMedium;
+                        }
+                    }
+                }
+            }
+            .change-password {
+                @include flexColumnCenter;
+                text-align: center;
+                align-self:center;
+                width: 70%;
+                margin-bottom: 1rem;
+                .passwordinfo {
+                    background-color: rgb(240, 240, 240);
+                    label {
+                        display: block;
+                        text-align:center;
+                    }
+                    input {
+                        @include inputfieldStyle;
+                        width: 80%;
+                    }
+                    button {
+                        @include buttonShapeMedium;
+                        width:120px;
+                    }
 
-            //styling föt checkout och shoppingcart 
+                }
+            }
+            //styling shoppingcart på checkout page 
             .shoppingcart-container {
                 height: auto;
                 background-color: $colorSecond;
                 margin: 10px;
-
                 .wishlist-shoppingcart-continer {
                     @include flexColumnCenter;
                     padding-top: 1rem;
                     padding-bottom: 1rem;
-
                     .wishlist-shoppingcart-innercontiner {
                         align-self: center;
                         border: $colorMain;
@@ -290,11 +234,9 @@ html {
                         display: flex;
                         flex-direction: row;
                         width: 70%;
-
                         .wishlist-shoppingcart-info {
                             display: flex;
                             flex-direction: column;
-
                             .wishlist-shoppingcart-item {
                                 margin: 7px;
                                 font-size: $textSizeSmall;
@@ -305,225 +247,49 @@ html {
 
                     }
                 }
-
-                .changecart {
-                    border-left: 0.5px solid lightslategray;
-                    padding: 10px 10px 0px 10px;
-                }
             }
-
             .checkout-payment-container {
                 @include flexColumnCenter;
                 background-color: rgb(240, 240, 240);
                 margin: 10px;
-
                 form {
                     align-self: center;
                     text-align: center;
-
                     .checkout-user-container,
                     .checkout-postal {
-                        align-self: center;
-                        text-align: left;
-                        border: none;
-                        margin-bottom: 1rem;
-
+                        margin:1rem;
                         label {
-                            text-align: left;
-                            font-size: 1rem;
-                            margin-bottom: 0.2rem;
+                            @include inputlabelStyle;
                         }
-
                         input {
-                            padding: 0.5rem 0 0.5rem 0;
-                            width: 100%;
-                            border: 1px solid lightgrey;
-                            margin-bottom: 1rem;
+                            @include inputfieldStyle
                         }
                     }
-
                     button {
-                        @include buttonShapeMedium;
+                        text-align:center;
+                        background-color: rgb(106, 238, 188);
+                        border:none;
+                        width:100px;
+                        padding: 10px; 
                         font-size: $textFontStandard;
-                        color: $colorThird;
-                        background: none;
-                        margin: 4px 0;
                         margin-bottom: 2rem;
-
-                        &:hover {
-                            @include buttonHover;
-                        }
                     }
                 }
             }
 
+
+
+            //admin page produkter 
+            h2 {
+              text-align:center;  
+            }
             .product-container {
                 text-align: center;
                 margin-top: 2rem;
                 margin-bottom: 3rem;
-
                 .album-img a img {
                     width: 50%;
                 }
-            }
-
-            //styling för useraccount/userPorfile 
-            .userinfo {
-                @include flexColumnCenter;
-
-                h3 {
-                    align-self: center;
-                    border-bottom: 1px solid $colorThird;
-                    width: 80%;
-                }
-
-                span,
-                h4 {
-                    align-self: center;
-                }
-            }
-
-            .orderinfo {
-                @include flexColumnCenter;
-                margin-bottom: 50px;
-
-                h3 {
-                    align-self: center;
-                    border-bottom: 1px solid;
-                    border-width: 1px;
-                    border-color: $colorThird;
-                    width: 80%;
-                }
-
-                .wishlist-continer {
-                    align-self: center;
-                    list-style: none;
-                    display: flex;
-                    flex-direction: column;
-                    justify-items: center;
-                    justify-content: center;
-                    width: 80%;
-
-                    .wishlist-innercontiner {
-                        border: $colorSecond;
-                        border-style: solid;
-                        margin: 10px;
-                        border-width: 1px;
-                        display: flex;
-                        flex-direction: column;
-                        justify-items: center;
-                        justify-content: center;
-
-                        .wishlist-item {
-                            margin: 7px;
-                        }
-
-                        button {
-                            @include buttonShapeMedium;
-                            font-size: $textFontStandard;
-                            color: whitesmoke;
-                            background: none;
-                            margin: 4px 0;
-
-                            &:hover {
-                                @include buttonHover;
-                            }
-                        }
-                    }
-                }
-            }
-
-            .change-password {
-                @include flexColumnCenter;
-                align-self: center;
-                width: 70%;
-                margin-bottom: 2rem;
-
-                .passwordinfo {
-                    text-align: center;
-                    background-color: rgb(240, 240, 240);
-
-                    h3,
-                    label {
-                        display: block;
-                        color: $colorSecond
-                    }
-
-                    input {
-                        padding: 0.5rem 0 0.5rem 0;
-                        width: 80%;
-                        border: none;
-                        margin-bottom: 1rem;
-                    }
-
-                    button {
-                        @include buttonShapeMedium;
-                        font-size: $textFontStandard;
-                        color: $colorThird;
-                        background: none;
-
-                        &:hover {
-                            @include buttonHover;
-                        }
-
-                    }
-
-                }
-            }
-
-            //styling för enskilda produkter (one product) 
-            #one-product-image {
-                width: 70%;
-            }
-
-            #add-to-cart-button {
-                @include buttonShapeMedium;
-                font-size: $textFontStandard;
-                color: $colorSecond;
-                background: none;
-                margin: 4px 0;
-
-                &:hover {
-                    @include buttonHover;
-                }
-            }
-
-            //styling för create-user och login 
-            .create-user-form,
-            .admin-login-form,
-            .reset-form {
-                align-self: center;
-
-                fieldset {
-                    align-self: center;
-                    text-align: left;
-                    padding: 1.5rem;
-                    border: none;
-                    margin-bottom: 1rem;
-
-                    label {
-                        text-align: left;
-                        font-size: 1rem;
-                        margin-bottom: 0.2rem;
-                    }
-
-                    input {
-                        padding: 0.5rem 0 0.5rem 0;
-                        width: 100%;
-                        border: none;
-                        margin-bottom: 1rem;
-                    }
-                }
-            }
-
-            .reset-password {
-                text-align: center;
-                margin-bottom: 3rem;
-
-
-
-
-
             }
         }
     }

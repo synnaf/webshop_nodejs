@@ -1,10 +1,9 @@
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 <main>
-    <p class="small-text">
-        Ett urval av alla godbitar som finns på lager just nu.
-    </p>
-    <%- include ("pagination.ejs") %>
+    <div class="pageheadline">
+        <h1>Products</h1>
+    </div>
     <ul class="product-list">
         <% productList.forEach((product)=>{ %>
         <li class="product-display">
@@ -28,7 +27,6 @@
                 </div>
             </div>
         </li>
-        <div class="line"></div>
         <% }) %>
     </ul>
     <%- include ("pagination.ejs") %>

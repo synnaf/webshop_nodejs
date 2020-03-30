@@ -3,7 +3,6 @@
 <main>
     <div class="product-container">
         <h1><%= oneProduct.album %></h1>
-
         <div class="oneproduct-image-container"><img src="<%= oneProduct.imgUrl %>" id="one-product-image"></div>
         <div class="oneproduct-info-container">
             <div class="product-info-left">
@@ -18,7 +17,6 @@
                 <a href="/wishlist/<%=oneProduct._id%>"><button id="add-to-cart-button">SPARA</button></a>
             </div>
         </div>
-        <div class="line"></div>
     </div>
 </main>
 <%- include ("footer.ejs") %>
