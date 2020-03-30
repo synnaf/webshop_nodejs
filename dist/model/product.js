@@ -1,15 +1,23 @@
-'use strict';
+"use strict";
 
-// schema för en produkt
 var mongoose = require('mongoose');
+var Schema = require("mongoose").Schema;
 
-var schema = new mongoose.Schema({
-    name: String,
+var schemaProduct = new Schema({
+    artist: String,
+    album: String,
+    tracks: String,
+    spotifyId: String,
+    imgUrl: String,
+    genre: [],
     price: Number,
-    description: String,
-    imgUrl: String
+    addedBy: String,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
 });
 
-var productItem = mongoose.model('product', schema);
+var Product = mongoose.model("Product", schemaProduct);
 
-module.exports = productItem;
+module.exports = Product;
