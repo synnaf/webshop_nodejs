@@ -8,7 +8,23 @@ html {
         color: $colorSecond;
         min-height: 100%;
         .adminpage {
-            background-color: white;
+            background-color: white; 
+            h2,h3{
+                text-align:center;  
+            }
+            .search-album-button {
+                button {
+                    @include buttonBig; 
+                }
+            }
+            .product-container {
+                text-align: center;
+                margin-top: 2rem;
+                margin-bottom: 3rem;
+                .album-img a img {
+                    width: 50%;
+                }
+            }
         }
         a {
             text-decoration: none;
@@ -125,11 +141,14 @@ html {
                     }
                 }
             }
-            //styling för create-user och login 
+            //styling för create-user, login, admin-form 
             .create-user-form,
             .admin-login-form,
-            .reset-form {
+            .reset-form,
+            .search-album-form,
+            .add-product-form {
                 @include flexColumnCenter;
+                align-content:center;
                 fieldset {
                     @include flexColumnCenter;
                     @include formFieldset;
@@ -138,6 +157,20 @@ html {
                     }
                     input {
                         @include inputfieldStyle; 
+                    }
+                    .checkboxes {
+                        @include flexRowBetween; 
+                        label {
+                            @include inputlabelStyle;
+                        }
+                        input {
+                            @include inputfieldStyle;
+                        }
+                    }
+                    .add-album {
+                        button {
+                            @include buttonBig; 
+                        }
                     }
                 }
             }
@@ -274,21 +307,6 @@ html {
                         font-size: $textFontStandard;
                         margin-bottom: 2rem;
                     }
-                }
-            }
-
-
-
-            //admin page produkter 
-            h2 {
-              text-align:center;  
-            }
-            .product-container {
-                text-align: center;
-                margin-top: 2rem;
-                margin-bottom: 3rem;
-                .album-img a img {
-                    width: 50%;
                 }
             }
         }

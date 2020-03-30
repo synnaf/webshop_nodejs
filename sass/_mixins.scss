@@ -16,14 +16,11 @@
     flex-direction: column;
     justify-content: center;
 }
-
-
 @mixin buttonShapeSmall {
     padding: 20px 16px;
     border:none; 
     border-radius: 50%;
 }
-
 
 @mixin buttonShapeMedium {
     background-color: rgb(106, 238, 188);
@@ -46,12 +43,9 @@
     width: 40%;
 }
 
-
-
-
-
 @mixin formFieldset {
     align-content: center;
+    text-align:center;
     padding: 1rem;
     border: none;
     margin-bottom: 1rem;
@@ -60,6 +54,7 @@
     padding: 0.5rem 0 0.5rem 0;
     width: 90%;
     margin-bottom: 1rem;
+    
     border: 1px solid lightgrey;
 }
 @mixin inputlabelStyle {
@@ -67,9 +62,6 @@
     font-size: 1.2rem;
     margin-bottom: 0.2rem;
 }
-
-
-
 
 @mixin headerText {
     font-weight: $textBold;
@@ -86,18 +78,6 @@
 }
 @mixin breadText {
     font-family:$textFontStandard;
-}
-
-
-
-
-
-
-
-
-
-@mixin hej{
-    margin: auto;
 }
 
 @mixin buttonHover {
