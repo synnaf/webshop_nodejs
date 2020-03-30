@@ -5,19 +5,14 @@ const crypto = require("crypto");
 const UserInfoModel = require('../model/user');
 const ProductModel = require("../model/product");
 const config = require('../config/config');
-const {
-    ROUTE,
-    VIEW
-} = require('../constant');
+const {ROUTE,VIEW} = require('../constant');
 const jwt = require('jsonwebtoken');
 const verifyToken = require("./verifyToken");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const url = require("url");
 const transport = nodemailer.createTransport(sendgridTransport({
-    auth: {
-        api_key: config.mailkey.mailkey
-    }
+    auth: {api_key: config.mailkey.mailkey}
 }))
 
 router.get(ROUTE.createUser, (req, res) => {

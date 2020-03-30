@@ -38,8 +38,4 @@ const PRODUCT = {
     genres: ["All", "Rock", "Pop", "Soul", "Rap", "Rnb", "Blues"]
 }
 
-module.exports = {
-    VIEW,
-    ROUTE,
-    PRODUCT
-}
+module.exports = {VIEW,ROUTE,PRODUCT}

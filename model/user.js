@@ -33,7 +33,7 @@ const schemaUser = new Schema({
     wishlist: [{
         productId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Product" //det som exporteras i product-model 
+            ref: "Product"
         }
     }]
 })

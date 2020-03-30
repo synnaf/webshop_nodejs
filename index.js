@@ -1,9 +1,6 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
-const {
-    app,
-    PORT
-} = require('./src/server')
+const {app,PORT} = require('./src/server')
 const config = require('./config/config')
 
 const dbOptions = {
@@ -16,7 +13,4 @@ mongoose.connect(config.mongoDB.databaseUrl, dbOptions).then(() => {
     app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
 })
 
-module.exports = {
-    app,
-    PORT
-}
+module.exports = {app,PORT}
