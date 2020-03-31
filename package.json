@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A simple webshop",
   "main": "index.js",
+  "engines": {"node": "12.13.0"}, 
   "scripts": {
     "unittest": "mocha",
     "cypress": "cypress open",
@@ -11,7 +12,7 @@
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./test,./npm-debug.log --copy-files,./sass",
     "sass": "node-sass --watch sass -o public",
     "start-dev": "nodemon index.js",
-    "start": "npm run build && node dist/index.js"
+    "start": "node index.js"
   },
   "keywords": [
     "webshop",
