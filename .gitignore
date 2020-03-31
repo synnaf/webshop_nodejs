@@ -4,5 +4,4 @@ node_modules/
 cypress/
 !cypress/integration/
 dist/*
-.package-lock.json
 
