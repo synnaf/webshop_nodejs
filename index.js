@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-require('dotenv').config()
 const {app,PORT} = require('./src/server')
 const config = require('./config/config')
 
