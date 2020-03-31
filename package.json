@@ -5,13 +5,6 @@
   "main": "index.js",
   "engines": {"node": "12.13.0"}, 
   "scripts": {
-    "unittest": "mocha",
-    "cypress": "cypress open",
-    "cy:run": "cypress run -- --record --spec 'cypress/integration/todo_ui_spec.js'",
-    "test": "npm run unittest & npm run cy:run",
-    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./test,./npm-debug.log --copy-files,./sass",
-    "sass": "node-sass --watch sass -o public",
-    "start-dev": "nodemon index.js",
     "start": "node index.js"
   },
   "keywords": [
