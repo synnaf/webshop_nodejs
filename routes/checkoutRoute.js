@@ -59,19 +59,36 @@ router.get(ROUTE.confirmation, verifyToken, async (req, res) => {
     
     if (verifyToken) {
 
-        const showUserInfo = await UserModel.findOne({ _id: req.body.userInfo._id }).populate('orders.orderId'); 
-        console.log(showUserInfo + " trying to find user")
+        console.log(req.body.userInfo + " this is the active user"); 
+        console.log(req.body.userInfo.wishlist + " this is wishlist")
 
-        //hitta produkten
-        const orders = await OrderModel.findOne({_id: req.params._id}).populate('ordedProduct.productId');
-        const userA = await OrderModel.findOne({_id: req.params._id}).populate('ordedByUser');
-        //hitta användaren 
-        const user = await UserModel.findOne({_id: req.body.userInfo._id });
+        //Hitta användaren som skickar requesten, och populera orders i user-model? 
+        //vad vill jag göra här? ska vi inte populera Order-model? 
+        //denna rad bidrar till att göra push in i orders på user-modellen
+        const showUserInfo = await UserModel.findOne({ _id: req.body.userInfo._id }).populate('orders.orderId', {
+            orderId: req.body.userInfo._id 
+        }); 
+
+        // //hitta produkten
+        // //Leta i ordermodel efter ett _id som matchar req.params_id. 
+        // //Populera ordedProducts productId?
+        const userOrder = await OrderModel.findOne({_id: req.params._id}).populate('Order.orderedProducts.productId', {
+            productId: req.body.userInfo.wishlist
+        });
+  
+
+        // I order-modellen: orders._id ska vara samma sak som userModel.orders._id 
+        //(users order-id ska vara samma som orderns faktiska id)
         
-        //till användaren, lägg till produkten enligt metoden 
-        user.orderProducts(orders, userA);
+        // //hitta användaren, använd metoden och skicka med order_s och userA 
+        const user = await UserModel.findOne({_id: req.body.userInfo._id }).populate('User.orders');
+        // console.log(user.orders + " this is user orders")
+  
+        
+        // //till användaren, lägg till produkten enligt metoden 
+        user.orderProducts(showUserInfo, userOrder);
 
-        //skicka användaren till confirmation 
+        // //skicka användaren till confirmation 
         return res.redirect(ROUTE.userAccount);
 
     } else {
