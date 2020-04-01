@@ -35,6 +35,12 @@ const schemaUser = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Product"
         }
+    }], 
+    orders: [{
+        orderId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Order"
+        }
     }]
 })
 
@@ -57,6 +63,20 @@ schemaUser.methods.removeWishList = function (productId) {
     this.wishlist = currentProducts;
     return this.save();
 }
+
+
+schemaUser.methods.orderProducts = function (products) {
+
+    //hämta wishlist 
+    //splicea ur wishlist
+    let orderInfo = this.wishlist.splice(products); 
+ 
+    //lägg in dem i orders-array istället 
+    this.orders.push(orderInfo)
+
+}
+
+
 
 const userModel = mongoose.model('User', schemaUser)
 

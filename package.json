@@ -3,9 +3,12 @@
   "version": "0.0.1",
   "description": "A simple webshop",
   "main": "index.js",
-  "engines": {"node": "12.13.0"}, 
+  "engines": {
+    "node": "12.13.0"
+  },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js", 
+    "start-dev": "nodemon index.js"
   },
   "keywords": [
     "webshop",

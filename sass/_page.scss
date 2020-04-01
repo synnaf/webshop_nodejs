@@ -121,26 +121,30 @@ html {
                 }
             }
             //product info page 
-            .oneproduct-image-container {
-                #one-product-image {
-                    width: 70%;
+            .product-container {
+                text-align:center;
+                .oneproduct-image-container {
+                    #one-product-image {
+                        width: 70%;
+                    }
                 }
-            }
-            .oneproduct-info-container {
-                .product-info-left{
-                    text-align:center;
-                    padding:1rem;
-                }
-                .product-info-right {
-                    text-align:center;
-                }
-                #add-to-cart-button {
-                    @include buttonShapeMedium;
-                    &:hover {
-                        box-shadow:2px 2px 8px $colorThird;
+                .oneproduct-info-container {
+                    .product-info-left{
+                        text-align:center;
+                        padding:1rem;
+                    }
+                    .product-info-right {
+                        text-align:center;
+                    }
+                    #add-to-cart-button {
+                        @include buttonShapeMedium;
+                        &:hover {
+                            box-shadow:2px 2px 8px $colorThird;
+                        }
                     }
                 }
             }
+
             //styling för create-user, login, admin-form 
             .create-user-form,
             .admin-login-form,

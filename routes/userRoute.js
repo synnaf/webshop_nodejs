@@ -254,7 +254,7 @@ router.post(ROUTE.resetpassword, async (req, res) => {
             to: req.body.resetmail,
             from: "<no-reply>vinylshopen@info",
             subject: "Ändra ditt lösenord!",
-            html: `http://localhost:8080/resetpassword/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord! Länken är giltig i 1 timme.<h2>`
+            html: `http://vinylfanny.herokuapp.com/resetpassword/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord! Länken är giltig i 1 timme.<h2>`
         })
         res.redirect(ROUTE.login)
     })
@@ -294,5 +294,11 @@ router.post(ROUTE.resetpasswordToken, async (req, res) => {
 router.get(ROUTE.logout, (req, res) => {
     res.clearCookie("jsonwebtoken").redirect(ROUTE.index);
 })
+
+
+//checkout route? här skapas en post request som populerar orders
+//Orders presenteras sedan på confirmation-sidan 
+
+
 
 module.exports = router;
