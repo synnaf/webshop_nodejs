@@ -6,25 +6,66 @@ const OrderModel = require("../model/order");
 const ProductModel = require("../model/order");
 const verifyToken = require("./verifyToken"); 
 
-// ---------------------- HÄMTA CHECKOUT, VISA WISHLIST ------------------------- // 
+//require dotenv
+//process.env.STRIPE_SECR
+const stripe = require("stripe")("sk_test_EK0CWyAdc95YpZnvi93siYln00WnwUkskB"); 
+
+// ---------------------- HÄMTA CHECKOUT, VISA SHOPPINGCART------------------------- // 
 
 router.get(ROUTE.checkout, verifyToken, async (req, res) => {
     if (verifyToken) {
-        const showUserInfo = await UserModel.findOne({ _id: req.body.userInfo._id })
-            .populate('wishlist.productId', {
-                artist: 1,
-                album: 1,
-                price: 1
-            })
-        res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo, token: (req.cookies.jsonwebtoken !== undefined) ? true : false })
+
+    const showUserInfo = await UserModel.findOne({ _id: req.body.userInfo._id }).populate('shoppingcart.productId', {
+        artist: 1,
+        album: 1,
+        price: 1,
+        quantity: 1
+    }); 
+    res.status(202).render(VIEW.checkout, { ROUTE, showUserInfo, token: (req.cookies.jsonwebtoken !== undefined) ? true : false })
     } else {
         return res.status(202).render(VIEW.checkout, {
             ROUTE,
-            showUserInfo: "empty cart",
+            showUserCart: "empty cart",
             token: (req.cookies.jsonwebtoken !== undefined) ? true : false
         })
     }
 })
+
+
+router.get("/delete/:id", verifyToken, async (req,res)=>{
+
+    if(verifyToken) {
+        const user = await UserModel.findOne({ _id: req.body.userInfo._id });
+        console.log(user)
+        user.removeFromShoppingcart(req.params.id)
+        res.redirect(ROUTE.checkout)
+    } else { 
+        res.send("nope")
+    }
+}); 
+
+
+
+router.get("/update/:id", verifyToken, async (req,res)=>{
+    
+        // updatera med populate?
+        const product = await ProductModel.findOne({
+        _id: req.params.id
+        });
+        const user = await UserModel.findOne({
+        _id: req.body.userInfo._id
+        });
+        //update shoppingcart
+        user.addToShoppingcart(product);
+       
+
+    //uppdatera shoppingcart med två olika villkor 
+    res.send("update pressed!")
+})
+
+
+
+
 
 // ------------------ POST REQUEST FRÅN CHECKOUT ----------------------------------- // 
 
@@ -39,7 +80,7 @@ router.post(ROUTE.checkout, verifyToken, async (req, res) => {
 
         orderDate: Date.now(), //sätter dagens datum 
         ordedByUser: req.body.userInfo, //ska sätta info från användaren, tar enligt ref objectId 
-        orderedProducts: req.body.userInfo.wishlist //hämta info från wishlist, tar enligt ref objectId 
+        orderedProducts: req.body.userInfo.shoppingcart //hämta info från wishlist, tar enligt ref objectId 
 
     });
     order.save();  
@@ -47,8 +88,6 @@ router.post(ROUTE.checkout, verifyToken, async (req, res) => {
     //redirectar till confirmation
     res.redirect(ROUTE.confirmation); 
 })
-
-
 
 
 
@@ -84,7 +123,6 @@ router.get(ROUTE.confirmation, verifyToken, async (req, res) => {
         const user = await UserModel.findOne({_id: req.body.userInfo._id }).populate('User.orders');
         // console.log(user.orders + " this is user orders")
   
-        
         // //till användaren, lägg till produkten enligt metoden 
         user.orderProducts(showUserInfo, userOrder);
 
@@ -102,10 +140,60 @@ router.get(ROUTE.confirmation, verifyToken, async (req, res) => {
 })
 
 
-// när man kommer till checkout populeras wishlist 
-// när man kommer till confirmation populeras order på User 
 
-//när man trycker på beställ så sparas beställningen till Order
+// ------------------------------ DAGENS FÖRELÄSNING -------------------------- //
+
+
+// // när man kommer till checkout populeras wishlist 
+// // när man kommer till confirmation populeras order på User 
+// //när man trycker på beställ så sparas beställningen till Order
+
+// //hit kommer man om man trycker på varukorgen eller checkout-knapp 
+// router.get("/checkout", verifyToken, async (req,res)=> {
+
+//     //i req.body.userInfo finns info om användaren
+//     //hämta användarens info som finns i shoppingcart
+//     const user = await UserModel.findOne({_id: req.body.userInfo._id}).populate("shoppingcart.products"); 
+
+//     //rendera checkout-sidan med användarens info 
+//     //skicka med sessionId 
+//     return stripe.checkout.sessions.create({
+//         payment_method_types: ["card"], 
+//         line_items: user.shoppingcart.map((products)=> {
+//             return {
+//                 name: products.productId.album, 
+//                 amount: products.productId.price*100, 
+//                 quantity: 1, 
+//                 currency: "eur" 
+//             }
+//         }), 
+//         successUrl: 'http://localHost:8080/confirmation',
+//         cancelUrl: 'http://localHost:8080/canceled',
+//     })
+//     .then( (session)=> {
+//       // If `redirectToCheckout` fails due to a browser or network
+//       // error, display the localized error message to your customer
+//       // using `result.error.message`.
+//       res.render("checkout.ejs", {user, sessionId: session.id})
+
+//     });
+
+
+
+
+// })
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

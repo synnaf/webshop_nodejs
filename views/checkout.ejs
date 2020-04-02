@@ -5,22 +5,42 @@
         <h1>Varukorg</h1>
     </div>
     <div class="shoppingcart-container">
+
         <div class="wishlist-shoppingcart-continer">
-            <% showUserInfo.wishlist.forEach( (obj)=> { %>
+            <!-- för att rendera shoppingcart:
+                Gör en loop som skriver ut  
+                
+                user.shoppingcart[0].productId.name 
+            -->
+            
+            <% showUserInfo.shoppingcart.forEach((product)=> { %>
+
             <div class="wishlist-shoppingcart-innercontiner">
-                <div class="product-img"> </div>
                 <div class="wishlist-shoppingcart-info">
-                    <div class="wishlist-shoppingcart-item ">Album: <%= obj.productId.album %> </div>
-                    <div class="wishlist-shoppingcart-item ">Artist: <%= obj.productId.artist %> </div>
-                    <div class="wishlist-shoppingcart-item ">Album ID: <%= obj.productId._id %> </div>
-                    <div class="wishlist-shoppingcart-item ">Pris: <%= obj.productId.price %> SEK</div>
+                    <div class="wishlist-shoppingcart-item ">Album: <%= product.productId.album %> </div>
+                    <div class="wishlist-shoppingcart-item ">Artist: <%= product.productId.artist %> </div>
+                    <div class="wishlist-shoppingcart-item ">Pris: <%= product.productId.price %> SEK</div>
+                    <div class="wishlist-shoppingcart-item ">Antal: <%= product.productId.quantity %> st</div>
+                    <div class="wishlist-shoppingcart-item "> 
+                        <a href="/update/<%=product %>">
+                            <button type="button">+</button>
+                        </a>
+                        <a href="update<%=product %>">
+                            <button type="button">-</button></a>
+                        </a>
+                    </div>
+                    <div class="shoppingcart-item"><a href="/delete/<%=product.productId._id%>">
+                        <button type="button">TA BORT</button></a>
+                    </div>
                 </div>
             </div>
-            <% }); %>
+                <% }); %>
+        </div>
 
         </div>
     </div>
     <div class="checkout-payment-container">
+        <!-- här borde vi skicka formuläret till order/confirmation?  -->
         <form action="<%= ROUTE.checkout %>" method="POST">
             <h2>Betalning</h2>
             <div class="checkout-user-container">
@@ -54,9 +74,24 @@
                 </div>
             </div>
             <div class="checkout-button">
-                <button type="submit">BESTÄLL</button>
+                <button id="checkoutButton" type="submit">BESTÄLL</button>
             </div>
         </form>
     </div>
 </main>
+
+
+<!-- <script src="https://js.stripe.com/v3/"></script>
+<script> 
+    var stripe = Stripe('pk_test_5MTNw7RfN0HdEq9ObVGQ1xWV00JXhKiZPx');
+    document.querySelector("#checkoutButtpn").addEventListener("click", ()=>{
+        stripe.redirectToCheckout({
+            sessionId: ""
+        })
+    })
+</script> -->
+
+
+
+
 <%- include ("footer.ejs") %>

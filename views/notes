@@ -82,3 +82,49 @@ router.get("/orderconfirmation", async (req,res)=> {
     // res.render(VIEW.confirmation, { ROUTE, showUserInfo, token: (req.cookies.jsonwebtoken !== undefined) ? true : false })
 
 })
+
+
+
+----------------
+
+        <div class="wishlist-shoppingcart-continer">
+            
+            <% showUserInfo.wishlist.forEach( (obj)=> { %>
+            <div class="wishlist-shoppingcart-innercontiner">
+                <div class="wishlist-shoppingcart-info">
+                    <div class="wishlist-shoppingcart-item ">Album: <%= obj.productId.album %> </div>
+                    <div class="wishlist-shoppingcart-item ">Artist: <%= obj.productId.artist %> </div>
+                    <div class="wishlist-shoppingcart-item ">Album ID: <%= obj.productId._id %> </div>
+                    <div class="wishlist-shoppingcart-item ">Pris: <%= obj.productId.price %> SEK</div>
+                    <div class="shoppingcart-item"><a href="/delete/<%=obj.productId._id%>">
+                        <button type="button">TA BORT</button></a>
+                    </div>
+                </div>
+            </div>
+                <% }); %>
+        </div>
+
+
+
+
+        --------------
+
+        För att lägga till en betalningstjänt behöver vi ett tredjepartssystem. 
+        Det förenklar för oss, och känns säkrare för användaren.  
+
+        STRIPE API, KLARNA, PAYPAL är populära lösningar. 
+        
+        > Vi behöver en api-nyckel. På så sätt får vi tillgång till deras tjänst. Som ett password och ett användarnamn. 
+        > Aktivera vår bank. 
+        > Aktivera kontot. 
+
+        > Developer > Api-nycklar. Här finns våra nycklar. 
+
+
+        > Order-länk som redirectar oss till order-router, renderar en ejs-fil där vi kan plocka information.
+        > Order router - renderar checkout.ejs. stämmer av betalningsuppgifter - går till stripe. 
+        > sen går vi till stripe. på stripe matar användaren in information, stripe kontrollerar. 
+        > Sen skickar stripe vidare till en success eller en fail-router (order confirmation). 
+
+
+        > det är i checkout.ejs som vi skriver logik för att redriecta till stripe. 

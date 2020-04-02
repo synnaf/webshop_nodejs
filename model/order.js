@@ -3,23 +3,6 @@ const Schema = require("mongoose").Schema;
 
 const schemaOrder = new Schema({
     orderDate: { type: Date },
-
-//     //häntar user från User-model
-//     ordedByUser: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: "User"
-//     }, 
-
-//     //en array av produkter, precis som wishlist 
-//     //häntar id från Product-model
-//     orderedProducts: [{
-//         productId: {
-//             type: mongoose.Schema.Types.ObjectId,
-//             ref: "Product"
-//         }
-//     }]
-// })
-
     orderedProducts: [
         {
         product: { type: Object, required: true },

@@ -232,6 +232,33 @@ router.get(ROUTE.wishlistRemoveId, verifyToken, async (req, res) => {
     res.redirect(ROUTE.userAccount);
 })
 
+
+//---------------- add to shoppingcart KÖPKNAPP ----------------- // 
+
+router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
+    if (verifyToken) {
+        const product = await ProductModel.findOne({
+            _id: req.params.id
+        });
+        const user = await UserInfoModel.findOne({
+            _id: req.body.userInfo._id
+        });
+        user.addToShoppingcart(product);
+        return res.redirect(ROUTE.userAccount);
+    } else {
+        res.redirect(url.format({
+            pathname: ROUTE.error,
+            query: {
+                errmsg: 'Du måste logga in för att lägga till produkten i din varukorg!'
+            }
+        }));
+    }
+})
+
+
+
+// ------------ reset password ----------------------- // 
+
 router.get(ROUTE.resetpassword, (req, res) => {
     res.status(200).render(VIEW.resetpassword, {
         ROUTE,
@@ -294,11 +321,5 @@ router.post(ROUTE.resetpasswordToken, async (req, res) => {
 router.get(ROUTE.logout, (req, res) => {
     res.clearCookie("jsonwebtoken").redirect(ROUTE.index);
 })
-
-
-//checkout route? här skapas en post request som populerar orders
-//Orders presenteras sedan på confirmation-sidan 
-
-
 
 module.exports = router;

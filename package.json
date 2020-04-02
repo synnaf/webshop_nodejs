@@ -7,7 +7,7 @@
     "node": "12.13.0"
   },
   "scripts": {
-    "start": "node index.js", 
+    "start": "node index.js",
     "start-dev": "nodemon index.js"
   },
   "keywords": [
@@ -29,7 +29,8 @@
     "nodemailer": "^6.4.6",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "querystring": "^0.2.0",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "stripe": "^8.38.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
