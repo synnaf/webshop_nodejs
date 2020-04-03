@@ -46,25 +46,13 @@ const schemaUser = new Schema({
             default: 1
         }
     }] 
-    // shoppingcart: {
-    //     products: [
-    //       {
-    //         productId: {
-    //           type: Schema.Types.ObjectId,
-    //           ref: 'Product',
-    //           required: true
-    //         },
-    //         quantity: { type: Number, required: true }
-    //       }
-    //     ]
-    //   }
+
 }); 
 
 
 // ----------------- SHOPPINGCART ---------------------- // 
 
 
-// METOD FÖR ATT LÄGGA PRODUKTER I CART 
 schemaUser.methods.addToShoppingcart = function(product) {
         // const cartProductIndex = this.shoppingcart.products.findIndex(product => {
         //     return product.productId.toString() === product._id.toString(); 

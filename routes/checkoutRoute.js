@@ -5,10 +5,8 @@ const UserModel = require("../model/user");
 const OrderModel = require("../model/order"); 
 const ProductModel = require("../model/order");
 const verifyToken = require("./verifyToken"); 
-
-//require dotenv
-//process.env.STRIPE_SECR
-const stripe = require("stripe")("sk_test_EK0CWyAdc95YpZnvi93siYln00WnwUkskB"); 
+const config = require('../config/config'); 
+const stripe = require("stripe")(config.stripe_api.sc_key); 
 
 // ---------------------- HÄMTA CHECKOUT, VISA SHOPPINGCART------------------------- // 
 
