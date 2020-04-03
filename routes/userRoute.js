@@ -256,7 +256,6 @@ router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
 })
 
 
-
 // ------------ reset password ----------------------- // 
 
 router.get(ROUTE.resetpassword, (req, res) => {

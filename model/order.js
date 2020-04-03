@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = require("mongoose").Schema;
 
 const schemaOrder = new Schema({
+    //borde detta vara en array? en array där varje objekt består ab date,products, user? 
     orderDate: { type: Date },
     orderedProducts: [
         {

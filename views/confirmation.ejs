@@ -5,11 +5,14 @@
         <h1>Tack för din beställning!</h1>
     </div>
     <div class="userinfo">
-        <h4>Tack!</h4>
-        <span>Dina varor kommer att levereras till följande adress:</span>
-        <span><%= showUserInfo %></span>
-        <span></span>
-        <span></span>
+        <span>Dina varor kommer att levereras till:</span>
+        <span><%= showOrderInfo.firstName+" "+showOrderInfo.lastName %></span>
+        <span><%= showOrderInfo.address %></span>
+        <span>
+            <b>Ordernummer:</b> 
+             <%= showOrderInfo._id %>
+        </span>
+
 
     </div>
     <form class="startbuttons" method="get">

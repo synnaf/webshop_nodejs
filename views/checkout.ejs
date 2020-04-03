@@ -20,12 +20,12 @@
                     <div class="wishlist-shoppingcart-item ">Album: <%= product.productId.album %> </div>
                     <div class="wishlist-shoppingcart-item ">Artist: <%= product.productId.artist %> </div>
                     <div class="wishlist-shoppingcart-item ">Pris: <%= product.productId.price %> SEK</div>
-                    <div class="wishlist-shoppingcart-item ">Antal: <%= product.productId.quantity %> st</div>
+                    <div class="wishlist-shoppingcart-item ">Antal: <%= product.quantity %> st</div>
                     <div class="wishlist-shoppingcart-item "> 
-                        <a href="/update/<%=product %>">
+                        <a href="/update/<%=product%>">
                             <button type="button">+</button>
                         </a>
-                        <a href="update<%=product %>">
+                        <a href="update/<%=product %>">
                             <button type="button">-</button></a>
                         </a>
                     </div>
@@ -41,7 +41,7 @@
     </div>
     <div class="checkout-payment-container">
         <!-- här borde vi skicka formuläret till order/confirmation?  -->
-        <form action="<%= ROUTE.checkout %>" method="POST">
+        <form action="/order" method="POST">
             <h2>Betalning</h2>
             <div class="checkout-user-container">
                 <input type="number" placeholder="Kortnummer">
@@ -81,17 +81,15 @@
 </main>
 
 
-<!-- <script src="https://js.stripe.com/v3/"></script>
+<script src="https://js.stripe.com/v3/"></script>
 <script> 
     var stripe = Stripe('pk_test_5MTNw7RfN0HdEq9ObVGQ1xWV00JXhKiZPx');
-    document.querySelector("#checkoutButtpn").addEventListener("click", ()=>{
+    document.querySelector("#checkoutButton").addEventListener("click", ()=>{
         stripe.redirectToCheckout({
-            sessionId: ""
+            sessionId: "<%=sessionId%>"
         })
     })
-</script> -->
-
-
+</script>
 
 
 <%- include ("footer.ejs") %>
