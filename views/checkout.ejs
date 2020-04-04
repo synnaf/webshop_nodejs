@@ -7,12 +7,7 @@
     <div class="shoppingcart-container">
 
         <div class="wishlist-shoppingcart-continer">
-            <!-- för att rendera shoppingcart:
-                Gör en loop som skriver ut  
-                
-                user.shoppingcart[0].productId.name 
-            -->
-            
+
             <% showUserInfo.shoppingcart.forEach((product)=> { %>
 
             <div class="wishlist-shoppingcart-innercontiner">
@@ -27,14 +22,13 @@
                         <button type="button">TA BORT</button></a>
                     </div>
                 </div>
-            </div>
-                <% }); %>
+            </div>  
         </div>
+        <% }); %>
 
         </div>
     </div>
     <div class="checkout-payment-container">
-        <!-- här borde vi skicka formuläret till order/confirmation?  -->
         <form action="/checkout" method="POST">
             <h2>Betalning</h2>
             <div class="checkout-user-container">
