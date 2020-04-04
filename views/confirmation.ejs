@@ -6,11 +6,12 @@
     </div>
     <div class="userinfo">
         <span>Dina varor kommer att levereras till:</span>
-        <span><%= showOrderInfo.firstName+" "+showOrderInfo.lastName %></span>
-        <span><%= showOrderInfo.address %></span>
+        <span><%= showUserInfo.firstName+" "+showUserInfo.lastName %></span>
+        <span><%= showUserInfo.address %></span>
         <span>
             <b>Ordernummer:</b> 
-             <%= showOrderInfo._id %>
+             <%= showOrderInfo %>
+             <%= showOrderDetails %>
         </span>
 
     </div>

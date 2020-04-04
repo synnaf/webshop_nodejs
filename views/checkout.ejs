@@ -22,13 +22,7 @@
                     <div class="wishlist-shoppingcart-item ">Pris: <%= product.productId.price %> SEK</div>
                     <div class="wishlist-shoppingcart-item ">Antal: <%= product.quantity %> st</div>
                     <div class="wishlist-shoppingcart-item "> 
-                        <a href="/update/<%=product%>">
-                            <button type="button">+</button>
-                        </a>
-                        <a href="update/<%=product %>">
-                            <button type="button">-</button></a>
-                        </a>
-                    </div>
+
                     <div class="shoppingcart-item"><a href="/delete/<%=product.productId._id%>">
                         <button type="button">TA BORT</button></a>
                     </div>
@@ -41,7 +35,7 @@
     </div>
     <div class="checkout-payment-container">
         <!-- här borde vi skicka formuläret till order/confirmation?  -->
-        <form action="/order" method="POST">
+        <form action="/checkout" method="POST">
             <h2>Betalning</h2>
             <div class="checkout-user-container">
                 <input type="number" placeholder="Kortnummer">

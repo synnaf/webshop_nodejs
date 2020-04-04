@@ -1,26 +1,4 @@
-<%- include ("header.ejs") %>
-<%- include ("navbar.ejs") %>
-<main>
-    <div class="pageheadline">
-        <h1>Tack för din beställning!</h1>
-    </div>
-    <div class="userinfo">
-        <h4>Tack <%= customer.fName %>!</h4>
-        <span>Dina varor kommer att levereras till följande adress:</span>
-        <!-- <span><%= customer.fName %> <%= customer.lName %></span>
-        <span><%= customer.address %></span>
-        <span><%= customer.city %></span> -->
 
-    </div>
-    <form class="startbuttons" method="get">
-        <button type="submit" formaction="/">STARTSIDA</button>
-        <button type="submit" formaction="logout">LOGGA UT</button>
-    </form>
-</main>
-<%- include ("footer.ejs") %>
-
-
----------
 
 
 /*  ---------------------  HÄMTA CONFIRMATION   -----------------------  */

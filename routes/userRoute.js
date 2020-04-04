@@ -244,7 +244,7 @@ router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
             _id: req.body.userInfo._id
         });
         user.addToShoppingcart(product);
-        return res.redirect(ROUTE.userAccount);
+        return res.redirect(ROUTE.checkout);
     } else {
         res.redirect(url.format({
             pathname: ROUTE.error,

@@ -45,7 +45,13 @@ const schemaUser = new Schema({
             type: Number,
             default: 1
         }
-    }] 
+    }], 
+    orders: [{
+        orderId: {
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: "Order"
+        }
+    }]
 
 }); 
 
@@ -53,27 +59,7 @@ const schemaUser = new Schema({
 // ----------------- SHOPPINGCART ---------------------- // 
 
 
-schemaUser.methods.addToShoppingcart = function(product) {
-        // const cartProductIndex = this.shoppingcart.products.findIndex(product => {
-        //     return product.productId.toString() === product._id.toString(); 
-        // }); 
-
-        // let newQuantity = 1; 
-        // const updatedCartProducts = [...this.shoppingcart.products]; 
-
-        // if(cartProductIndex > 0) {
-        //     newQuantity = this.shoppingcart.products[cartProductIndex].quantity + 1; 
-        //     updatedCartProducts[cartProductIndex].quantity = newQuantity; 
-        // } else {
-        //     updatedCartProducts.push({
-        //         productId: product._id,
-        //         quantity: newQuantity
-        //     }); 
-        // }
-        // const updatedCart = { produtcs: updatedCartProducts}; 
-        // this.shoppingcart = updatedCart; 
-        // return this.save(); 
-
+schemaUser.methods.addToShoppingcart = function(product) { 
         this.shoppingcart.push({ productId: product._id })
         const filter = this.shoppingcart.filter(function ({
             productId
@@ -85,9 +71,7 @@ schemaUser.methods.addToShoppingcart = function(product) {
 }
 
 
-// METOD FÖR ATT TA BORT FRÅN CART 
 schemaUser.methods.removeFromShoppingcart = function (productId) {
-
     const currentProducts = this.shoppingcart.filter((product) => {
         return product.productId.toString()
             !==productId.toString()
@@ -95,14 +79,11 @@ schemaUser.methods.removeFromShoppingcart = function (productId) {
     this.shoppingcart = currentProducts;
     return this.save();
 }
-// METOD FÖR ATT TÖMMA CART 
+
 schemaUser.methods.clearShoppingcart = function() {
-    this.shoppingcart = { products: [] };
+    this.shoppingcart = [] ;
     return this.save();
 };
-
-
-
 
 // -------------- WISHLIST ----------------------------- // 
 
@@ -117,7 +98,7 @@ schemaUser.methods.addToWishlist = function (product) {
     return this.save();
 }
 
-schemaUser.methods.removeWishList = function (productId) {
+schemaUser.methods.removeWishList = function(productId) {
     const currentProducts = this.wishlist.filter((product) => {
         return product.productId.toString()
             !==productId.toString()
@@ -126,9 +107,13 @@ schemaUser.methods.removeWishList = function (productId) {
     return this.save();
 }
 
+// ------------- ORDER ------------- // 
+
+schemaUser.methods.createOrder = function(order) {
+    this.orders.push({ orderedByUser: order._id })
+    return this.save();
+}
   
 
-
-const userModel = mongoose.model('User', schemaUser)
-
-module.exports = userModel
+const userModel = mongoose.model('User', schemaUser);
+module.exports = userModel; 
