@@ -3,7 +3,7 @@ const router = express.Router();
 const { ROUTE, VIEW } = require('../constant');
 const UserModel = require("../model/user"); 
 const verifyToken = require("./verifyToken"); 
-const config = require('../config/config'); 
+const config = require("../config/config"); 
 const stripe = require("stripe")(config.stripe_api.sc_key); 
 
 // ---------------------- HÄMTA CHECKOUT, VISA SHOPPINGCART------------------------- // 
@@ -69,7 +69,7 @@ router.post(ROUTE.checkout, verifyToken, async (req, res) => {
 
     const customer = await UserModel.findOne({ _id: req.body.userInfo._id })
     customer.createOrder(customer); 
-    customer.clearShoppingcart();
+
 
     return res.redirect(ROUTE.confirmation)  
     
@@ -82,7 +82,9 @@ router.post(ROUTE.checkout, verifyToken, async (req, res) => {
 router.get(ROUTE.confirmation, verifyToken, async (req, res) => {
     
     if (verifyToken) {
-        const showUserInfo = await UserModel.findOne({ _id: req.body.userInfo._id }); 
+
+        const showUserInfo = await UserModel.findOne({ _id: req.body.userInfo._id });
+        showUserInfo.clearShoppingcart(); 
         res.status(202).render(VIEW.confirmation, { ROUTE, showUserInfo, token: (req.cookies.jsonwebtoken !== undefined) ? true : false })
 
     } else {

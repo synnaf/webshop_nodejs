@@ -59,7 +59,7 @@ const schemaUser = new Schema({
 // ----------------- SHOPPINGCART ---------------------- // 
 
 
-schemaUser.methods.addToShoppingcart = function(product) { 
+schemaUser.methods.addToShoppingcart = function(product) {
         this.shoppingcart.push({ productId: product._id })
         const filter = this.shoppingcart.filter(function ({
             productId
