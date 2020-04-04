@@ -3,8 +3,10 @@ const router = express.Router();
 const { ROUTE, VIEW } = require('../constant');
 const UserModel = require("../model/user"); 
 const verifyToken = require("./verifyToken"); 
-const config = require('../config/config'); 
-const stripe = require("stripe")(config.stripe_api.sc_key); 
+
+//require dotenv
+//process.env.STRIPE_SECR
+const stripe = require("stripe")("sk_test_EK0CWyAdc95YpZnvi93siYln00WnwUkskB"); 
 
 // ---------------------- HÄMTA CHECKOUT, VISA SHOPPINGCART------------------------- // 
 

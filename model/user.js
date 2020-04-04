@@ -59,7 +59,28 @@ const schemaUser = new Schema({
 // ----------------- SHOPPINGCART ---------------------- // 
 
 
-schemaUser.methods.addToShoppingcart = function(product) { 
+// METOD FÖR ATT LÄGGA PRODUKTER I CART 
+schemaUser.methods.addToShoppingcart = function(product) {
+        // const cartProductIndex = this.shoppingcart.products.findIndex(product => {
+        //     return product.productId.toString() === product._id.toString(); 
+        // }); 
+
+        // let newQuantity = 1; 
+        // const updatedCartProducts = [...this.shoppingcart.products]; 
+
+        // if(cartProductIndex > 0) {
+        //     newQuantity = this.shoppingcart.products[cartProductIndex].quantity + 1; 
+        //     updatedCartProducts[cartProductIndex].quantity = newQuantity; 
+        // } else {
+        //     updatedCartProducts.push({
+        //         productId: product._id,
+        //         quantity: newQuantity
+        //     }); 
+        // }
+        // const updatedCart = { produtcs: updatedCartProducts}; 
+        // this.shoppingcart = updatedCart; 
+        // return this.save(); 
+
         this.shoppingcart.push({ productId: product._id })
         const filter = this.shoppingcart.filter(function ({
             productId

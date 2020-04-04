@@ -24,7 +24,8 @@ const admin = {
 }
 
 const stripe_api = {
-    sc_key: process.env.STRIPE_SECRET
+    pk_key: process.env.STRIPE_KEY_PUBL, 
+    sc_key: process.env.STRIPE_KEY_SECR
 }
 
 
