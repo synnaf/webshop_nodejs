@@ -49,8 +49,8 @@ const schemaUser = new Schema({
     orders: [{
         orderId: {
             type: mongoose.Schema.Types.ObjectId, 
-            ref: "Order"
-        }
+        }, 
+        products: Array
     }]
 
 }); 
@@ -110,7 +110,7 @@ schemaUser.methods.removeWishList = function(productId) {
 // ------------- ORDER ------------- // 
 
 schemaUser.methods.createOrder = function(order) {
-    this.orders.push({ orderedByUser: order._id })
+    this.orders.push({ products: order.productId })
     return this.save();
 }
   

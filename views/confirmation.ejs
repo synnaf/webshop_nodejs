@@ -8,16 +8,11 @@
         <span>Dina varor kommer att levereras till:</span>
         <span><%= showUserInfo.firstName+" "+showUserInfo.lastName %></span>
         <span><%= showUserInfo.address %></span>
-        <span>
-            <b>Ordernummer:</b> 
-             <%= showOrderInfo %>
-             <%= showOrderDetails %>
-        </span>
 
     </div>
     <form class="startbuttons" method="get">
         <button type="submit" formaction="/">STARTSIDA</button>
-        <button type="submit" formaction="logout">LOGGA UT</button>
+        <button type="submit" formaction="/logout">LOGGA UT</button>
     </form>
 </main>
 <%- include ("footer.ejs") %>
