@@ -23,5 +23,9 @@ const admin = {
     adminPassword: process.env.ADMIN_PASSWORD
 }
 
+const stripe_api = {
+    sc_key: process.env.STRIPE_SECRET
+}
 
-module.exports = { mongoDB, spotify, mailkey, tokenkey, admin };  
+
+module.exports = { mongoDB, spotify, mailkey, tokenkey, admin, stripe_api };  

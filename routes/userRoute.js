@@ -232,6 +232,32 @@ router.get(ROUTE.wishlistRemoveId, verifyToken, async (req, res) => {
     res.redirect(ROUTE.userAccount);
 })
 
+
+//---------------- add to shoppingcart KÖPKNAPP ----------------- // 
+
+router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
+    if (verifyToken) {
+        const product = await ProductModel.findOne({
+            _id: req.params.id
+        });
+        const user = await UserInfoModel.findOne({
+            _id: req.body.userInfo._id
+        });
+        user.addToShoppingcart(product);
+        return res.redirect(ROUTE.checkout);
+    } else {
+        res.redirect(url.format({
+            pathname: ROUTE.error,
+            query: {
+                errmsg: 'Du måste logga in för att lägga till produkten i din varukorg!'
+            }
+        }));
+    }
+})
+
+
+// ------------ reset password ----------------------- // 
+
 router.get(ROUTE.resetpassword, (req, res) => {
     res.status(200).render(VIEW.resetpassword, {
         ROUTE,
@@ -254,7 +280,7 @@ router.post(ROUTE.resetpassword, async (req, res) => {
             to: req.body.resetmail,
             from: "<no-reply>vinylshopen@info",
             subject: "Ändra ditt lösenord!",
-            html: `http://localhost:8080/resetpassword/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord! Länken är giltig i 1 timme.<h2>`
+            html: `http://vinylfanny.herokuapp.com/resetpassword/${resetToken} <h2>Klicka på länken för att ändra ditt lösenord! Länken är giltig i 1 timme.<h2>`
         })
         res.redirect(ROUTE.login)
     })

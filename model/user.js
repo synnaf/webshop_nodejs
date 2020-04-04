@@ -35,8 +35,57 @@ const schemaUser = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Product"
         }
+    }],
+    shoppingcart: [{
+        productId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product"
+        }, 
+        quantity: {
+            type: Number,
+            default: 1
+        }
+    }], 
+    orders: [{
+        orderId: {
+            type: mongoose.Schema.Types.ObjectId, 
+        }, 
+        products: Array
     }]
-})
+
+}); 
+
+
+// ----------------- SHOPPINGCART ---------------------- // 
+
+
+schemaUser.methods.addToShoppingcart = function(product) { 
+        this.shoppingcart.push({ productId: product._id })
+        const filter = this.shoppingcart.filter(function ({
+            productId
+        }) {
+            return !this.has(`${productId}`) && this.add(`${productId}`)
+        }, new Set)
+        this.shoppingcart = [...filter]
+        return this.save();
+}
+
+
+schemaUser.methods.removeFromShoppingcart = function (productId) {
+    const currentProducts = this.shoppingcart.filter((product) => {
+        return product.productId.toString()
+            !==productId.toString()
+    })
+    this.shoppingcart = currentProducts;
+    return this.save();
+}
+
+schemaUser.methods.clearShoppingcart = function() {
+    this.shoppingcart = [] ;
+    return this.save();
+};
+
+// -------------- WISHLIST ----------------------------- // 
 
 schemaUser.methods.addToWishlist = function (product) {
     this.wishlist.push({ productId: product._id })
@@ -49,7 +98,7 @@ schemaUser.methods.addToWishlist = function (product) {
     return this.save();
 }
 
-schemaUser.methods.removeWishList = function (productId) {
+schemaUser.methods.removeWishList = function(productId) {
     const currentProducts = this.wishlist.filter((product) => {
         return product.productId.toString()
             !==productId.toString()
@@ -58,6 +107,13 @@ schemaUser.methods.removeWishList = function (productId) {
     return this.save();
 }
 
-const userModel = mongoose.model('User', schemaUser)
+// ------------- ORDER ------------- // 
 
-module.exports = userModel
+schemaUser.methods.createOrder = function(order) {
+    this.orders.push({ products: order.productId })
+    return this.save();
+}
+  
+
+const userModel = mongoose.model('User', schemaUser);
+module.exports = userModel; 

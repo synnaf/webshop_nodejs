@@ -7,12 +7,8 @@
     "node": "12.13.0"
   },
   "scripts": {
-    "unittest": "mocha",
-    "cypress": "cypress open",
-    "cy:run": "cypress -- --record --spec 'cypress/integration/adminRoute_ui_spec.js",
-    "test": "npm run unittest & npm run cy:run",
-    "sass": "node-sass --watch sass -o public",
-    "start": "node index.js"
+    "start": "node index.js",
+    "start-dev": "nodemon index.js"
   },
   "keywords": [
     "webshop",
@@ -33,7 +29,8 @@
     "nodemailer": "^6.4.6",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "querystring": "^0.2.0",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "stripe": "^8.38.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
