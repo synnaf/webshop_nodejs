@@ -65,8 +65,8 @@ router.get(ROUTE.confirmation, verifyToken, async (req, res) => {
                 currency: "eur" 
             }
         }), 
-        success_url: 'http://localHost:8080'+ ROUTE.paymentConf, 
-        cancel_url: 'http://localHost:8080' + ROUTE.error
+        success_url: 'http://vinylfanny.herokuapp.com'+ ROUTE.paymentConf, 
+        cancel_url: 'http://vinylfanny.herokuapp.com' + ROUTE.error
     })
     .then((session) => {
         res.render(VIEW.confirmation, {
