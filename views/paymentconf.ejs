@@ -1,0 +1,21 @@
+<%- include ("header.ejs") %>
+<%- include ("navbar.ejs") %>
+<main>
+    <div class="container">
+        <div class="pageheadline">
+            <h1>Tack <%= order.customerId.firstName %>!</h1>
+            <h3>Din order är nu betald.</h3>
+        </div>
+        <div class="userinfo">
+            <span><b>Ordernummer:</b> <%= order._id%></span>
+            <span><b>Leveransuppgifter:</b></span>
+            <span><%= order.customerId.firstName %> <%= order.customerId.lastName %></span>
+            <span><%= order.customerId.address %></span>
+        <form class="startbuttons" method="get">
+            <button type="submit" formaction="<%=ROUTE.index%>">HEM</button>
+            <button type="submit" formaction="<%=ROUTE.userAccount%>">MIN PROFIL</button>
+            <button type="submit" formaction="<%=ROUTE.logout%>">LOGGA UT</button>
+        </form>
+    </div>
+</main>
+<%- include ("footer.ejs") %>

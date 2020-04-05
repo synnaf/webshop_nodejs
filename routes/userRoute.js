@@ -204,6 +204,8 @@ router.post(ROUTE.userAccount, async (req, res) => {
     }
 })
 
+// ----------- wishlist ------------- // 
+
 router.get(ROUTE.wishlistId, verifyToken, async (req, res) => {
     if (verifyToken) {
         const product = await ProductModel.findOne({
@@ -233,7 +235,7 @@ router.get(ROUTE.wishlistRemoveId, verifyToken, async (req, res) => {
 })
 
 
-//---------------- add to shoppingcart KÖPKNAPP ----------------- // 
+// ------- shoppingcart ------------ //
 
 router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
     if (verifyToken) {
@@ -243,16 +245,24 @@ router.get("/shoppingcart/:id", verifyToken, async (req, res) => {
         const user = await UserInfoModel.findOne({
             _id: req.body.userInfo._id
         });
-        user.addToShoppingcart(product);
+        user.addToCart(product);
         return res.redirect(ROUTE.checkout);
     } else {
         res.redirect(url.format({
             pathname: ROUTE.error,
             query: {
-                errmsg: 'Du måste logga in för att lägga till produkten i din varukorg!'
+                errmsg: 'Du måste logga in för att lägga till produkten i din önskelista!'
             }
         }));
     }
+})
+
+router.get("/removefromcart/:id", verifyToken, async (req, res) => {
+    const user = await UserInfoModel.findOne({
+        _id: req.body.userInfo._id
+    });
+    user.removeCart(req.params.id)
+    return res.redirect(ROUTE.checkout);
 })
 
 

@@ -11,7 +11,8 @@ const VIEW = {
     confirmation: 'confirmation',
     error: 'errors',
     resetpassword: 'resetpassword',
-    resetform: 'resetform'
+    resetform: 'resetform',
+    paymentConf: 'paymentconf'
 }
 
 const ROUTE = {
@@ -29,13 +30,15 @@ const ROUTE = {
     confirmation: '/checkout/confirmation',
     error: '/*',
     resetpassword: '/resetpassword',
-    resetpasswordToken: '/resetpassword/:token', 
-    wishlistRemoveId: '/remove/:id'
+    resetpasswordToken: '/resetpassword/:token',
+    wishlistRemoveId: '/remove/:id',
+    paymentConf: '/order/confirmed'
 }
 
 const PRODUCT = {
     perPage: 4,
     genres: ["All", "Rock", "Pop", "Soul", "Rap", "Rnb", "Blues"]
 }
+
 
 module.exports = {VIEW,ROUTE,PRODUCT}

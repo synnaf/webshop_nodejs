@@ -2,16 +2,21 @@
 <%- include ("navbar.ejs") %>
 <main>
     <div class="pageheadline">
-        <h1>Tack för din beställning!</h1>
+        <h3>Tack <%= showUserInfo.firstName %> för din beställning!</h3>
+        <h5>Lämna inte sidan! Du skickas vidare till betalning...</h5>
     </div>
-    <div class="userinfo">
-        <span>Dina varor kommer att levereras till:</span>
-        <span><%= showUserInfo.firstName+" "+showUserInfo.lastName %></span>
-        <span><%= showUserInfo.address %></span>
-    </div>
-    <form class="startbuttons" method="get">
-        <button type="submit" formaction="/">STARTSIDA</button>
-        <button type="submit" formaction="/logout">LOGGA UT</button>
-    </form>
 </main>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+
+    var stripe = Stripe('pk_test_5MTNw7RfN0HdEq9ObVGQ1xWV00JXhKiZPx');  
+    setTimeout(stripePayment, 3000); 
+
+    function stripePayment() {
+        stripe.redirectToCheckout({
+            sessionId: '<%=sessionId%>'
+        })
+    }
+    
+</script>
 <%- include ("footer.ejs") %>
