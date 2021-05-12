@@ -26,7 +26,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.6",
     "node-sass-middleware": "^0.11.0",
-    "nodemailer": "^6.4.6",
+    "nodemailer": "^6.4.16",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "querystring": "^0.2.0",
     "request": "^2.88.2",
